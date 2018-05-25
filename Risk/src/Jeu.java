@@ -8,13 +8,13 @@ import java.awt.event.*;
 public class Jeu {
 	
 	public void menuPrincipal() {
-		StdDraw.setCanvasSize(1352,720);
+		/*StdDraw.setCanvasSize(1352,720);
 		StdDraw.picture(0.5,0.5,"avantMenu.png");
 		if(StdDraw.isKeyPressed(49)) {	
 			System.out.println("Ca marche");
 			StdDraw.clear();
 			StdDraw.filledRectangle(0, 0, 30, 40);
-		}
+		}*/
 	}
 	
 	private void menuOption() {
@@ -28,7 +28,6 @@ public class Jeu {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
-		boolean termine = false;
 		
 		int coordonneesKenya [][] = {{0,0},{0,1}};
 		int coordonneesZimbabwe [][] = {{1,0},{1,1}};
@@ -72,14 +71,10 @@ public class Jeu {
 		
 		Partie partie = new Partie(0,4,4, missionsDispo, regions);
 		partie.miseEnPlace();
-		while(!termine) {
-			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
-				partie.tourJoueur(partie.joueurs.get(i));
-				if(partie.joueurs.get(i).verifVictoire()) {
-					termine = true;
-				}
-			}
+		for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
+			partie.tourJoueur(partie.joueurs.get(i));
 		}
+		
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
