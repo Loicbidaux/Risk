@@ -62,8 +62,22 @@ public class Joueur {
 		this.dernieresConquetes = dernieresConquetes;
 	}
 
-	public void verifVictoire() {
-		
+	public boolean verifVictoire() {
+		if(this.territoires.size() == 42) {
+			return true;
+		}
+		else {
+			return false; //ajouter les victoires par mission
+		}
+	}
+	
+	public boolean verifDefaite() {
+		if(this.territoires.size() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public Territoires selectionTerritoire() { //a faire

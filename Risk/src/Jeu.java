@@ -28,6 +28,7 @@ public class Jeu {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
+		boolean termine = false;
 		
 		int coordonneesKenya [][] = {{0,0},{0,1}};
 		int coordonneesZimbabwe [][] = {{1,0},{1,1}};
@@ -71,10 +72,14 @@ public class Jeu {
 		
 		Partie partie = new Partie(0,4,4, missionsDispo, regions);
 		partie.miseEnPlace();
-		for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
-			partie.tourJoueur(partie.joueurs.get(i));
+		while(!termine) {
+			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
+				partie.tourJoueur(partie.joueurs.get(i));
+				if(partie.joueurs.get(i).verifVictoire()) {
+					termine = true;
+				}
+			}
 		}
-		
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
