@@ -37,7 +37,10 @@ public class Territoires {
 		return voisins;
 	}
 	
-	public void appartenanceTerritoire(Joueur joueur) {
-
+	public void ajoutUnites(ArrayList <Unite> unites) {
+		for(int i = 0 ; i < unites.size(); i++) {
+			this.unites.add(unites.get(0));
+			unites.remove(0);
+		}
 	}
 }
