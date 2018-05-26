@@ -7,15 +7,15 @@ import java.awt.event.*;
 
 public class Jeu {
 	
-	public void menuPrincipal() {
-		/*StdDraw.setCanvasSize(1352,720);
+	/*public void menuPrincipal() {
+		StdDraw.setCanvasSize(1352,720);
 		StdDraw.picture(0.5,0.5,"avantMenu.png");
 		if(StdDraw.isKeyPressed(49)) {	
 			System.out.println("Ca marche");
 			StdDraw.clear();
 			StdDraw.filledRectangle(0, 0, 30, 40);
-		}*/
-	}
+		}
+	}*/
 	
 	private void menuOption() {
 		
@@ -24,10 +24,13 @@ public class Jeu {
 	private void menuPartie() {
 		
 	}
-
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
+		boolean termine = false;
+		
+		Joueur joueur = new Joueur(1,"gege", true);
 		
 		int coordonneesKenya [][] = {{0,0},{0,1}};
 		int coordonneesZimbabwe [][] = {{1,0},{1,1}};
@@ -69,12 +72,38 @@ public class Jeu {
 		missionsDispo.add(mission1);
 		missionsDispo.add(mission2);
 		
-		Partie partie = new Partie(0,4,4, missionsDispo, regions);
-		partie.miseEnPlace();
-		for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
-			partie.tourJoueur(partie.joueurs.get(i));
-		}
+		int tableau [] = {1,1};
+		int puissCavalier [] = {2,3,4,5,6,7};
+		int puissCanon [] = {4,5,6,7,8,9};
+		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1);
+		Unite cavalierA = new Unite(3,puissCavalier,1,3,3,1,2);
+		Unite canonA = new Unite(7,puissCanon,3,2,1,1,3);
 		
+		Unite soldatD = new Soldat(1,tableau,1,1,1,1,4);
+		Unite cavalierD = new Unite(3,puissCavalier,1,3,3,1,5);
+		Unite canonD = new Unite(7,puissCanon,3,2,1,1,6);
+		
+		ArrayList <Unite> attaquants = new ArrayList();
+		attaquants.add(soldatA);
+		//attaquants.add(cavalierA);
+		//attaquants.add(canonA);
+		
+		ArrayList <Unite> defenseurs = new ArrayList();
+		//defenseurs.add(soldatD);
+		defenseurs.add(cavalierD);
+		defenseurs.add(canonD);
+		
+		Partie partie = new Partie(0,4,4, missionsDispo, regions);
+		joueur.bataille(defenseurs, attaquants);
+		partie.miseEnPlace();
+		//while(!termine) {
+			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
+				partie.tourJoueur(partie.joueurs.get(i));
+				//if(partie.joueurs.get(i).verifVictoire()) {
+					//termine = true;
+				//}
+			}
+		//}
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");

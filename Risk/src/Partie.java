@@ -53,6 +53,7 @@ public class Partie {
 		
 	}
 	
+	//on regarde a quelle region appartient la region demandee
 	public Regions appartenanceRegionTerritoire(Territoires territoire) {
 		for(int i = 0 ; i < this.regions.size(); i++) {
 			if(this.regions.get(i).territoires.contains(territoire)) {
@@ -62,6 +63,7 @@ public class Partie {
 		return this.regions.get(0);
 	}
 	
+	//fonction ne se lancant qu'au debut de la partie
 	public void miseEnPlace() {
 		int randomNum;
 		int randomNum2;
@@ -79,6 +81,7 @@ public class Partie {
 			}
 		}
 		
+		//calcul du nombre de territoires dus aux joueurs
 		int nbreTerritoires = territoires.size();
 		int territoiresParJoueur = Math.round(nbreTerritoires/this.nbreJoueursTotal);
 
@@ -102,6 +105,7 @@ public class Partie {
 		
 		ArrayList <Joueur> joueursChanceux = new ArrayList();
 		
+		//les territoires non distribues sont donnes aleatoirement a des joueurs differents
 		while(!territoires.isEmpty()) {
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.joueurs.size());
 			if(!joueursChanceux.contains(this.joueurs.get(randomNum))) {
@@ -113,6 +117,7 @@ public class Partie {
 		}	
 	}
 	
+	//on increment le compteur du nombre de tours
 	public void tourJoueur(Joueur joueur) {
 		if(joueur.Humain) {
 			joueur.appelRenforts();
