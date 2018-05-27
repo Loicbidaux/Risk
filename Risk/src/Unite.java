@@ -7,8 +7,9 @@ public class Unite {
 	int mouvement;
 	int disponibilite;
 	int numero;
+	String nom;
 	
-	public Unite(int cout, int puissance [], int attaque, int defense, int mouvement, int disponibilite, int numero) {
+	public Unite(int cout, int puissance [], int attaque, int defense, int mouvement, int disponibilite,int numero, String nom) {
 		super();
 		this.cout = cout;
 		this.puissance = puissance;
@@ -16,7 +17,8 @@ public class Unite {
 		this.defense = defense;
 		this.mouvement = mouvement;
 		this.disponibilite = disponibilite;
-		this.numero = numero;
+		this.nom = nom;
+		this.numero=numero;
 	}
 	
 	public void setCout(int cout) {

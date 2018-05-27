@@ -90,17 +90,17 @@ public class Joueur {
 	
 	public void ajouterSoldat() {
 		int tabPuissance [] = {1,2,3,4,5,6};
-		this.armees.add(new Soldat(1,tabPuissance,2,1,2,1,this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Soldat(1 , tabPuissance, 2, 1, 2, 1, this.armees.get(this.armees.size()-1).numero+1, "Soldat " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void ajouterCavalier() {
 		int tabPuissance [] = {2,3,4,5,6,7};
-		this.armees.add(new Cavalier(3,tabPuissance,1,3,3,1,this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Cavalier(3, tabPuissance, 1, 3, 3, 1, this.armees.get(this.armees.size()-1).numero+1, "Cavalier " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void ajouterCanon() {
 		int tabPuissance [] = {4,5,6,7,8,9};
-		this.armees.add(new Cavalier(7,tabPuissance,3,2,1,1,this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Canon(7, tabPuissance, 3, 2, 1, 1, this.armees.get(this.armees.size()-1).numero+1, "Canon " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void appelRenforts() {
@@ -140,7 +140,7 @@ public class Joueur {
 		this.setDernieresConquetes(0);
 	}
 	
-	public void choixUnitesCombat(Territoires territoire) {
+	public ArrayList <Unite> choixUnitesCombat(Territoires territoire) {
 		boolean finSelecUnite = false;
 		ArrayList <Unite> unitesAttaque = new ArrayList();
 		while(!finSelecUnite) {
@@ -176,7 +176,7 @@ public class Joueur {
 		}
 	}
 	
-	public void bataille(ArrayList <Unite> defense, ArrayList <Unite> attaque) {
+	public Unite [][] issueBataille(ArrayList <Unite> defense, ArrayList <Unite> attaque) {
 		int puissanceDefense [] = new int[defense.size()];
 		int puissanceAttaque [] = new int[attaque.size()];
 		int randomNum;
@@ -195,71 +195,74 @@ public class Joueur {
 		//on les trie
 		TriParSelection(puissanceAttaque);
 		
+		
+		Unite unitesMortes [][] = new Unite[2][3];
 		//les valeurs sont comparées pour le combat
 		if(attaque.size() >= defense.size()) {
 			for(int i = 0 ; i <defense.size(); i++) {
-				System.out.println(attaque.get(i).numero + " attaque " + defense.get(i).numero + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
+				System.out.println(attaque.get(i).nom + " attaque " + defense.get(i).nom + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
 				if(puissanceAttaque[i]>puissanceDefense[i]) {
-					System.out.println(defense.get(i).numero + " est mort");
-					//defense.remove(i);
+					System.out.println(defense.get(i).nom + " est mort");
+					unitesMortes[0][i] = defense.get(i);
 				}
 				else if(puissanceDefense[i]>puissanceAttaque[i]) {
-					System.out.println(attaque.get(i).numero + " est mort");
-					//attaque.remove(i);
+					System.out.println(attaque.get(i).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(i);
 				}
 				else if(defense.get(i).defense > attaque.get(i).attaque) {
-					System.out.println(defense.get(i).numero + " est mort");
-					//defense.remove(i);
+					System.out.println(defense.get(i).nom + " est mort");
+					unitesMortes[0][i] = defense.get(i);
 				}
 				else if(attaque.get(i).attaque > defense.get(i).defense) {
-					System.out.println(attaque.get(i).numero + " est mort");
-					//attaque.remove(i);
+					System.out.println(attaque.get(i).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(i);
 				}
 				else {
 					randomNum = ThreadLocalRandom.current().nextInt(0, 2);
 					if(randomNum==1) {
-						System.out.println(attaque.get(i).numero + " est mort");
-						//attaque.remove(i);
+						System.out.println(attaque.get(i).nom + " est mort");
+						unitesMortes[1][i] = attaque.get(i);
 					}
 					else {
-						System.out.println(defense.get(i).numero + " est mort");
-						//defense.remove(i);
+						System.out.println(defense.get(i).nom + " est mort");
+						unitesMortes[0][i] = defense.get(i);
 					}
 				}
 			}
 		}
 		else {
 			for(int i = 0 ; i <attaque.size(); i++) {
-				System.out.println(attaque.get(i).numero + " attaque " + defense.get(i).numero + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
+				System.out.println(attaque.get(i).nom + " attaque " + defense.get(i).nom + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
 				if(puissanceAttaque[i]>puissanceDefense[i]) {
-					System.out.println(defense.get(i).numero + " est mort");
-					//defense.remove(i);
+					System.out.println(defense.get(i).nom + " est mort");
+					unitesMortes[0][i] = defense.get(i);
 				}
 				else if(puissanceDefense[i]>puissanceAttaque[i]) {
-					System.out.println(attaque.get(i).numero + " est mort");
-					//attaque.remove(i);
+					System.out.println(attaque.get(i).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(i);
 				}
 				else if(defense.get(i).defense > attaque.get(i).attaque) {
-					System.out.println(defense.get(i).numero + " est mort");
-					//defense.remove(i);
+					System.out.println(defense.get(i).nom + " est mort");
+					unitesMortes[0][i] = defense.get(i);
 				}
 				else if(attaque.get(i).attaque > defense.get(i).defense) {
-					System.out.println(attaque.get(i).numero + " est mort");
-					//attaque.remove(i);
+					System.out.println(attaque.get(i).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(i);
 				}
 				else {
 					randomNum = ThreadLocalRandom.current().nextInt(0, 2);
 					if(randomNum==1) {
 						System.out.println(attaque.get(i).numero + " est mort");
-						//attaque.remove(i);
+						unitesMortes[1][i] = attaque.get(i);
 					}
 					else {
 						System.out.println(defense.get(i).numero + " est mort");
-						//defense.remove(i);
+						unitesMortes[0][i] = defense.get(i);
 					}
 				}
 			}
 		}
+		return unitesMortes;
 	}
 	
 	
@@ -316,7 +319,33 @@ public class Joueur {
 				System.out.println("---------------------------");
 				System.out.println("---------------------------");
 				
-				//choisir une des options puis lancer attaque() ou deplacement()
+				//choisir une des options puis lancer attaque ou deplacement sur territoireCible
+					//attaque :
+					//ne marche sans doute PAS
+						Territoires territoireCible = territoireSelec;
+						int indiceDefense = 0;
+						int indiceAttaque = 1;
+						ArrayList <Unite> attaquants = this.choixUnitesCombat(territoireSelec);
+						ArrayList <Unite> defenseurs = territoireCible.unitesDef(attaquants.size());
+						Unite resultat [][]= issueBataille(defenseurs, attaquants);
+						for(int i = 0  ; i<resultat[0].length ; i++) {
+							territoireCible.unites.remove(resultat[0][i]);
+							territoireCible.proprietaire.armees.remove(resultat[0][i]);
+						}
+						if(territoireCible.unites.size() == 0) {
+							territoireCible.proprietaire = this;
+							territoireCible.unites.addAll(attaquants);
+							for(int i = 0 ; i<resultat[1].length ; i++) {
+								territoireCible.unites.remove(resultat[1][i]);
+								territoireCible.proprietaire.armees.remove(resultat[1][i]);
+							}
+						}
+						else {
+							for(int i = 0 ; i<resultat[1].length ; i++) {
+								territoireSelec.unites.remove(resultat[1][i]);
+								this.armees.remove(resultat[1][i]);
+							}
+						}		
 			}
 			
 			voisins.clear();

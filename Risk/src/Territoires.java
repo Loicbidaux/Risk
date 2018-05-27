@@ -5,6 +5,7 @@ public class Territoires {
 	int numero;
 	int [][] coordonnees;
 	ArrayList <Unite> unites = new ArrayList();
+	Joueur proprietaire;
 	
 	public Territoires(String nom, int[][] coordonnees, int numero) {
 		super();
@@ -24,6 +25,13 @@ public class Territoires {
 	public void setCoordonnees(int[][] coordonnees) {
 		this.coordonnees = coordonnees;
 	}
+	
+	public void setProprietaire(Joueur proprietaire) {
+		this.proprietaire = proprietaire;
+	}
+	
+	
+	
 	
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

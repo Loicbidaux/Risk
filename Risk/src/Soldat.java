@@ -5,8 +5,8 @@ public class Soldat extends Unite {
 	
 	public static final int [] puissance1 = {1,2,3,4,5,6};
 	
-	public Soldat(int cout, int puissance [], int attaque, int defense, int mouvement, int disponibilite, int numero) {
-		super(cout, puissance, attaque, defense, mouvement, disponibilite, numero);
+	public Soldat(int cout, int puissance [], int attaque, int defense, int mouvement, int disponibilite, int numero, String nom) {
+		super(cout, puissance, attaque, defense, mouvement, disponibilite, numero, nom);
 		// TODO Auto-generated constructor stub
 		this.cout = 1;
 		this.puissance = puissance1;

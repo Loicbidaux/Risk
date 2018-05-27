@@ -75,17 +75,17 @@ public class Jeu {
 		int tableau [] = {1,1};
 		int puissCavalier [] = {2,3,4,5,6,7};
 		int puissCanon [] = {4,5,6,7,8,9};
-		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1);
-		Unite cavalierA = new Unite(3,puissCavalier,1,3,3,1,2);
-		Unite canonA = new Unite(7,puissCanon,3,2,1,1,3);
+		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1,"soldatA");
+		Unite cavalierA = new Unite(3,puissCavalier,1,3,3,1,2, "CavalierA" );
+		Unite canonA = new Unite(7,puissCanon,3,2,1,1,3, "CanonA");
 		
-		Unite soldatD = new Soldat(1,tableau,1,1,1,1,4);
-		Unite cavalierD = new Unite(3,puissCavalier,1,3,3,1,5);
-		Unite canonD = new Unite(7,puissCanon,3,2,1,1,6);
+		Unite soldatD = new Soldat(1,tableau,1,1,1,1,4, "SoldatD");
+		Unite cavalierD = new Unite(3,puissCavalier,1,3,3,1,5, "CavalierD");
+		Unite canonD = new Unite(7,puissCanon,3,2,1,1,6, "CanonD");
 		
 		ArrayList <Unite> attaquants = new ArrayList();
 		attaquants.add(soldatA);
-		//attaquants.add(cavalierA);
+		attaquants.add(cavalierA);
 		//attaquants.add(canonA);
 		
 		ArrayList <Unite> defenseurs = new ArrayList();
@@ -94,7 +94,7 @@ public class Jeu {
 		defenseurs.add(canonD);
 		
 		Partie partie = new Partie(0,4,4, missionsDispo, regions);
-		joueur.bataille(defenseurs, attaquants);
+		joueur.issueBataille(defenseurs, attaquants);
 		partie.miseEnPlace();
 		//while(!termine) {
 			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
