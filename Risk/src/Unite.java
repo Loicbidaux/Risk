@@ -1,4 +1,3 @@
-
 public class Unite {
 	int cout;
 	int puissance [];

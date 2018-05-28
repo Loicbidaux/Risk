@@ -1,4 +1,3 @@
-
 public class Soldat extends Unite {
 
 	public static final int COUNT = 1;

@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,12 +11,15 @@ public class Joueur {
 	ArrayList <Regions> regions = new ArrayList();
 	boolean Humain;
 	int dernieresConquetes;
+	Color couleur;
+	String camp;
 	
-	public Joueur(int numero, String pseudo, boolean humain) {
+	public Joueur(int numero, String pseudo, boolean humain, Color couleur) {
 		super();
 		this.numero = numero;
 		this.Pseudo = pseudo;
 		this.Humain = humain;
+		this.couleur=couleur;
 	}
 
 	public int getNumero() {

@@ -6,12 +6,14 @@ public class Territoires {
 	int [][] coordonnees;
 	ArrayList <Unite> unites = new ArrayList();
 	Joueur proprietaire;
+	int [] coordonneesUnite;
 	
-	public Territoires(String nom, int[][] coordonnees, int numero) {
+	public Territoires(String nom, int[][] coordonnees, int numero, int[] coordonneesUnite) {
 		super();
 		this.numero = numero;
 		this.nom = nom;
 		this.coordonnees = coordonnees;
+		this.coordonneesUnite = coordonneesUnite;
 	}
 	public String getNom() {
 		return nom;

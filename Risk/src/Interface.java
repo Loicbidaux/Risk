@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -202,8 +205,26 @@ public class Interface extends JFrame {
 
 	
 	
-	}	
+	}//fin constructeur	
+	
+	public void affichageUniteCarte(Partie partie) {
+		Color couleur = null;
+		String camp;
+		ArrayList <Unite> uniteTerritoire = new ArrayList();
+		int[] coordonneesUnite ;
+		
+		for(int i = 0 ; i<partie.regions.size(); i++) {
+			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
+				couleur = partie.regions.get(i).territoires.get(j).proprietaire.couleur;
+				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;
+				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
+				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
+				
+			}}
 	}
+	
+	
+	}//fin class
 	
 
 
