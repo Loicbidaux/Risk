@@ -11,10 +11,10 @@ public class Joueur {
 	ArrayList <Regions> regions = new ArrayList();
 	boolean Humain;
 	int dernieresConquetes;
-	Color couleur;
+	String couleur;
 	String camp;
 	
-	public Joueur(int numero, String pseudo, boolean humain, Color couleur) {
+	public Joueur(int numero, String pseudo, boolean humain, String couleur) {
 		super();
 		this.numero = numero;
 		this.Pseudo = pseudo;
@@ -64,6 +64,10 @@ public class Joueur {
 	
 	public void setDernieresConquetes(int dernieresConquetes) {
 		this.dernieresConquetes = dernieresConquetes;
+	}
+	
+	public void setCamp(String camp) {
+		this.camp = camp;
 	}
 
 	public boolean verifVictoire() {

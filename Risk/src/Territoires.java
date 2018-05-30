@@ -3,16 +3,14 @@ import java.util.ArrayList;
 public class Territoires {
 	String nom;
 	int numero;
-	int [][] coordonnees;
 	ArrayList <Unite> unites = new ArrayList();
 	Joueur proprietaire;
 	int [] coordonneesUnite;
 	
-	public Territoires(String nom, int[][] coordonnees, int numero, int[] coordonneesUnite) {
+	public Territoires(String nom, int numero, int[] coordonneesUnite) {
 		super();
 		this.numero = numero;
 		this.nom = nom;
-		this.coordonnees = coordonnees;
 		this.coordonneesUnite = coordonneesUnite;
 	}
 	public String getNom() {
@@ -21,15 +19,14 @@ public class Territoires {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public int[][] getCoordonnees() {
-		return coordonnees;
-	}
-	public void setCoordonnees(int[][] coordonnees) {
-		this.coordonnees = coordonnees;
-	}
+
 	
 	public void setProprietaire(Joueur proprietaire) {
 		this.proprietaire = proprietaire;
+	}
+	
+	public void setUnites(ArrayList <Unite> unites) {
+		this.unites = unites;
 	}
 	
 	
