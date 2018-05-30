@@ -327,7 +327,7 @@ public class Joueur {
 				System.out.println("---------------------------");
 				System.out.println("---------------------------");
 				
-				//choisir une des options puis lancer attaque ou deplacement sur territoireCible
+				/*//choisir une des options puis lancer attaque ou deplacement sur territoireCible
 					//attaque :
 					//ne marche sans doute PAS
 						Territoires territoireCible = territoireSelec;
@@ -353,7 +353,7 @@ public class Joueur {
 								territoireSelec.unites.remove(resultat[1][i]);
 								this.armees.remove(resultat[1][i]);
 							}
-						}		
+						}*/		
 			}
 			
 			voisins.clear();

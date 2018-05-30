@@ -267,6 +267,7 @@ public class Interface extends JFrame {
 				btnUnite.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 43);
 				btnUnite.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/unite.png"));
+				System.out.println("Les voisins de " + partie.regions.get(i).territoires.get(j).nom+ " sont " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(0).nom + " " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(1).nom);
 				btnUnite.setVisible(true);
 				
 				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(0).numero)+"</html>");

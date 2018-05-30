@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Territoires {
 	String nom;
@@ -35,12 +37,18 @@ public class Territoires {
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public ArrayList <Territoires> voisinsTerritoire(Partie partie) {
+		List <Territoires> territoiresTotal = new LinkedList();
+		for(int i = 0 ; i<partie.regions.size(); i++) {
+			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
+				territoiresTotal.add(partie.regions.get(i).territoires.get(j));
+			}
+		}
 		ArrayList <Territoires> voisins = new ArrayList();
 		Regions region = partie.appartenanceRegionTerritoire(this);
 		
-		for(int i = 0 ; i < region.adjMatrices[this.numero].length ; i++) {
-			if(region.adjMatrices[this.numero][i] != 0) {
-				voisins.add(region.territoires.get(i));
+		for(int i = 0 ; i < partie.adjMatrices[this.numero].length ; i++) {
+			if(partie.adjMatrices[this.numero][i] != 0) {
+				voisins.add(territoiresTotal.get(i));
 			}
 		}
 		return voisins;
