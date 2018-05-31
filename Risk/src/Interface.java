@@ -213,9 +213,11 @@ public class Interface extends JFrame {
 		String couleur;
 		String camp;
 		ArrayList <Unite> uniteTerritoire = new ArrayList();
-		/*int tableau [] = {1,1};
-		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1,"soldatA");
-		uniteTerritoire.add(5, soldatA);*/
+		int nbSoldatTerritoire=0 ;
+		int nbCavalierTerritoire = 0;
+		int nbCanonTerritoire = 0;
+		
+		
 		int[] coordonneesUnite ;
 		
 		for(int i = 0 ; i<partie.regions.size(); i++) {
@@ -225,20 +227,144 @@ public class Interface extends JFrame {
 				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
 				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
 				
+				for(int k = 0; k<partie.regions.get(i).territoires.get(j).unites.size(); k++) {
+					if(partie.regions.get(i).territoires.get(j).unites.get(k).cout == 1) {
+						nbSoldatTerritoire++;
+					}
+					else if(partie.regions.get(i).territoires.get(j).unites.get(k).cout == 3) {
+						nbCavalierTerritoire ++;
+					}
+					else {
+						nbCanonTerritoire ++;
+					}
+				}
 				
+				JLabel btnUnite = new JLabel("");
+				
+				btnUnite.setName(partie.regions.get(i).territoires.get(j).nom);
+				lblTest2.add(btnUnite);
+				btnUnite.setOpaque(false);
+				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 43);
+				btnUnite.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/unite.png"));
+				System.out.println("Les voisins de " + partie.regions.get(i).territoires.get(j).nom+ " sont " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(0).nom + " " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(1).nom);
+				btnUnite.setVisible(true);
+				
+				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(nbSoldatTerritoire)+"</html>");
+				nbSoldat.setBounds(coordonneesUnite[0]+4, coordonneesUnite[1]+40, 25, 25);
+				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbSoldat);
+				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCavalier = new JLabel("<html><font color = 'white'>"+String.valueOf(nbCavalierTerritoire)+"</html>");
+				nbCavalier.setBounds(coordonneesUnite[0]+36, coordonneesUnite[1]+40, 25, 25);
+				nbCavalier.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbCavalier);
+				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCanon = new JLabel("<html><font color = 'white'>"+String.valueOf(nbCanonTerritoire)+"</html>");
+				nbCanon.setBounds(coordonneesUnite[0]+75, coordonneesUnite[1]+40, 25, 25);
+				nbCanon.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbCanon);
+				nbCanon.setHorizontalTextPosition(JLabel.CENTER);
+				
+				nbSoldatTerritoire=0 ;
+				nbCavalierTerritoire = 0;
+				nbCanonTerritoire = 0;
+				
+			}}
+	}
+	
+	public void affichageRenfort (Joueur joueur) {
+	
+		
+		int[] coordonneesUnite ;
+		String camp = joueur.camp;
+		String couleur = joueur.couleur;
+		int nbSoldatTerritoire=0;
+		int nbCavalierTerritoire=0;
+		int nbCanonTerritoire=0;
+		
+		JLabel fenetreRenfort = new JLabel("");
+		fenetreRenfort.setBounds(0,0, 1920, 1080);
+		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
+		lblTest2.add(fenetreRenfort);
+		
+		for(int i = 0 ; i<joueur.territoires.size(); i++) {
+				nbSoldatTerritoire = 0;
+				nbCavalierTerritoire = 0;
+				nbCanonTerritoire = 0;
+				coordonneesUnite = joueur.territoires.get(i).coordonneesUnite;
+				
+				for(int k = 0; k<joueur.territoires.get(i).unites.size(); k++) {
+					if(joueur.territoires.get(i).unites.get(k).cout == 1) {
+						nbSoldatTerritoire++;
+						System.out.println("hhaha" + joueur.territoires.get(i).nom);
+					}
+					else if(joueur.territoires.get(i).unites.get(k).cout == 3) {
+						nbCavalierTerritoire ++;
+					}
+					else {
+						nbCanonTerritoire ++;
+					}
+				}
+
 				JButton btnUnite = new JButton("");
+				
+				lblTest2.add(btnUnite);
+				btnUnite.setOpaque(false);
+				btnUnite.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+				btnUnite.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+				btnUnite.setFocusPainted(false);
+				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 70);
+				btnUnite.setVisible(true);
+				
+				JLabel nbSoldat = new JLabel("<html><font color = 'white'><font size = '15'>"+String.valueOf(nbSoldatTerritoire)+"</html>");
+				fenetreRenfort.add(nbSoldat);
+				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
+				nbSoldat.setOpaque(false);
+				nbSoldat.setBounds(1485, 935, 112, 70);
+				nbSoldat.setVisible(false);
+				
+				JLabel nbCavalier = new JLabel("<html><font color = 'white'><font size = '15'>"+String.valueOf(nbCavalierTerritoire)+"</html>");
+				fenetreRenfort.add(nbSoldat);
+				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);
+				nbCavalier.setOpaque(false);
+				nbCavalier.setBounds(1637, 935, 112, 70);
+				nbCavalier.setVisible(false);
+				
+				JLabel nbCanon = new JLabel("<html><font color = 'white'><font size = '15'>"+String.valueOf(nbCanonTerritoire)+"</html>");
+				fenetreRenfort.add(nbCanon);
+				nbCanon.setHorizontalTextPosition(JLabel.CENTER);
+				nbCanon.setOpaque(false);
+				nbCanon.setBounds(1790, 935, 112, 70);
+				nbCanon.setVisible(false);
+				
 				btnUnite.addMouseListener(new MouseListener() {
 					
 					@Override
 					public void mouseReleased(MouseEvent e) {
 						// TODO Auto-generated method stub
-						System.out.println(btnUnite.getName());
+						System.out.println("haha");
+						
+						fenetreRenfort.add(nbSoldat);
+						nbSoldat.setVisible(true);
+						fenetreRenfort.add(nbCavalier);
+						nbCavalier.setVisible(true);
+						fenetreRenfort.add(nbCanon);
+						nbCanon.setVisible(true);
+						fenetreRenfort.validate();
+						
 					}
 					
 					@Override
 					public void mousePressed(MouseEvent e) {
 						// TODO Auto-generated method stub
-						
+						fenetreRenfort.removeAll();
+						nbSoldat.setVisible(false);
+						nbCavalier.setVisible(false);
+						nbCanon.setVisible(false);
+						fenetreRenfort.validate();
 					}
 					
 					@Override
@@ -259,38 +385,62 @@ public class Interface extends JFrame {
 						
 					}
 				});
-				btnUnite.setName(partie.regions.get(i).territoires.get(j).nom);
-				lblTest2.add(btnUnite);
-				btnUnite.setOpaque(false);
-				btnUnite.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-				btnUnite.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
-				btnUnite.setFocusPainted(false); // On n'affiche pas l'effet de focus.
-				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 43);
-				btnUnite.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/unite.png"));
-				System.out.println("Les voisins de " + partie.regions.get(i).territoires.get(j).nom+ " sont " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(0).nom + " " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(1).nom);
-				btnUnite.setVisible(true);
 				
-				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(0).numero)+"</html>");
-				nbSoldat.setBounds(coordonneesUnite[0]+4, coordonneesUnite[1]+40, 25, 25);
-				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
-				lblTest2.add(nbSoldat);
-				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
+				JButton nbSoldatPlus = new JButton("");
+				fenetreRenfort.add(nbSoldatPlus);
+				nbSoldatPlus.setOpaque(false);
+				nbSoldatPlus.setBounds(0, 0, 112, 70);
+				nbSoldatPlus.setBorderPainted(true);
+				nbSoldatPlus.setVisible(true);
+				final Territoires territoire = joueur.territoires.get(i);
 				
-				JLabel nbCavalier = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(1).numero)+"</html>");
-				nbCavalier.setBounds(coordonneesUnite[0]+36, coordonneesUnite[1]+40, 25, 25);
-				nbCavalier.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
-				lblTest2.add(nbCavalier);
-				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);
 				
-				JLabel nbCanon = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(2).numero)+"</html>");
-				nbCanon.setBounds(coordonneesUnite[0]+75, coordonneesUnite[1]+40, 25, 25);
-				nbCanon.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
-				lblTest2.add(nbCanon);
-				nbCanon.setHorizontalTextPosition(JLabel.CENTER);
-				
-			}}
+				nbSoldatPlus.addMouseListener(new MouseListener() {
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						System.out.println("haha");
+						
+						/*fenetreRenfort.add(nbSoldat);
+						nbSoldat.setVisible(true);
+						fenetreRenfort.add(nbCavalier);
+						nbCavalier.setVisible(true);
+						fenetreRenfort.add(nbCanon);
+						nbCanon.setVisible(true);*/
+						int [] tableau = {1,1};
+						System.out.println("Avant = " + territoire.unites.size());
+						territoire.unites.add(new Soldat(1,tableau,1,1,1,1,1,"soldatA"));
+						System.out.println("Apres = " + territoire.unites.size());
+						fenetreRenfort.validate();
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
 	}
-	
 	
 	}//fin class
 	

@@ -71,7 +71,7 @@ public class Partie {
 	}
 	
 	//fonction ne se lancant qu'au debut de la partie
-	public void miseEnPlace() {
+	public void miseEnPlace(Interface frame) {
 		int randomNum;
 		int randomNum2;
 		int puissSoldat [] = {1,2,3,4,5,6};
@@ -108,6 +108,11 @@ public class Partie {
 			//attribution des armees
 			for(int j=1; j<50-5*this.nbreJoueursTotal +1 ; j++) {
 				this.joueurs.get(i).armees.add(new Soldat(1,puissSoldat,2,1,2,1,j, "Soldat" + j));
+			}
+			frame.affichageRenfort(this.joueurs.get(i));
+			
+			while (true) {
+			
 			}
 		}
 		

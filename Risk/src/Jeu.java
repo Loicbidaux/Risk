@@ -401,7 +401,7 @@ public class Jeu {
 		frame.setVisible(true);
 		frame.affichageUniteCarte(partie);
 		//joueur.issueBataille(defenseurs, attaquants);
-		partie.miseEnPlace();
+		partie.miseEnPlace(frame);
 		//while(!termine) {
 			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
 				partie.tourJoueur(partie.joueurs.get(i));
