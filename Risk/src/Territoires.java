@@ -1,18 +1,18 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Territoires {
 	String nom;
 	int numero;
-	int [][] coordonnees;
 	ArrayList <Unite> unites = new ArrayList();
 	Joueur proprietaire;
 	int [] coordonneesUnite;
 	
-	public Territoires(String nom, int[][] coordonnees, int numero, int[] coordonneesUnite) {
+	public Territoires(String nom, int numero, int[] coordonneesUnite) {
 		super();
 		this.numero = numero;
 		this.nom = nom;
-		this.coordonnees = coordonnees;
 		this.coordonneesUnite = coordonneesUnite;
 	}
 	public String getNom() {
@@ -21,15 +21,14 @@ public class Territoires {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public int[][] getCoordonnees() {
-		return coordonnees;
-	}
-	public void setCoordonnees(int[][] coordonnees) {
-		this.coordonnees = coordonnees;
-	}
+
 	
 	public void setProprietaire(Joueur proprietaire) {
 		this.proprietaire = proprietaire;
+	}
+	
+	public void setUnites(ArrayList <Unite> unites) {
+		this.unites = unites;
 	}
 	
 	
@@ -38,12 +37,18 @@ public class Territoires {
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public ArrayList <Territoires> voisinsTerritoire(Partie partie) {
+		List <Territoires> territoiresTotal = new LinkedList();
+		for(int i = 0 ; i<partie.regions.size(); i++) {
+			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
+				territoiresTotal.add(partie.regions.get(i).territoires.get(j));
+			}
+		}
 		ArrayList <Territoires> voisins = new ArrayList();
 		Regions region = partie.appartenanceRegionTerritoire(this);
 		
-		for(int i = 0 ; i < region.adjMatrices[this.numero].length ; i++) {
-			if(region.adjMatrices[this.numero][i] != 0) {
-				voisins.add(region.territoires.get(i));
+		for(int i = 0 ; i < partie.adjMatrices[this.numero].length ; i++) {
+			if(partie.adjMatrices[this.numero][i] != 0) {
+				voisins.add(territoiresTotal.get(i));
 			}
 		}
 		return voisins;

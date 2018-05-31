@@ -11,10 +11,10 @@ public class Joueur {
 	ArrayList <Regions> regions = new ArrayList();
 	boolean Humain;
 	int dernieresConquetes;
-	Color couleur;
+	String couleur;
 	String camp;
 	
-	public Joueur(int numero, String pseudo, boolean humain, Color couleur) {
+	public Joueur(int numero, String pseudo, boolean humain, String couleur) {
 		super();
 		this.numero = numero;
 		this.Pseudo = pseudo;
@@ -64,6 +64,10 @@ public class Joueur {
 	
 	public void setDernieresConquetes(int dernieresConquetes) {
 		this.dernieresConquetes = dernieresConquetes;
+	}
+	
+	public void setCamp(String camp) {
+		this.camp = camp;
 	}
 
 	public boolean verifVictoire() {
@@ -323,7 +327,7 @@ public class Joueur {
 				System.out.println("---------------------------");
 				System.out.println("---------------------------");
 				
-				//choisir une des options puis lancer attaque ou deplacement sur territoireCible
+				/*//choisir une des options puis lancer attaque ou deplacement sur territoireCible
 					//attaque :
 					//ne marche sans doute PAS
 						Territoires territoireCible = territoireSelec;
@@ -349,7 +353,7 @@ public class Joueur {
 								territoireSelec.unites.remove(resultat[1][i]);
 								this.armees.remove(resultat[1][i]);
 							}
-						}		
+						}*/		
 			}
 			
 			voisins.clear();

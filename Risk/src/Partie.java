@@ -8,17 +8,20 @@ public class Partie {
 	int tour;
 	int nbreJoueursTotal;
 	int nbreJoueursHumains;
+	Territoires [] noeuds;
+	int adjMatrices [][];
 	ArrayList <Joueur> joueurs = new ArrayList();
 	ArrayList <Missions> missionsDispo = new ArrayList();
 	ArrayList <Regions> regions = new ArrayList();
 	
-	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Missions> missionsDispo, ArrayList <Regions> regions) {
+	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Missions> missionsDispo, ArrayList <Regions> regions, int adjMatrices [][]) {
 		super();
 		this.tour = tour;
 		this.nbreJoueursTotal = nbreJoueursTotal;
 		this.nbreJoueursHumains = nbreJoueursHumains;
 		this.missionsDispo = missionsDispo;
 		this.regions = regions;
+		this.adjMatrices = adjMatrices;
 	}
 
 	public int getTour() {
@@ -43,6 +46,10 @@ public class Partie {
 
 	public void setNbreJoueursHumains(int nbreJoueursHumains) {
 		this.nbreJoueursHumains = nbreJoueursHumains;
+	}
+	
+	public void setAdjMatrices(int[][] adjMatrices) {
+		this.adjMatrices = adjMatrices;
 	}
 	
 	public void ajouterTour() {
@@ -70,7 +77,7 @@ public class Partie {
 		int puissSoldat [] = {1,2,3,4,5,6};
 		
 		for(int i=0 ; i<nbreJoueursTotal ; i++) {
-			this.joueurs.add(new Joueur(i, "oui", true));
+			this.joueurs.add(new Joueur(i, "oui", true, "haha"));
 		}
 		
 		//tableau contenant tous les territoires

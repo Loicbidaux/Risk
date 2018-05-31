@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Regions {
 	String nom;
-	Territoires [] noeuds;
-	int adjMatrices [][];
+	//Territoires [] noeuds;
+	//int adjMatrices [][];
 	ArrayList <Territoires> territoires = new ArrayList();
 	
 	public Regions(String nom, ArrayList<Territoires> territoires) {
@@ -24,9 +24,9 @@ public class Regions {
 		this.territoires = territoires;
 	}
 	
-	public void setAdjMatrices(int[][] adjMatrices) {
-		this.adjMatrices = adjMatrices;
-	}
+	//public void setAdjMatrices(int[][] adjMatrices) {
+		//this.adjMatrices = adjMatrices;
+	//}
 	public void appartenanceRegionJoueur(Joueur joueur) {
 		boolean appartient = true;
 		for(int i = 0 ; i<this.territoires.size(); i++) {

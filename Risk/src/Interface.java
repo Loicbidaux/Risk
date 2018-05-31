@@ -18,13 +18,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class Interface extends JFrame {
 	
 	
-	private JPanel contentPane;
+	private JPanel contentPane = new JPanel();
+	private JLabel lblTest2 = new JLabel("test2");
 	private boolean FSflag = false;
     private int PrevX, PrevY, PrevWidth, PrevHeight;
 	/**
@@ -53,8 +55,6 @@ public class Interface extends JFrame {
 		setBounds(0, 0, 1920, 1080);
 		
 		
-		
-		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -65,7 +65,7 @@ public class Interface extends JFrame {
 		lblTest.setIcon(new ImageIcon("src/Images/Menu/fond.png"));
 		contentPane.add(lblTest);
 		
-		JLabel lblTest2 = new JLabel("test2");
+		
 		lblTest2.setBounds(0, 0, 1920, 1080);
 		lblTest2.setIcon(new ImageIcon("src/Images/carte/BASE-RISK-STARWARS.png"));
 		contentPane.add(lblTest2);
@@ -162,6 +162,8 @@ public class Interface extends JFrame {
 			};
 			
 			
+			
+			
 		btnPlay.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -207,10 +209,13 @@ public class Interface extends JFrame {
 	
 	}//fin constructeur	
 	
-	public void affichageUniteCarte(Partie partie) {
-		Color couleur = null;
+	public void affichageUniteCarte(Partie partie ) {
+		String couleur;
 		String camp;
 		ArrayList <Unite> uniteTerritoire = new ArrayList();
+		/*int tableau [] = {1,1};
+		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1,"soldatA");
+		uniteTerritoire.add(5, soldatA);*/
 		int[] coordonneesUnite ;
 		
 		for(int i = 0 ; i<partie.regions.size(); i++) {
@@ -219,6 +224,69 @@ public class Interface extends JFrame {
 				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;
 				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
 				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
+				
+				
+				JButton btnUnite = new JButton("");
+				btnUnite.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						System.out.println(btnUnite.getName());
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				btnUnite.setName(partie.regions.get(i).territoires.get(j).nom);
+				lblTest2.add(btnUnite);
+				btnUnite.setOpaque(false);
+				btnUnite.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+				btnUnite.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+				btnUnite.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 43);
+				btnUnite.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/unite.png"));
+				System.out.println("Les voisins de " + partie.regions.get(i).territoires.get(j).nom+ " sont " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(0).nom + " " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(1).nom);
+				btnUnite.setVisible(true);
+				
+				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(0).numero)+"</html>");
+				nbSoldat.setBounds(coordonneesUnite[0]+4, coordonneesUnite[1]+40, 25, 25);
+				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbSoldat);
+				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCavalier = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(1).numero)+"</html>");
+				nbCavalier.setBounds(coordonneesUnite[0]+36, coordonneesUnite[1]+40, 25, 25);
+				nbCavalier.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbCavalier);
+				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCanon = new JLabel("<html><font color = 'white'>"+String.valueOf(uniteTerritoire.get(2).numero)+"</html>");
+				nbCanon.setBounds(coordonneesUnite[0]+75, coordonneesUnite[1]+40, 25, 25);
+				nbCanon.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblTest2.add(nbCanon);
+				nbCanon.setHorizontalTextPosition(JLabel.CENTER);
 				
 			}}
 	}
