@@ -1,15 +1,11 @@
 
 public class Missions {
 	String enonce;
-	int conditions;
 	int numero;
-	String titre;
-	public Missions(String enonce, int conditions, int numero, String titre) {
+	public Missions(String enonce, int numero) {
 		super();
 		this.enonce = enonce;
-		this.conditions = conditions;
 		this.numero = numero;
-		this.titre = titre;
 	}
 	public String getEnonce() {
 		return enonce;
@@ -17,23 +13,11 @@ public class Missions {
 	public void setEnonce(String enonce) {
 		this.enonce = enonce;
 	}
-	public int getConditions() {
-		return conditions;
-	}
-	public void setConditions(int conditions) {
-		this.conditions = conditions;
-	}
 	public int getNumero() {
 		return numero;
 	}
 	public void setNumero(int numero) {
 		this.numero = numero;
-	}
-	public String getTitre() {
-		return titre;
-	}
-	public void setTitre(String titre) {
-		this.titre = titre;
 	}
 	
 }

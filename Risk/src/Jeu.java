@@ -7,16 +7,6 @@ import java.awt.event.*;
 
 public class Jeu {
 	
-	/*public void menuPrincipal() {
-		StdDraw.setCanvasSize(1352,720);
-		StdDraw.picture(0.5,0.5,"avantMenu.png");
-		if(StdDraw.isKeyPressed(49)) {	
-			System.out.println("Ca marche");
-			StdDraw.clear();
-			StdDraw.filledRectangle(0, 0, 30, 40);
-		}
-	}*/
-	
 	private void menuOption() {
 		
 	}
@@ -31,7 +21,6 @@ public class Jeu {
 		boolean termine = false;
 		Joueur joueur = new Joueur(1,"gege", true,"red");
 		joueur.setCamp("rebelles");
-		
 		
 		//Ensemble des térritoires de la région 1
 		int coordonneesUniteTatooine [] = {1050,80};
@@ -273,23 +262,14 @@ public class Jeu {
 		regions.add(CorridorDison);
 		regions.add(SecteurElrood);
 		regions.add(NoyauGalactique);
+
+		Unite soldatA = new Soldat(1,"soldatA");
+		Unite cavalierA = new Cavalier(2, "CavalierA" );
+		Unite canonA = new Canon(3, "CanonA");
 		
-		Missions mission1 = new Missions("Tuer", 1, 1, "Mission Tuer");
-		Missions mission2 = new Missions("Sauver", 1, 1, "Mission Sauver");
-		ArrayList <Missions> missionsDispo = new ArrayList();
-		missionsDispo.add(mission1);
-		missionsDispo.add(mission2);
-		
-		int tableau [] = {1,1};
-		int puissCavalier [] = {2,3,4,5,6,7};
-		int puissCanon [] = {4,5,6,7,8,9};
-		Unite soldatA = new Soldat(1,tableau,1,1,1,1,1,"soldatA");
-		Unite cavalierA = new Unite(3,puissCavalier,1,3,3,1,2, "CavalierA" );
-		Unite canonA = new Unite(7,puissCanon,3,2,1,1,3, "CanonA");
-		
-		Unite soldatD = new Soldat(1,tableau,1,1,1,1,4, "SoldatD");
-		Unite cavalierD = new Unite(3,puissCavalier,1,3,3,1,5, "CavalierD");
-		Unite canonD = new Unite(7,puissCanon,3,2,1,1,6, "CanonD");
+		Unite soldatD = new Soldat(4, "SoldatD");
+		Unite cavalierD = new Cavalier(5, "CavalierD");
+		Unite canonD = new Canon(6, "CanonD");
 		
 		
 		ArrayList <Unite> attaquants = new ArrayList<Unite>();
@@ -364,7 +344,7 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0}, //kashyyk
 				{0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //kessel
 				{0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //da soochr v
-				{0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //...
 				{0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -394,9 +374,10 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0},
 				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0}
 		};
-		Partie partie = new Partie(0,4,4, missionsDispo, regions, adjMatrices);
+		Partie partie = new Partie(0,4,4,regions, adjMatrices);
+		partie.ajouterMissions(partie.nbreJoueursTotal);
 		Interface frame = new Interface();
 		frame.setVisible(true);
 		frame.affichageUniteCarte(partie);
@@ -405,34 +386,35 @@ public class Jeu {
 		//while(!termine) {
 			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
 				partie.tourJoueur(partie.joueurs.get(i));
-				//if(partie.joueurs.get(i).verifVictoire()) {
-					//termine = true;
-				//}
+				if(partie.joueurs.get(i).verifVictoire()) {
+					termine = true;
+				}
 			}
 		//}
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
+		System.out.println("Taille " +partie.missionsDispo.size());
 		System.out.println(partie.joueurs.get(0).numero);
-		System.out.println(partie.joueurs.get(0).mission.titre);
+		System.out.println(partie.joueurs.get(0).mission.enonce);
 		System.out.println(partie.joueurs.get(0).territoires.size());
 		System.out.println(partie.joueurs.get(0).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(0).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(1).numero);
-		System.out.println(partie.joueurs.get(1).mission.titre);
+		System.out.println(partie.joueurs.get(1).mission.enonce);
 		System.out.println(partie.joueurs.get(1).territoires.size());
 		System.out.println(partie.joueurs.get(1).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(1).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(2).numero);
-		System.out.println(partie.joueurs.get(2).mission.titre);
+		System.out.println(partie.joueurs.get(2).mission.enonce);
 		System.out.println(partie.joueurs.get(2).territoires.size());
 		System.out.println(partie.joueurs.get(2).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(2).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(3).numero);
-		System.out.println(partie.joueurs.get(3).mission.titre);
+		System.out.println(partie.joueurs.get(3).mission.enonce);
 		System.out.println(partie.joueurs.get(3).territoires.size());
 		System.out.println(partie.joueurs.get(3).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(3).armees.size());

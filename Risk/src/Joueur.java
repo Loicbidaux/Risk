@@ -97,18 +97,15 @@ public class Joueur {
 	}
 	
 	public void ajouterSoldat() {
-		int tabPuissance [] = {1,2,3,4,5,6};
-		this.armees.add(new Soldat(1 , tabPuissance, 2, 1, 2, 1, this.armees.get(this.armees.size()-1).numero+1, "Soldat " + this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Soldat(this.armees.get(this.armees.size()-1).numero+1, "Soldat " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void ajouterCavalier() {
-		int tabPuissance [] = {2,3,4,5,6,7};
-		this.armees.add(new Cavalier(3, tabPuissance, 1, 3, 3, 1, this.armees.get(this.armees.size()-1).numero+1, "Cavalier " + this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Cavalier(this.armees.get(this.armees.size()-1).numero+1, "Cavalier " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void ajouterCanon() {
-		int tabPuissance [] = {4,5,6,7,8,9};
-		this.armees.add(new Canon(7, tabPuissance, 3, 2, 1, 1, this.armees.get(this.armees.size()-1).numero+1, "Canon " + this.armees.get(this.armees.size()-1).numero+1));
+		this.armees.add(new Canon(this.armees.get(this.armees.size()-1).numero+1, "Canon " + this.armees.get(this.armees.size()-1).numero+1));
 	}
 	
 	public void appelRenforts() {
@@ -330,7 +327,7 @@ public class Joueur {
 				/*//choisir une des options puis lancer attaque ou deplacement sur territoireCible
 					//attaque :
 					//ne marche sans doute PAS
-						Territoires territoireCible = territoireSelec;
+						Territoires territoireCible = ..... ;
 						int indiceDefense = 0;
 						int indiceAttaque = 1;
 						ArrayList <Unite> attaquants = this.choixUnitesCombat(territoireSelec);

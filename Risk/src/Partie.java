@@ -14,12 +14,11 @@ public class Partie {
 	ArrayList <Missions> missionsDispo = new ArrayList();
 	ArrayList <Regions> regions = new ArrayList();
 	
-	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Missions> missionsDispo, ArrayList <Regions> regions, int adjMatrices [][]) {
+	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Regions> regions, int adjMatrices [][]) {
 		super();
 		this.tour = tour;
 		this.nbreJoueursTotal = nbreJoueursTotal;
 		this.nbreJoueursHumains = nbreJoueursHumains;
-		this.missionsDispo = missionsDispo;
 		this.regions = regions;
 		this.adjMatrices = adjMatrices;
 	}
@@ -56,10 +55,10 @@ public class Partie {
 		this.setTour(this.tour + 1);
 	}
 	
-	public void ajoutMissions() {
-		
+	public void setMissionsDispo(ArrayList<Missions> missionsDispo) {
+		this.missionsDispo = missionsDispo;
 	}
-	
+
 	//on regarde a quelle region appartient la region demandee
 	public Regions appartenanceRegionTerritoire(Territoires territoire) {
 		for(int i = 0 ; i < this.regions.size(); i++) {
@@ -93,9 +92,17 @@ public class Partie {
 		int territoiresParJoueur = Math.round(nbreTerritoires/this.nbreJoueursTotal);
 
 		for(int i = 0 ; i<this.nbreJoueursTotal ; i++) {
+			
 			//attribution des missions
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.missionsDispo.size());
 			this.joueurs.get(i).mission = this.missionsDispo.get(randomNum);
+			if(this.joueurs.get(i).mission.enonce.charAt(0)== "D".charAt(0)) {
+				randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
+				while(randomNum == this.joueurs.get(i).numero) {
+					randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
+				}
+				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce+randomNum);
+			}
 			
 			//attribution des territoires
 			for(int j=0 ; j<territoiresParJoueur ; j++) {
@@ -107,13 +114,13 @@ public class Partie {
 			
 			//attribution des armees
 			for(int j=1; j<50-5*this.nbreJoueursTotal +1 ; j++) {
-				this.joueurs.get(i).armees.add(new Soldat(1,puissSoldat,2,1,2,1,j, "Soldat" + j));
+				this.joueurs.get(i).armees.add(new Soldat(j, "Soldat" + j));
 			}
-			frame.affichageRenfort(this.joueurs.get(i));
+			//frame.affichageRenfort(this.joueurs.get(i));
 			
-			while (true) {
+			//while (true) {
 			
-			}
+			//}
 		}
 		
 		ArrayList <Joueur> joueursChanceux = new ArrayList();
@@ -139,6 +146,31 @@ public class Partie {
 		}
 		else {
 			//code intell. artif.
+		}
+	}
+	
+	public void ajouterMissions(int nbreJoueurs) {
+		this.missionsDispo.add(new Missions("Contrôler 3 régions et au moins 18 territoires", 1));
+		this.missionsDispo.add(new Missions("Contrôler la plus grosse région + 1 autre région", 2));
+		if(nbreJoueurs == 2) {
+			this.missionsDispo.add(new Missions("Conquérir tous les territoires", 3));
+			this.missionsDispo.add(new Missions("Contrôler 30 territoires", 4));
+		}
+		else if(nbreJoueurs == 3) {
+			this.missionsDispo.add(new Missions("Conquérir tous les territoires", 3));
+			this.missionsDispo.add(new Missions("Contrôler 30 territoires", 4));
+			this.missionsDispo.add(new Missions("Détruire le joueur ", 5));
+			this.missionsDispo.add(new Missions("Contrôler 18 territoires avec au moins 2 armées", 6));
+		}
+		else if(nbreJoueurs == 4 || nbreJoueurs == 5) {
+			this.missionsDispo.add(new Missions("Détruire le joueur ", 3));
+			this.missionsDispo.add(new Missions("Contrôler 18 territoires avec au moins 2 armées", 4));
+			this.missionsDispo.add(new Missions("Contrôler 24 territoires", 5));
+		}
+		else if(nbreJoueurs == 6) {
+			this.missionsDispo.add(new Missions("Détruire le joueur ", 3));
+			this.missionsDispo.add(new Missions("Contrôler 18 territoires avec au moins 2 armées", 4));
+			this.missionsDispo.add(new Missions("Contrôler 21 territoires", 5));
 		}
 	}
 	

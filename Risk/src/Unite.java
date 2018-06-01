@@ -1,4 +1,4 @@
-public class Unite {
+public abstract class Unite {
 	int cout;
 	int puissance [];
 	int attaque;
