@@ -76,8 +76,26 @@ public class Partie {
 		int puissSoldat [] = {1,2,3,4,5,6};
 		
 		for(int i=0 ; i<nbreJoueursTotal ; i++) {
-			Joueur joueur = new Joueur(i,"gege", true,"red");
+			Joueur joueur = new Joueur(i,"gege", true);
 			joueur.setCamp("rebelles");
+			if (i==0) {
+				joueur.setCouleur("red");
+			}
+			else if(i==1) {
+				joueur.setCouleur("black");
+			}
+			else if(i==2) {
+				joueur.setCouleur("pink");
+			}
+			else if(i==3) {
+				joueur.setCouleur("orange");
+			}
+			else if(i==4) {
+				joueur.setCouleur("green");
+			}
+			else {
+				joueur.setCouleur("blue");
+			}
 			this.joueurs.add(joueur);
 		}
 		

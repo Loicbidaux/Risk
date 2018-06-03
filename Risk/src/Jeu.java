@@ -29,7 +29,7 @@ public class Jeu {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
 		boolean termine = false;
-		Joueur joueur = new Joueur(1,"gege", true,"red");
+		Joueur joueur = new Joueur(1,"gege", true);
 		joueur.setCamp("rebelles");
 		
 		
@@ -395,16 +395,15 @@ public class Jeu {
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
 		partie.miseEnPlace();
+		frame.affichageUniteCarteDebutPartie(partie);
+		
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			partie.joueurs.get(i).attributionRenfort(partie,frame);
 		}
 		
 		frame.refreshCarte();
-		frame.affichageUniteCarte(partie);
 		
-		for(int i = 0 ; i <Hoth.unites.size(); i++) {
-			System.out.println(i);
-		}
+		
 		//joueur.issueBataille(defenseurs, attaquants);
 		
 		/*while(!termine) {
