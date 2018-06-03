@@ -1,0 +1,6 @@
+rouge : FF0000
+Noir : 000000
+Orange : F7931E
+Vert : 8CC63F
+Bleu : 0071BC
+Rose : FF00FF
