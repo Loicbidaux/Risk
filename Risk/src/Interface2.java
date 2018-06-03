@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
@@ -32,7 +33,9 @@ public class Interface2 extends JFrame {
 	JPanel panelCarte = new JPanel();
 	
 	JLabel lblMenu = new JLabel("Menu");
+	JLabel transition = new JLabel("");
 	JLabel lblCarte = new JLabel("Carte");
+	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
 	
 	JButton btnPlay = new JButton("");
 	JButton btnFullscreen = new JButton("FullScreen");
@@ -42,6 +45,8 @@ public class Interface2 extends JFrame {
 	
 	
 	JLabel fenetreRenfort = new JLabel("");
+	
+	private Timer timer = null;
 	
 	public Interface2(){
 		super();
@@ -88,12 +93,21 @@ public class Interface2 extends JFrame {
 		btnFullscreen.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreen.setVisible(true);
 		
-		
+		transition.setBounds(0, 0, 1920, 1080);
+		transition.setHorizontalAlignment(JLabel.CENTER);
+		transition.setHorizontalAlignment(JLabel.CENTER);
+		transition.setBackground(Color.black);
+		transition.setIcon(new ImageIcon("src/Images/Menu/menuaction/test.gif"));
+		contentPane.add(transition,"2");
 		
 		
 		lblCarte.setBounds(0, 0, 1920, 1080);
 		lblCarte.setIcon(new ImageIcon("src/Images/carte/BASE-RISK-STARWARS.png"));
-		contentPane.add(lblCarte,"2");
+		contentPane.add(lblCarte,"3");
+		
+		lblEncartBasDroite.setBounds(0, 0, 1920, 1080);
+		lblEncartBasDroite.setIcon(new ImageIcon("src/Images/Menu/menuaction/ENCART-BASDROIT-VIDE.png"));
+		lblCarte.add(lblEncartBasDroite);
 		
 		
 		lblCarte.add(btnFullscreenCarte);
@@ -172,28 +186,70 @@ public class Interface2 extends JFrame {
 				
 			}
 			};
-		
+			timer = new Timer(35000, new ActionListener(){      // Timer 4 seconds
+	            public void actionPerformed(ActionEvent e) {
+	            	cl.show(contentPane, "3");
+	            }
+	        });
+			
 		ActionListener Jouer = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(contentPane, "2");
-				
+				cl.show(contentPane, "2");	
+				timer.start();
 			}
 			
 		};
 		
+		
+		
+		
+		
 		btnFullscreen.addMouseListener(fullscreen);
 		btnFullscreenCarte.addMouseListener(fullscreen);
 		btnPlay.addActionListener(Jouer);
+		transition.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				cl.show(contentPane, "3");
+				}
+			
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		return contentPane;
 	}
 	
 	
 	public void affichageUniteCarte(Partie partie ) {
-		String couleur;
-		String camp;
+		String couleur ;
+		String camp ;
 		ArrayList <Unite> uniteTerritoire = new ArrayList();
 		int nbSoldatTerritoire=0 ;
 		int nbCavalierTerritoire = 0;
@@ -232,7 +288,7 @@ public class Interface2 extends JFrame {
 				btnUnite.setVisible(true);
 				
 				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(nbSoldatTerritoire)+"</html>");
-				nbSoldat.setBounds(coordonneesUnite[0]+4, coordonneesUnite[1]+40, 25, 25);
+				nbSoldat.setBounds(coordonneesUnite[0]+3, coordonneesUnite[1]+40, 25, 25);
 				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
 				lblCarte.add(nbSoldat);
 				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
@@ -291,16 +347,18 @@ public void affichageRenfort (Joueur joueur) {
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
 		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
-		lblCarte.add(fenetreRenfort);
+		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JButton finDePhase = new JButton("");
 		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1560, 735, 200, 50);
+		finDePhase.setBounds(1760, 765, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
 		finDePhase.setVisible(true);
+		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		fenetreRenfort.add(finDePhase);
+		
 		
 		finDePhase.addMouseListener(new MouseListener() {
 			
@@ -980,6 +1038,7 @@ public void affichageRenfort (Joueur joueur) {
 public void refreshCarte() {
 	lblCarte.removeAll();
 	lblCarte.add(btnFullscreenCarte);
+	lblCarte.add(lblEncartBasDroite);
 	lblCarte.validate();
 	lblCarte.repaint();
 	
