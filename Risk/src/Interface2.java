@@ -33,6 +33,7 @@ public class Interface2 extends JFrame {
 	
 	JLabel lblMenu = new JLabel("Menu");
 	JLabel lblCarte = new JLabel("Carte");
+	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
 	
 	JButton btnPlay = new JButton("");
 	JButton btnFullscreen = new JButton("FullScreen");
@@ -94,6 +95,10 @@ public class Interface2 extends JFrame {
 		lblCarte.setBounds(0, 0, 1920, 1080);
 		lblCarte.setIcon(new ImageIcon("src/Images/carte/BASE-RISK-STARWARS.png"));
 		contentPane.add(lblCarte,"2");
+		
+		lblEncartBasDroite.setBounds(0, 0, 1920, 1080);
+		lblEncartBasDroite.setIcon(new ImageIcon("src/Images/Menu/menuaction/ENCART-BASDROIT-VIDE.png"));
+		lblCarte.add(lblEncartBasDroite);
 		
 		
 		lblCarte.add(btnFullscreenCarte);
@@ -291,16 +296,18 @@ public void affichageRenfort (Joueur joueur) {
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
 		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
-		lblCarte.add(fenetreRenfort);
+		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JButton finDePhase = new JButton("");
 		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1560, 735, 200, 50);
+		finDePhase.setBounds(1760, 765, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
 		finDePhase.setVisible(true);
+		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		fenetreRenfort.add(finDePhase);
+		
 		
 		finDePhase.addMouseListener(new MouseListener() {
 			
@@ -980,6 +987,7 @@ public void affichageRenfort (Joueur joueur) {
 public void refreshCarte() {
 	lblCarte.removeAll();
 	lblCarte.add(btnFullscreenCarte);
+	lblCarte.add(lblEncartBasDroite);
 	lblCarte.validate();
 	lblCarte.repaint();
 	

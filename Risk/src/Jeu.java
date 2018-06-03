@@ -40,11 +40,11 @@ public class Jeu {
 		Territoires Wayland = new Territoires("Wayland",1,coordonneesUniteWayland);
 		int coordonneesUniteToprawa [] = {1275,110};
 		Territoires Toprawa = new Territoires("Toprawa",2,coordonneesUniteToprawa);
-		int coordonneesUniteDathomir [] = {1140,165};
+		int coordonneesUniteDathomir [] = {1140,170};
 		Territoires Dathomir = new Territoires("Dathomir",3,coordonneesUniteDathomir);
 		int coordonneesUniteYavin4 [] = {1230,230};
 		Territoires Yavin4 = new Territoires("Yavin4",4,coordonneesUniteYavin4);
-		int coordonneesUniteDantooine [] = {1415,175};
+		int coordonneesUniteDantooine [] = {1478,175};
 		Territoires Dantooine = new Territoires("Dantooine",5,coordonneesUniteDantooine);
 		int coordonneesUniteOrdmantell [] = {1325,310};
 		Territoires Ordmantell = new Territoires("Ord Mantell",6,coordonneesUniteOrdmantell);
