@@ -7,6 +7,16 @@ import java.awt.event.*;
 
 public class Jeu {
 	
+	/*public void menuPrincipal() {
+		StdDraw.setCanvasSize(1352,720);
+		StdDraw.picture(0.5,0.5,"avantMenu.png");
+		if(StdDraw.isKeyPressed(49)) {	
+			System.out.println("Ca marche");
+			StdDraw.clear();
+			StdDraw.filledRectangle(0, 0, 30, 40);
+		}
+	}*/
+	
 	private void menuOption() {
 		
 	}
@@ -21,6 +31,7 @@ public class Jeu {
 		boolean termine = false;
 		Joueur joueur = new Joueur(1,"gege", true,"red");
 		joueur.setCamp("rebelles");
+		
 		
 		//Ensemble des térritoires de la région 1
 		int coordonneesUniteTatooine [] = {1050,80};
@@ -89,17 +100,17 @@ public class Jeu {
 		
 		
 		ArrayList <Territoires> BordureMedianeListe = new ArrayList();
-		BordureExterieureListe.add(Kashyyyk);
-		BordureExterieureListe.add(Kessel);
-		BordureExterieureListe.add(DasoochrV);
-		BordureExterieureListe.add(Ylesia);
-		BordureExterieureListe.add(Toydaria);
-		BordureExterieureListe.add(Narshadda);
-		BordureExterieureListe.add(Bothawui);
-		BordureExterieureListe.add(Gamorr);
-		BordureExterieureListe.add(Kothlis);
-		BordureExterieureListe.add(Rodia);
-		BordureExterieureListe.add(Falleen);
+		BordureMedianeListe.add(Kashyyyk);
+		BordureMedianeListe.add(Kessel);
+		BordureMedianeListe.add(DasoochrV);
+		BordureMedianeListe.add(Ylesia);
+		BordureMedianeListe.add(Toydaria);
+		BordureMedianeListe.add(Narshadda);
+		BordureMedianeListe.add(Bothawui);
+		BordureMedianeListe.add(Gamorr);
+		BordureMedianeListe.add(Kothlis);
+		BordureMedianeListe.add(Rodia);
+		BordureMedianeListe.add(Falleen);
 
 		
 		Regions BordureMediane = new Regions("Bordure Mediane", BordureMedianeListe);
@@ -262,18 +273,21 @@ public class Jeu {
 		regions.add(CorridorDison);
 		regions.add(SecteurElrood);
 		regions.add(NoyauGalactique);
-
+		
+		int tableau [] = {1,1};
+		int puissCavalier [] = {2,3,4,5,6,7};
+		int puissCanon [] = {4,5,6,7,8,9};
 		Unite soldatA = new Soldat(1,"soldatA");
 		Unite cavalierA = new Cavalier(2, "CavalierA" );
 		Unite canonA = new Canon(3, "CanonA");
 		
 		Unite soldatD = new Soldat(4, "SoldatD");
-		Unite cavalierD = new Cavalier(5, "CavalierD");
-		Unite canonD = new Canon(6, "CanonD");
+		Unite cavalierD = new Cavalier(5, "CavalierA" );
+		Unite canonD = new Canon(6, "CanonA");
 		
 		
 		ArrayList <Unite> attaquants = new ArrayList<Unite>();
-		attaquants.add(soldatA);
+		attaquants.add(0,soldatA);
 		attaquants.add(1, cavalierA);
 		attaquants.add(2, canonA);
 		
@@ -344,7 +358,7 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0}, //kashyyk
 				{0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //kessel
 				{0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //da soochr v
-				{0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //...
+				{0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,1,0,1,1,0,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -374,50 +388,68 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0},
 				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0}
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
 		};
-		Partie partie = new Partie(0,4,4,regions, adjMatrices);
+		Partie partie = new Partie(0,4,4, regions, adjMatrices);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
-		Interface frame = new Interface();
+		Interface2 frame = new Interface2();
 		frame.setVisible(true);
+		partie.miseEnPlace();
+		for(int i=0 ; i<partie.joueurs.size() ; i++) {
+			partie.joueurs.get(i).attributionRenfort(partie,frame);
+		}
+		
+		
+		ArrayList <Unite> attaquants2 = new ArrayList(Tatooine.getUnites());
+		
+		/*attaquants2.add(cavalierA);
+		attaquants2.add(cavalierA);
+		attaquants2.add(cavalierA);
+		attaquants2.add(cavalierA);
+		Tatooine.setUnites(attaquants2);*/
+		
+		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
+		
+		for(int i = 0 ; i <Hoth.unites.size(); i++) {
+			System.out.println(i);
+		}
 		//joueur.issueBataille(defenseurs, attaquants);
-		partie.miseEnPlace(frame);
-		//while(!termine) {
+		
+		/*while(!termine) {
 			for(int i = 0 ; i < partie.nbreJoueursTotal ; i++) {
 				partie.tourJoueur(partie.joueurs.get(i));
 				if(partie.joueurs.get(i).verifVictoire()) {
 					termine = true;
 				}
 			}
-		//}
+		}
 		System.out.println("");
 		System.out.println("");
 		System.out.println("");
-		System.out.println("Taille " +partie.missionsDispo.size());
 		System.out.println(partie.joueurs.get(0).numero);
-		System.out.println(partie.joueurs.get(0).mission.enonce);
+		System.out.println(partie.joueurs.get(0).mission.titre);
 		System.out.println(partie.joueurs.get(0).territoires.size());
 		System.out.println(partie.joueurs.get(0).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(0).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(1).numero);
-		System.out.println(partie.joueurs.get(1).mission.enonce);
+		System.out.println(partie.joueurs.get(1).mission.titre);
 		System.out.println(partie.joueurs.get(1).territoires.size());
 		System.out.println(partie.joueurs.get(1).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(1).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(2).numero);
-		System.out.println(partie.joueurs.get(2).mission.enonce);
+		System.out.println(partie.joueurs.get(2).mission.titre);
 		System.out.println(partie.joueurs.get(2).territoires.size());
 		System.out.println(partie.joueurs.get(2).territoires.get(0).nom);
 		System.out.println(partie.joueurs.get(2).armees.size());
 		System.out.println("");
 		System.out.println(partie.joueurs.get(3).numero);
-		System.out.println(partie.joueurs.get(3).mission.enonce);
+		System.out.println(partie.joueurs.get(3).mission.titre);
 		System.out.println(partie.joueurs.get(3).territoires.size());
 		System.out.println(partie.joueurs.get(3).territoires.get(0).nom);
-		System.out.println(partie.joueurs.get(3).armees.size());
+		System.out.println(partie.joueurs.get(3).armees.size());*/
 	}
 
 }

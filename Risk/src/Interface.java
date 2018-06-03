@@ -76,7 +76,7 @@ public class Interface extends JFrame {
 		JLabel btnPlay = new JLabel("play");
 		lblTest.add(btnPlay);
 		btnPlay.setBounds(707, 470, 505, 145);
-		btnPlay.setIcon(new ImageIcon("src/Images/Test/btnJouer.png"));
+		
 		
 		JButton btnFullscreen = new JButton("FullScreen");
 		lblTest.add(btnFullscreen);
@@ -84,7 +84,7 @@ public class Interface extends JFrame {
 		btnFullscreen.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnFullscreen.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
 		btnFullscreen.setFocusPainted(false); // On n'affiche pas l'effet de focus.
-		btnFullscreen.setBounds(919, 650, 83, 81);
+		btnFullscreen.setBounds(0, 0, 83, 81);
 		btnFullscreen.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreen.setVisible(true);
 
@@ -256,7 +256,7 @@ public class Interface extends JFrame {
 				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
 				
 				JLabel nbCavalier = new JLabel("<html><font color = 'white'>"+String.valueOf(nbCavalierTerritoire)+"</html>");
-				nbCavalier.setBounds(coordonneesUnite[0]+36, coordonneesUnite[1]+40, 25, 25);
+				nbCavalier.setBounds(coordonneesUnite[0]+40, coordonneesUnite[1]+40, 25, 25);
 				nbCavalier.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
 				lblTest2.add(nbCavalier);
 				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);

@@ -14,6 +14,10 @@ public class Joueur {
 	String couleur;
 	String camp;
 	
+	int nbRenfort = 10;
+	int flagFinDePhase =0 ;
+	int flagValider =0 ;
+	
 	public Joueur(int numero, String pseudo, boolean humain, String couleur) {
 		super();
 		this.numero = numero;
@@ -69,7 +73,23 @@ public class Joueur {
 	public void setCamp(String camp) {
 		this.camp = camp;
 	}
+	
+	public int getNbRenfort() {
+		return nbRenfort;
+	}
 
+	public void setNbRenfort(int nbRenfort) {
+		this.nbRenfort = nbRenfort;
+	}
+	
+	public void setFlagValider(int flagValider) {
+		this.flagValider = flagValider;
+	}
+	
+	public void setFlagFinDePhase(int flagFinDePhase) {
+		this.flagFinDePhase = flagFinDePhase;
+	}
+	
 	public boolean verifVictoire() {
 		if(this.territoires.size() == 42) {
 			return true;
@@ -97,15 +117,21 @@ public class Joueur {
 	}
 	
 	public void ajouterSoldat() {
-		this.armees.add(new Soldat(this.armees.get(this.armees.size()-1).numero+1, "Soldat " + this.armees.get(this.armees.size()-1).numero+1));
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		attaquants2.add(new Soldat(1,"Soldat"));
+		this.setArmees(attaquants2);
 	}
 	
 	public void ajouterCavalier() {
-		this.armees.add(new Cavalier(this.armees.get(this.armees.size()-1).numero+1, "Cavalier " + this.armees.get(this.armees.size()-1).numero+1));
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		attaquants2.add(new Cavalier(2,"Cavalier"));
+		this.setArmees(attaquants2);
 	}
 	
 	public void ajouterCanon() {
-		this.armees.add(new Canon(this.armees.get(this.armees.size()-1).numero+1, "Canon " + this.armees.get(this.armees.size()-1).numero+1));
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		attaquants2.add(new Canon(3,"Canon"));
+		this.setArmees(attaquants2);
 	}
 	
 	public void appelRenforts() {
@@ -359,5 +385,37 @@ public class Joueur {
 			fin = true;
 		}
 	}
+	
+	public void attributionRenfort(Partie partie,Interface2 frame) {
+		while(flagFinDePhase == 0) {
+			boucleAttributionRenfort(partie,frame);
+			while(flagValider ==0) {
+				if(flagFinDePhase==1) {flagValider=1;}
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			flagValider=0;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		flagFinDePhase =0;
+		frame.refreshCarte();
+	}
+	
+	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
+		frame.refreshCarte();
+		frame.affichageUniteCarte(partie);
+		frame.affichageRenfort(this);
+	}
+
 	
 }

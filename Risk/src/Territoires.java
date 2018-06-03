@@ -31,8 +31,27 @@ public class Territoires {
 		this.unites = unites;
 	}
 	
+	public ArrayList<Unite> getUnites() {
+		return unites;
+	}
 	
+	public void ajouterSoldat() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Soldat(1,"Soldat"));
+		this.setUnites(attaquants2);
+	}
 	
+	public void ajouterCavalier() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Cavalier(2,"Cavalier"));
+		this.setUnites(attaquants2);
+	}
+	
+	public void ajouterCanon() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Canon(3,"Canon"));
+		this.setUnites(attaquants2);
+	}
 	
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -95,9 +114,8 @@ public class Territoires {
 	
 	//on ajoute des unites au territoire
 	public void ajoutUnites(ArrayList <Unite> unites) {
-		for(int i = 0 ; i < unites.size(); i++) {
-			this.unites.add(unites.get(0));
-			unites.remove(0);
+		for(int i = 0 ; i <unites.size(); i++) {
+			this.unites.add(unites.get(i));
 		}
 	}
 }
