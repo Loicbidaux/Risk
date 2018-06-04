@@ -14,6 +14,8 @@ public class Partie {
 	ArrayList <Missions> missionsDispo = new ArrayList();
 	ArrayList <Regions> regions = new ArrayList();
 	
+	int flagParametrageDebut = 0;
+	
 	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Regions> regions, int adjMatrices [][]) {
 		super();
 		this.tour = tour;
@@ -73,12 +75,30 @@ public class Partie {
 	public void miseEnPlace() {
 		int randomNum;
 		int randomNum2;
-		int puissSoldat [] = {1,2,3,4,5,6};
 		
 		for(int i=0 ; i<nbreJoueursTotal ; i++) {
-			Joueur joueur = new Joueur(i,"gege", true,"red");
+			Joueur joueur = new Joueur(i,"gege", true);
 			joueur.setCamp("rebelles");
+			if (i==0) {
+				joueur.setCouleur("red");
+			}
+			else if(i==1) {
+				joueur.setCouleur("black");
+			}
+			else if(i==2) {
+				joueur.setCouleur("pink");
+			}
+			else if(i==3) {
+				joueur.setCouleur("orange");
+			}
+			else if(i==4) {
+				joueur.setCouleur("green");
+			}
+			else {
+				joueur.setCouleur("blue");
+			}
 			this.joueurs.add(joueur);
+			
 		}
 		
 		//tableau contenant tous les territoires
@@ -116,9 +136,8 @@ public class Partie {
 			
 			//attribution des armees
 			for(int j=1; j<50-5*this.nbreJoueursTotal +1 ; j++) {
-				this.joueurs.get(i).armees.add(new Soldat(j, "Soldat" + j));
+				this.joueurs.get(i).nbRenfort++;
 			}
-			
 		}
 		
 		ArrayList <Joueur> joueursChanceux = new ArrayList();
@@ -133,8 +152,10 @@ public class Partie {
 				territoires.remove(randomNum2);
 				joueursChanceux.add(this.joueurs.get(randomNum));
 			}
-		}
+		}	
 	}
+	
+	
 	
 	//on increment le compteur du nombre de tours
 	public void tourJoueur(Joueur joueur) {

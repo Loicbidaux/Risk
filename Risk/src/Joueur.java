@@ -11,19 +11,19 @@ public class Joueur {
 	ArrayList <Regions> regions = new ArrayList();
 	boolean Humain;
 	int dernieresConquetes;
-	String couleur;
+	String Couleur;
 	String camp;
-	
-	int nbRenfort = 10;
+	ArrayList joueursDetruits = new ArrayList();
+	ArrayList <Territoires> territoiresConquis = new ArrayList();
+	int nbRenfort = 0;
 	int flagFinDePhase =0 ;
 	int flagValider =0 ;
 	
-	public Joueur(int numero, String pseudo, boolean humain, String couleur) {
+	public Joueur(int numero, String pseudo, boolean humain) {
 		super();
 		this.numero = numero;
 		this.Pseudo = pseudo;
 		this.Humain = humain;
-		this.couleur=couleur;
 	}
 
 	public int getNumero() {
@@ -90,12 +90,105 @@ public class Joueur {
 		this.flagFinDePhase = flagFinDePhase;
 	}
 	
+	public String getCouleur() {
+		return Couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		Couleur = couleur;
+	}
+
+	
+	//on retourne "true" si le joueur a rempli la mission qui lui a été destinée
+	public boolean missionRemplie(Missions mission) {
+		CharSequence detruire = "Détruire";
+		CharSequence territoire = "territoire";
+		if(mission.enonce.contains(detruire)) {
+			for(int i = 0 ; i<5 ; i++) {
+				if(mission.enonce.charAt(19)==String.valueOf(i).charAt(0) && this.joueursDetruits.contains(i)) {
+					return true;
+				}
+			}
+		}
+		
+		else if(mission.enonce.contains(territoire)) {
+			CharSequence tous = "tous";
+			CharSequence dix_huit = "18";
+			CharSequence vingt_un = "21";
+			CharSequence vingt_quatre = "24";
+			CharSequence trente = "30";
+			if(mission.enonce.contains(tous)) {
+				if(this.territoiresConquis.size()==42) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if(mission.enonce.contains(dix_huit)) {
+				if(this.territoires.size()==18) {
+					CharSequence armee = "armée";
+					if(mission.enonce.contains(armee)) {
+						for(int i = 0 ; i<this.territoires.size(); i++) {
+							if(this.territoires.get(i).unites.size()!=2) {
+								return false;
+							}
+						}
+						return true;
+					}	
+					else if(this.regions.size()==3){
+						return true;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			else if(mission.enonce.contains(vingt_un)) {
+				if(this.territoires.size()==21) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if(mission.enonce.contains(vingt_quatre)) {
+				if(this.territoires.size()==24) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else if(mission.enonce.contains(trente)) {
+				if(this.territoires.size()==30) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		}
+		else if(this.regions.size() >= 2){
+			for(int i = 0 ; i<this.regions.size(); i++) {
+				if(this.regions.get(i).territoires.size()==11) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+	
 	public boolean verifVictoire() {
 		if(this.territoires.size() == 42) {
 			return true;
 		}
+		else if(this.missionRemplie(this.mission)) {
+			return true;
+		}
 		else {
-			return false; //ajouter les victoires par mission
+			return false;
 		}
 	}
 	
@@ -134,7 +227,7 @@ public class Joueur {
 		this.setArmees(attaquants2);
 	}
 	
-	public void appelRenforts() {
+	public int appelRenforts() {
 		int armeesRegion = 0;
 		int territoiresRegion;
 		int totalRenfort;
@@ -156,19 +249,21 @@ public class Joueur {
 			totalRenfort += ThreadLocalRandom.current().nextInt(0, 2);
 		}
 		
-		//on lui ajoute ces soldats
+		/*//on lui ajoute ces soldats
 		for(int i = 0 ; i < totalRenfort ; i++) {
 			this.ajouterSoldat();
-		}
+		}*/
 		
 		//si il a recu moins de 2 soldats, on lui en donne jusqu'a ce qu'il en ait eu 2
 		while(totalRenfort <2) {
-			this.ajouterSoldat();
+			//this.ajouterSoldat();
 			totalRenfort++;
 		}
 		
 		//on remet a zero le nombre de conquetes au tour precedent du joueur
 		this.setDernieresConquetes(0);
+		
+		return totalRenfort;
 	}
 	
 	public ArrayList <Unite> choixUnitesCombat(Territoires territoire) {
@@ -200,7 +295,7 @@ public class Joueur {
 	public static void TriParSelection(int [] tab) {
 		for (int j=0 ; j<tab.length; j++)	{
 			for (int i=j ; i<tab.length; i++)	{
-				if (tab[i]<=tab[j]) {
+				if (tab[i]>=tab[j]) {
 					tab=permute(tab,i,j);
 				}
 			}
@@ -217,17 +312,18 @@ public class Joueur {
 		for(int i = 0 ; i< attaque.size();i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(attaque.get(i).puissance[0], attaque.get(i).puissance[attaque.get(i).puissance.length-1]);
 			puissanceAttaque[i]=randomNum;
-			if(i!=2) {
-				randomNum2 = ThreadLocalRandom.current().nextInt(defense.get(i).puissance[0], defense.get(i).puissance[defense.get(i).puissance.length-1]);
-				puissanceDefense[i]=randomNum2;
-			}
+		}
+		for(int i = 0 ; i<defense.size();i++) {
+			randomNum2 = ThreadLocalRandom.current().nextInt(defense.get(i).puissance[0], defense.get(i).puissance[defense.get(i).puissance.length-1]);
+			puissanceDefense[i]=randomNum2;
 		}
 		
 		//on les trie
 		TriParSelection(puissanceAttaque);
+		TriParSelection(puissanceDefense);
 		
 		
-		Unite unitesMortes [][] = new Unite[2][3];
+		Unite unitesMortes [][] = new Unite[2][4];
 		//les valeurs sont comparées pour le combat
 		if(attaque.size() >= defense.size()) {
 			for(int i = 0 ; i <defense.size(); i++) {
@@ -296,7 +392,15 @@ public class Joueur {
 		return unitesMortes;
 	}
 	
-	
+	protected void reposTroupes() {
+		for(int i = 0 ; i<this.territoires.size(); i++) {
+			for(int j = 0 ; j<this.territoires.get(i).unites.size(); j++) {
+				System.out.println(this.territoires.get(i).nom);
+				System.out.println(this.territoires.get(i).unites.get(j).nom);
+				this.territoires.get(i).unites.get(j).revigoree();
+			}
+		}
+	}
 	public void action(Partie partie) {
 		boolean fin = false;
 		Territoires  territoireSelec;
@@ -386,9 +490,37 @@ public class Joueur {
 		}
 	}
 	
+	public void resultatsBataille(Unite unitesMortes [][], Territoires territoireDef, Territoires territoireAtk, ArrayList<Unite> unitesAtk) {
+		for(int i = 0  ; i<unitesMortes[0].length ; i++) {
+			territoireDef.unites.remove(unitesMortes[0][i]);
+			territoireDef.proprietaire.armees.remove(unitesMortes[0][i]);
+		}
+		if(territoireDef.unites.size() == 0) {
+			territoireDef.proprietaire = this;
+			this.territoires.add(territoireDef);
+			
+			for(int i = 0 ; i<unitesAtk.size() ; i++) {
+				territoireDef.unites.add(unitesAtk.get(i));
+				territoireAtk.unites.remove(unitesAtk.get(i));
+				unitesAtk.get(i).fatigue();
+				unitesAtk.get(i).verifDisponibilite();
+			}
+			for(int i = 0 ; i<unitesMortes[1].length ; i++) {
+				territoireDef.unites.remove(unitesMortes[1][i]);
+				this.armees.remove(unitesMortes[1][i]);
+			}
+		}
+		else {
+			for(int i = 0 ; i<unitesMortes[1].length ; i++) {
+				territoireAtk.unites.remove(unitesMortes[1][i]);
+				this.armees.remove(unitesMortes[1][i]);
+			}
+		}
+	}
+	
 	public void attributionRenfort(Partie partie,Interface2 frame) {
 		while(flagFinDePhase == 0) {
-			boucleAttributionRenfort(partie,frame);
+			this.boucleAttributionRenfort(partie,frame);
 			while(flagValider ==0) {
 				if(flagFinDePhase==1) {flagValider=1;}
 				try {
@@ -414,8 +546,41 @@ public class Joueur {
 	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
-		frame.affichageRenfort(this);
+		frame.affichageRenfortDebutPartie(this);
 	}
-
+	
+	public void actionJoueur(Partie partie, Interface2 frame) {
+		while(flagFinDePhase == 0) {
+			this.boucleTourJoueur(partie, frame);
+			while(flagValider == 0) {
+				if(this.flagFinDePhase==1) {
+					flagValider=1;
+				}
+				try {
+					Thread.sleep(1);
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			flagValider=0;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		flagFinDePhase =0;
+		frame.refreshCarte();
+	}
+	
+	public void boucleTourJoueur(Partie partie, Interface2 frame) {
+		frame.refreshCarte();
+		frame.affichageUniteCarte(partie);
+		System.out.println("Les unites ont ete refresh");
+		frame.choixAttaqueDeplacement(partie, this);
+	}
 	
 }

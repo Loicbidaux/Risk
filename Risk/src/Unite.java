@@ -59,12 +59,14 @@ public abstract class Unite {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	
-	public void attaque() {
-		
+	public void fatigue() {
+		this.mouvement--;
 	}
 	
-	public void deplacement() {
-		
+	public void verifDisponibilite() {
+		if(this.mouvement == 0) {
+			this.disponibilite =0;
+		}
 	}
+	abstract void revigoree();
 }

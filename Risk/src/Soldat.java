@@ -10,4 +10,9 @@ public class Soldat extends Unite {
 	static final int defense = 1;
 	static final int mouvement = 2;
 	static final int disponibilite = 1;
+	
+	protected void revigoree() {
+		this.setMouvement(2);
+		this.setDisponibilite(1);
+	}
 }

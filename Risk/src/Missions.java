@@ -1,3 +1,4 @@
+import java.lang.*;
 
 public class Missions {
 	String enonce;
@@ -19,5 +20,4 @@ public class Missions {
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	
 }

@@ -34,25 +34,6 @@ public class Territoires {
 	public ArrayList<Unite> getUnites() {
 		return unites;
 	}
-	
-	public void ajouterSoldat() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
-		attaquants2.add(new Soldat(1,"Soldat"));
-		this.setUnites(attaquants2);
-	}
-	
-	public void ajouterCavalier() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
-		attaquants2.add(new Cavalier(2,"Cavalier"));
-		this.setUnites(attaquants2);
-	}
-	
-	public void ajouterCanon() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
-		attaquants2.add(new Canon(3,"Canon"));
-		this.setUnites(attaquants2);
-	}
-	
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public ArrayList <Territoires> voisinsTerritoire(Partie partie) {
@@ -79,17 +60,6 @@ public class Territoires {
 		
 		//s'il n'y a qu'une unite sur le territoire, elle est la seule a defendre
 		if(this.unites.size()==1) {
-			/*for(int i = 0 ; i < this.unites.size(); i++) {
-				if(i==0) {
-					defenseurs.add(this.unites.get(i));
-				}
-				else if (i!=0 && defenseurs.get(0).defense>this.unites.get(i).defense) {
-					defenseurs.set(0, this.unites.get(i));
-				}
-				if(defenseurs.get(0).defense == 1) {
-					return defenseurs;
-				}
-			}*/
 			defenseurs.add(this.unites.get(0));
 			return defenseurs;
 		}
@@ -112,10 +82,28 @@ public class Territoires {
 		}
 	}
 	
-	//on ajoute des unites au territoire
-	public void ajoutUnites(ArrayList <Unite> unites) {
-		for(int i = 0 ; i <unites.size(); i++) {
-			this.unites.add(unites.get(i));
-		}
+	public void ajouterSoldat() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Soldat(1,"Soldat"));
+		this.setUnites(attaquants2);
 	}
+	
+	public void ajouterCavalier() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Cavalier(2,"Cavalier"));
+		this.setUnites(attaquants2);
+	}
+	
+	public void ajouterCanon() {
+		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		attaquants2.add(new Canon(3,"Canon"));
+		this.setUnites(attaquants2);
+	}
+	//on ajoute des unites au territoire
+	//public void ajoutUnites(ArrayList <Unite> unites) {
+		//for(int i = 0 ; i < unites.size(); i++) {
+			//this.unites.add(unites.get(i));
+			//unites.remove(i);
+		//}
+	//}
 }
