@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
@@ -32,16 +33,25 @@ public class Interface2 extends JFrame {
 	JPanel panelCarte = new JPanel();
 	
 	JLabel lblMenu = new JLabel("Menu");
+	JLabel lblMenuParametrage = new JLabel("Menu Parametrage");
+	JLabel transition = new JLabel("");
 	JLabel lblCarte = new JLabel("Carte");
+	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
 	
 	JButton btnPlay = new JButton("");
 	JButton btnFullscreen = new JButton("FullScreen");
 	JButton btnFullscreenCarte = new JButton("FullScreenCarte");
+	JButton btnDebutDePartie = new JButton("");
+	JButton btnSkip = new JButton("Skip");
 	
 	CardLayout cl  = new CardLayout();
 	
 	
 	JLabel fenetreRenfort = new JLabel("");
+	
+	int flagSkip =0;
+	
+	private Timer timer = null;
 	
 	public Interface2(){
 		super();
@@ -88,12 +98,45 @@ public class Interface2 extends JFrame {
 		btnFullscreen.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreen.setVisible(true);
 		
+		lblMenuParametrage.setBounds(0, 0, 1920, 1080);
+		lblMenuParametrage.setIcon(new ImageIcon("src/Images/Menu/MENU-RISK-STARWARS.png"));
+		contentPane.add(lblMenuParametrage,"2");
 		
+		lblMenuParametrage.add(btnDebutDePartie);
+		btnDebutDePartie.setOpaque(false);
+		btnDebutDePartie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		btnDebutDePartie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		btnDebutDePartie.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnDebutDePartie.setBounds(760, 960, 375, 81);
+		btnDebutDePartie.setVisible(true);
+		
+		lblMenuParametrage.add(btnFullscreen);
+		
+		
+		transition.setBounds(0, 0, 1920, 1080);
+		transition.setHorizontalAlignment(JLabel.CENTER);
+		transition.setHorizontalAlignment(JLabel.CENTER);
+		transition.setBackground(Color.black);
+		transition.setIcon(new ImageIcon("src/Images/Menu/menuaction/test.gif"));
+		contentPane.add(transition,"3");
+		
+		transition.add(btnSkip);
+		btnSkip.setBounds(1680, 965, 200, 50);
+		btnSkip.setOpaque(false);
+		btnSkip.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		btnSkip.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+		btnSkip.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnSkip.setVisible(true);
+		btnSkip.setIcon(new ImageIcon("src/Images/Menu/menuaction/btnSkip.png"));
 		
 		
 		lblCarte.setBounds(0, 0, 1920, 1080);
 		lblCarte.setIcon(new ImageIcon("src/Images/carte/BASE-RISK-STARWARS.png"));
-		contentPane.add(lblCarte,"2");
+		contentPane.add(lblCarte,"4");
+		
+		lblEncartBasDroite.setBounds(0, 0, 1920, 1080);
+		lblEncartBasDroite.setIcon(new ImageIcon("src/Images/Menu/menuaction/ENCART-BASDROIT-VIDE.png"));
+		lblCarte.add(lblEncartBasDroite);
 		
 		
 		lblCarte.add(btnFullscreenCarte);
@@ -172,28 +215,80 @@ public class Interface2 extends JFrame {
 				
 			}
 			};
-		
+			timer = new Timer(29000, new ActionListener(){      // Timer 4 seconds
+	            public void actionPerformed(ActionEvent e) {
+	            	cl.show(contentPane, "4");
+	            	flagSkip = 1;
+	            }
+	        });
+			
 		ActionListener Jouer = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				cl.show(contentPane, "2");
-				
+				cl.show(contentPane, "2");	
 			}
 			
 		};
 		
+		ActionListener DebutDePartie = new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(contentPane, "3");	
+				timer.start();
+			}
+			
+		};
+		
+		
+		
 		btnFullscreen.addMouseListener(fullscreen);
 		btnFullscreenCarte.addMouseListener(fullscreen);
 		btnPlay.addActionListener(Jouer);
+		btnDebutDePartie.addActionListener(DebutDePartie);
+		btnSkip.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				cl.show(contentPane, "4");
+				flagSkip = 1;
+				}
+			
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		return contentPane;
 	}
 	
 	
 	public void affichageUniteCarte(Partie partie ) {
-		String couleur;
-		String camp;
+		String couleur ;
+		String camp ;
 		ArrayList <Unite> uniteTerritoire = new ArrayList();
 		int nbSoldatTerritoire=0 ;
 		int nbCavalierTerritoire = 0;
@@ -204,7 +299,7 @@ public class Interface2 extends JFrame {
 		
 		for(int i = 0 ; i<partie.regions.size(); i++) {
 			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
-				couleur = partie.regions.get(i).territoires.get(j).proprietaire.couleur;
+				couleur = partie.regions.get(i).territoires.get(j).proprietaire.Couleur;
 				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;
 				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
 				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
@@ -232,7 +327,7 @@ public class Interface2 extends JFrame {
 				btnUnite.setVisible(true);
 				
 				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(nbSoldatTerritoire)+"</html>");
-				nbSoldat.setBounds(coordonneesUnite[0]+4, coordonneesUnite[1]+40, 25, 25);
+				nbSoldat.setBounds(coordonneesUnite[0]+3, coordonneesUnite[1]+40, 25, 25);
 				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
 				lblCarte.add(nbSoldat);
 				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
@@ -256,33 +351,152 @@ public class Interface2 extends JFrame {
 			}}
 	}
 
+	public void affichageUniteCarteDebutPartie(Partie partie ) {
+		
+		while (flagSkip == 0) {
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		String couleur ;
+		String camp ;
+		ArrayList <Unite> uniteTerritoire = new ArrayList();
+		int nbSoldatTerritoire=0 ;
+		int nbCavalierTerritoire = 0;
+		int nbCanonTerritoire = 0;
+		
+		
+		int[] coordonneesUnite ;
+		
+		for(int i = 0 ; i<partie.regions.size(); i++) {
+			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				couleur = partie.regions.get(i).territoires.get(j).proprietaire.Couleur;
+				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;
+				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
+				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
+				
+				for(int k = 0; k<partie.regions.get(i).territoires.get(j).unites.size(); k++) {
+					if(partie.regions.get(i).territoires.get(j).unites.get(k).cout == 1) {
+						nbSoldatTerritoire++;
+					}
+				}
+				
+				JLabel btnUnite = new JLabel("");
+				
+				btnUnite.setName(partie.regions.get(i).territoires.get(j).nom);
+				lblCarte.add(btnUnite);
+				btnUnite.setOpaque(false);
+				btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 43);
+				btnUnite.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/unite.png"));
+				System.out.println("Les voisins de " + partie.regions.get(i).territoires.get(j).nom+ " sont " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(0).nom + " " + partie.regions.get(i).territoires.get(j).voisinsTerritoire(partie).get(1).nom);
+				btnUnite.setVisible(true);
+				
+				JLabel nbSoldat = new JLabel("<html><font color = 'white'>"+String.valueOf(nbSoldatTerritoire)+"</html>");
+				nbSoldat.setBounds(coordonneesUnite[0]+3, coordonneesUnite[1]+40, 25, 25);
+				nbSoldat.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblCarte.add(nbSoldat);
+				nbSoldat.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCavalier = new JLabel("<html><font color = 'white'>"+String.valueOf(nbCavalierTerritoire)+"</html>");
+				nbCavalier.setBounds(coordonneesUnite[0]+40, coordonneesUnite[1]+40, 25, 25);
+				nbCavalier.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblCarte.add(nbCavalier);
+				nbCavalier.setHorizontalTextPosition(JLabel.CENTER);
+				
+				JLabel nbCanon = new JLabel("<html><font color = 'white'>"+String.valueOf(nbCanonTerritoire)+"</html>");
+				nbCanon.setBounds(coordonneesUnite[0]+75, coordonneesUnite[1]+40, 25, 25);
+				nbCanon.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+				lblCarte.add(nbCanon);
+				nbCanon.setHorizontalTextPosition(JLabel.CENTER);
+				
+				nbSoldatTerritoire=0 ;
+				nbCavalierTerritoire = 0;
+				nbCanonTerritoire = 0;
+				
+			}}
+	}
+	
+	public void parametragePartie(Partie partie) {
+		
+		JButton joueurEmpire = new JButton();
+		JButton joueurRebelle = new JButton();
+		JButton iaEmpire = new JButton();
+		JButton iaRebelle = new JButton();
+		JButton ajouterJoueur = new JButton();
+		JButton ajouterIa = new JButton();
+		 
+		lblMenuParametrage.add(joueurEmpire);
+		joueurEmpire.setOpaque(false);
+		joueurEmpire.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		joueurEmpire.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		joueurEmpire.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		joueurEmpire.setBounds(505, 320, 115, 115);
+		joueurEmpire.setVisible(true);
+		
+		lblMenuParametrage.add(joueurRebelle);
+		joueurRebelle.setOpaque(false);
+		joueurRebelle.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		joueurRebelle.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		joueurRebelle.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		joueurRebelle.setBounds(735, 320, 115, 115);
+		joueurRebelle.setVisible(true);
+		
+		lblMenuParametrage.add(iaEmpire);
+		iaEmpire.setOpaque(false);
+		iaEmpire.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		iaEmpire.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		iaEmpire.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		iaEmpire.setBounds(1055, 320, 115, 115);
+		iaEmpire.setVisible(true);
+		
+		lblMenuParametrage.add(iaRebelle);
+		iaRebelle.setOpaque(false);
+		iaRebelle.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		iaRebelle.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		iaRebelle.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		iaRebelle.setBounds(1285, 320, 115, 115);
+		iaRebelle.setVisible(true);
+		
+		lblMenuParametrage.add(ajouterJoueur);
+		ajouterJoueur.setOpaque(false);
+		ajouterJoueur.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		ajouterJoueur.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		ajouterJoueur.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		ajouterJoueur.setBounds(490, 470, 365, 71);
+		ajouterJoueur.setVisible(true);
+		
+		lblMenuParametrage.add(ajouterIa);
+		ajouterIa.setOpaque(false);
+		ajouterIa.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		ajouterIa.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+		ajouterIa.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		ajouterIa.setBounds(1055, 470, 365, 71);
+		ajouterIa.setVisible(true);
+		
+		
+		lblMenuParametrage.validate();
+		lblMenuParametrage.repaint();
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-public void affichageRenfort (Joueur joueur) {
+	public void affichageRenfort (Joueur joueur) {
 	
 		
 		int[] coordonneesUnite ;
 		String camp = joueur.camp;
-		String couleur = joueur.couleur;
+		String couleur = joueur.Couleur;
 		int nbSoldatTerritoire=0;
 		int nbCavalierTerritoire=0;
 		int nbCanonTerritoire=0;
@@ -291,16 +505,18 @@ public void affichageRenfort (Joueur joueur) {
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
 		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
-		lblCarte.add(fenetreRenfort);
+		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JButton finDePhase = new JButton("");
 		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1560, 735, 200, 50);
+		finDePhase.setBounds(1760, 765, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
 		finDePhase.setVisible(true);
+		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		fenetreRenfort.add(finDePhase);
+		
 		
 		finDePhase.addMouseListener(new MouseListener() {
 			
@@ -664,7 +880,7 @@ public void affichageRenfort (Joueur joueur) {
 						int j = Integer.parseInt(nbRenfortDisponible.getText().substring(46,nbRenfortDisponible.getText().length()-7))-7;
 						
 						if (j>=0) {
-						int i = Integer.parseInt(nbCavalier.getText().substring(46,nbCanon.getText().length()-7))+1;
+						int i = Integer.parseInt(nbCanon.getText().substring(46,nbCanon.getText().length()-7))+1;
 						nbCanon.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
 						
 						nbRenfortDisponible.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(j)+"</html>");
@@ -976,10 +1192,388 @@ public void affichageRenfort (Joueur joueur) {
 		
 }
 
+	public void affichageRenfortDebutPartie (Joueur joueur) {
+	
+	
+	int[] coordonneesUnite ;
+	String camp = joueur.camp;
+	String couleur = joueur.Couleur;
+	int nbSoldatTerritoire=0;
+	int nbCavalierTerritoire=0;
+	int nbCanonTerritoire=0;
+	
+	
+	fenetreRenfort.setBounds(0,0, 1920, 1080);
+	//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
+	fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
+	lblEncartBasDroite.add(fenetreRenfort);
+	
+	JButton finDePhase = new JButton("");
+	finDePhase.setOpaque(false);
+	finDePhase.setBounds(1760, 765, 92, 60);
+	finDePhase.setBorderPainted(true);
+	finDePhase.setContentAreaFilled(false);
+	finDePhase.setFocusPainted(false);
+	finDePhase.setVisible(true);
+	finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
+	fenetreRenfort.add(finDePhase);
+	
+	
+	finDePhase.addMouseListener(new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(joueur.getNbRenfort() == 0) {
+				
+				joueur.setFlagFinDePhase(1);
+				
+				fenetreRenfort.removeAll();
+				fenetreRenfort.repaint();
+				fenetreRenfort.validate();
+			}
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
+	
+	
+	for(int i = 0 ; i<joueur.territoires.size(); i++) {
+			nbSoldatTerritoire = 0;
+			nbCavalierTerritoire = 0;
+			nbCanonTerritoire = 0;
+			coordonneesUnite = joueur.territoires.get(i).coordonneesUnite;
+			
+			for(int k = 0; k<joueur.territoires.get(i).unites.size(); k++) {
+				if(joueur.territoires.get(i).unites.get(k).cout == 1) {
+					nbSoldatTerritoire++;
+				}
+				else if(joueur.territoires.get(i).unites.get(k).cout == 3) {
+					nbCavalierTerritoire ++;
+				}
+				else {
+					nbCanonTerritoire ++;
+				}
+			}
 
-public void refreshCarte() {
+			JButton btnUnite = new JButton("");
+			
+			lblCarte.add(btnUnite);
+			btnUnite.setOpaque(false);
+			btnUnite.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+			btnUnite.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+			btnUnite.setFocusPainted(false);
+			btnUnite.setBounds(coordonneesUnite[0], coordonneesUnite[1], 112, 70);
+			btnUnite.setVisible(true);
+			
+			
+			JLabel nbSoldat = new JLabel("<html><font color = 'white'><font size = '15'>"+0+"</html>");
+			nbSoldat.setHorizontalAlignment(JLabel.CENTER);
+			nbSoldat.setVerticalAlignment(JLabel.CENTER);
+			nbSoldat.setOpaque(false);
+			nbSoldat.setBounds(1615, 940, 60, 60);
+			nbSoldat.setVisible(false);
+			
+			JButton nbSoldatPlus = new JButton("");
+			nbSoldatPlus.setOpaque(false);
+			nbSoldatPlus.setBounds(1580, 960, 33, 30);
+			nbSoldatPlus.setBorderPainted(true);
+			nbSoldatPlus.setContentAreaFilled(false);
+			nbSoldatPlus.setFocusPainted(false);
+			nbSoldatPlus.setVisible(true);
+			
+			JButton nbSoldatMoins = new JButton("");
+			nbSoldatMoins.setOpaque(false);
+			nbSoldatMoins.setBounds(1680, 960, 25, 30);
+			nbSoldatMoins.setBorderPainted(true);
+			nbSoldatMoins.setContentAreaFilled(false);
+			nbSoldatMoins.setFocusPainted(false);
+			nbSoldatMoins.setVisible(true);
+			
+			
+			
+			JLabel nbRenfortDisponible = new JLabel("<html><font color = 'white'><font size = '15'>"+String.valueOf(joueur.getNbRenfort())+"</html>");
+			nbRenfortDisponible.setHorizontalTextPosition(JLabel.CENTER);
+			nbRenfortDisponible.setOpaque(false);
+			nbRenfortDisponible.setBounds(1730, 775, 112, 70);
+			nbRenfortDisponible.setVisible(false);
+			
+			JButton renfortValider = new JButton("");
+			renfortValider.setOpaque(false);
+			renfortValider.setBounds(1560, 1010, 200, 50);
+			renfortValider.setBorderPainted(true);
+			renfortValider.setContentAreaFilled(false);
+			renfortValider.setFocusPainted(false);
+			renfortValider.setVisible(true);
+			
+			
+			
+			
+			final Territoires territoire = joueur.territoires.get(i);
+			final int maxRenfort =joueur.getNbRenfort();
+			
+			btnUnite.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					System.out.println("haha");
+					
+					fenetreRenfort.add(nbSoldat);
+					nbSoldat.setVisible(true);
+					fenetreRenfort.add(nbSoldatPlus);
+					nbSoldatPlus.setVisible(true);
+					fenetreRenfort.add(nbSoldatMoins);
+					nbSoldatMoins.setVisible(true);
+					
+					fenetreRenfort.add(nbRenfortDisponible);
+					nbRenfortDisponible.setVisible(true);
+					
+					fenetreRenfort.add(renfortValider);
+					renfortValider.setVisible(true);
+					
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					fenetreRenfort.removeAll();
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+												
+
+			nbSoldatPlus.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					int j = Integer.parseInt(nbRenfortDisponible.getText().substring(46,nbRenfortDisponible.getText().length()-7))-1;
+					
+					if (j>=0) {
+					int i = Integer.parseInt(nbSoldat.getText().substring(46,nbSoldat.getText().length()-7))+1;
+					nbSoldat.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
+					
+					nbRenfortDisponible.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(j)+"</html>");
+					
+					
+					fenetreRenfort.add(nbRenfortDisponible);
+					nbRenfortDisponible.setVisible(true);
+					fenetreRenfort.add(nbSoldat);
+					nbSoldat.setVisible(true);
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+					}
+					
+					
+					else {
+						fenetreRenfort.add(nbRenfortDisponible);
+						nbRenfortDisponible.setVisible(true);
+						fenetreRenfort.add(nbSoldat);
+						nbSoldat.setVisible(true);
+						fenetreRenfort.repaint();
+						fenetreRenfort.validate();
+					}
+				}
+				
+				
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					fenetreRenfort.remove(nbRenfortDisponible);
+					fenetreRenfort.remove(nbSoldat);
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+		
+			
+			nbSoldatMoins.addMouseListener(new MouseListener() {
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					int j = Integer.parseInt(nbRenfortDisponible.getText().substring(46,nbRenfortDisponible.getText().length()-7))+1;
+					
+					if (j<=maxRenfort && Integer.parseInt(nbSoldat.getText().substring(46,nbSoldat.getText().length()-7)) >=1 ) {
+					int i = Integer.parseInt(nbSoldat.getText().substring(46,nbSoldat.getText().length()-7))-1;
+					nbSoldat.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
+					
+					nbRenfortDisponible.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(j)+"</html>");
+					
+					
+					fenetreRenfort.add(nbRenfortDisponible);
+					nbRenfortDisponible.setVisible(true);
+					fenetreRenfort.add(nbSoldat);
+					nbSoldat.setVisible(true);
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+					}
+					
+					
+					else {
+						fenetreRenfort.add(nbRenfortDisponible);
+						nbRenfortDisponible.setVisible(true);
+						fenetreRenfort.add(nbSoldat);
+						nbSoldat.setVisible(true);
+						fenetreRenfort.add(nbSoldatPlus);
+						nbSoldatPlus.setVisible(true);
+						fenetreRenfort.repaint();
+						fenetreRenfort.validate();
+					}
+				}
+				
+				
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					fenetreRenfort.remove(nbRenfortDisponible);
+					fenetreRenfort.remove(nbSoldat);
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+						
+			
+			renfortValider.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					int i = Integer.parseInt(nbSoldat.getText().substring(46,nbSoldat.getText().length()-7));
+					int renfortDisponibleValider = Integer.parseInt(nbRenfortDisponible.getText().substring(46,nbRenfortDisponible.getText().length()-7)) ;
+					
+					
+					for(int ii = 0;ii<i;ii++) {
+						
+						joueur.ajouterSoldat();
+						territoire.ajouterSoldat();
+						
+					}
+					
+					
+					joueur.setNbRenfort(renfortDisponibleValider);
+					joueur.setFlagValider(1);
+					
+					fenetreRenfort.removeAll();
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+	
+			
+	
+	}
+	
+	
+}
+
+	public void refreshCarte() {
 	lblCarte.removeAll();
 	lblCarte.add(btnFullscreenCarte);
+	lblCarte.add(lblEncartBasDroite);
 	lblCarte.validate();
 	lblCarte.repaint();
 	

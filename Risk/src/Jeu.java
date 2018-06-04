@@ -29,7 +29,7 @@ public class Jeu {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
 		boolean termine = false;
-		Joueur joueur = new Joueur(1,"gege", true,"red");
+		Joueur joueur = new Joueur(1,"gege", true);
 		joueur.setCamp("rebelles");
 		
 		
@@ -40,11 +40,11 @@ public class Jeu {
 		Territoires Wayland = new Territoires("Wayland",1,coordonneesUniteWayland);
 		int coordonneesUniteToprawa [] = {1275,110};
 		Territoires Toprawa = new Territoires("Toprawa",2,coordonneesUniteToprawa);
-		int coordonneesUniteDathomir [] = {1140,165};
+		int coordonneesUniteDathomir [] = {1140,170};
 		Territoires Dathomir = new Territoires("Dathomir",3,coordonneesUniteDathomir);
 		int coordonneesUniteYavin4 [] = {1230,230};
 		Territoires Yavin4 = new Territoires("Yavin4",4,coordonneesUniteYavin4);
-		int coordonneesUniteDantooine [] = {1415,175};
+		int coordonneesUniteDantooine [] = {1478,175};
 		Territoires Dantooine = new Territoires("Dantooine",5,coordonneesUniteDantooine);
 		int coordonneesUniteOrdmantell [] = {1325,310};
 		Territoires Ordmantell = new Territoires("Ord Mantell",6,coordonneesUniteOrdmantell);
@@ -390,30 +390,21 @@ public class Jeu {
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
 		};
-		Partie partie = new Partie(0,4,4, regions, adjMatrices);
+		Partie partie = new Partie(0,6,4, regions, adjMatrices);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
+		frame.parametragePartie(partie);
 		partie.miseEnPlace();
+		frame.affichageUniteCarteDebutPartie(partie);
+		
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			partie.joueurs.get(i).attributionRenfort(partie,frame);
 		}
 		
-		
-		ArrayList <Unite> attaquants2 = new ArrayList(Tatooine.getUnites());
-		
-		/*attaquants2.add(cavalierA);
-		attaquants2.add(cavalierA);
-		attaquants2.add(cavalierA);
-		attaquants2.add(cavalierA);
-		Tatooine.setUnites(attaquants2);*/
-		
 		frame.refreshCarte();
-		frame.affichageUniteCarte(partie);
 		
-		for(int i = 0 ; i <Hoth.unites.size(); i++) {
-			System.out.println(i);
-		}
+		
 		//joueur.issueBataille(defenseurs, attaquants);
 		
 		/*while(!termine) {

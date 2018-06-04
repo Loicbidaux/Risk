@@ -11,19 +11,18 @@ public class Joueur {
 	ArrayList <Regions> regions = new ArrayList();
 	boolean Humain;
 	int dernieresConquetes;
-	String couleur;
+	String Couleur;
 	String camp;
 	
 	int nbRenfort = 10;
 	int flagFinDePhase =0 ;
 	int flagValider =0 ;
 	
-	public Joueur(int numero, String pseudo, boolean humain, String couleur) {
+	public Joueur(int numero, String pseudo, boolean humain) {
 		super();
 		this.numero = numero;
 		this.Pseudo = pseudo;
 		this.Humain = humain;
-		this.couleur=couleur;
 	}
 
 	public int getNumero() {
@@ -42,6 +41,14 @@ public class Joueur {
 		Pseudo = pseudo;
 	}
 
+	public String getCouleur() {
+		return Couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		Couleur = couleur;
+	}
+	
 	public Missions getMission() {
 		return mission;
 	}
@@ -414,7 +421,7 @@ public class Joueur {
 	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
-		frame.affichageRenfort(this);
+		frame.affichageRenfortDebutPartie(this);
 	}
 
 	
