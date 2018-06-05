@@ -98,7 +98,6 @@ public class Joueur {
 		Couleur = couleur;
 	}
 
-	
 	//on retourne "true" si le joueur a rempli la mission qui lui a été destinée
 	public boolean missionRemplie(Missions mission) {
 		CharSequence detruire = "Détruire";
@@ -200,15 +199,7 @@ public class Joueur {
 			return false;
 		}
 	}
-	
-	public Territoires selectionTerritoire() { //a faire
-		/*int tab [][] = {{1,0},{0,1}};
-		Territoires territoireSelec = new Territoires("test",tab,0);
-		return territoireSelec;*/
-		
-		return this.territoires.get(0);
-	}
-	
+
 	public void ajouterSoldat() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
 		attaquants2.add(new Soldat(1,"Soldat"));
@@ -227,7 +218,7 @@ public class Joueur {
 		this.setArmees(attaquants2);
 	}
 	
-	public int appelRenforts() {
+	public void appelRenforts() {
 		int armeesRegion = 0;
 		int territoiresRegion;
 		int totalRenfort;
@@ -263,59 +254,51 @@ public class Joueur {
 		//on remet a zero le nombre de conquetes au tour precedent du joueur
 		this.setDernieresConquetes(0);
 		
-		return totalRenfort;
+		this.setNbRenfort(totalRenfort);
 	}
+
 	
-	public ArrayList <Unite> choixUnitesCombat(Territoires territoire) {
-		boolean finSelecUnite = false;
-		ArrayList <Unite> unitesAttaque = new ArrayList();
-		while(!finSelecUnite) {
-			/*if(clique sur +) {
-				unitesAttaque.add(e);
-			}
-			else if(clique sur -) {
-				unitesAttaque.remove(e);
-			}
-			else if(clique sur CONFIRMER) {
-				for(int i = 0; i < unitesAttaque.size() ; i++) {
-					unitesAttaque.get(i).bataille()
-				}
-			}*/
-		}
-	}
-	
-	public static int [] permute(int [] tab, int a, int b) {
-		int var;
+	public static int [][] permute(int [][] tab, int a, int b) {
+		int [] var;
 		var=tab[a];
 		tab[a]=tab[b];
 		tab[b]=var;
 		return tab;
 	}
 	
-	public static void TriParSelection(int [] tab) {
+	public static void TriParSelection(int [][] tab) {
 		for (int j=0 ; j<tab.length; j++)	{
 			for (int i=j ; i<tab.length; i++)	{
-				if (tab[i]>=tab[j]) {
+				if (tab[i][0]>tab[j][0]) {
 					tab=permute(tab,i,j);
+				}
+				else if(tab[i][0]==tab[j][0]) {
+					if(tab[i][2]<=tab[j][2]) {
+						tab=permute(tab,i,j);
+					}
 				}
 			}
 		}
 	}
 	
 	public Unite [][] issueBataille(ArrayList <Unite> defense, ArrayList <Unite> attaque) {
-		int puissanceDefense [] = new int[defense.size()];
-		int puissanceAttaque [] = new int[attaque.size()];
+		int puissanceDefense [][] = new int[defense.size()][3];
+		int puissanceAttaque [][] = new int[attaque.size()][3];
 		int randomNum;
 		int randomNum2;
 		
 		//on determine la puissance de chaque unité
 		for(int i = 0 ; i< attaque.size();i++) {
 			randomNum = ThreadLocalRandom.current().nextInt(attaque.get(i).puissance[0], attaque.get(i).puissance[attaque.get(i).puissance.length-1]);
-			puissanceAttaque[i]=randomNum;
+			puissanceAttaque[i][0]=randomNum;
+			puissanceAttaque[i][1]=i;
+			puissanceAttaque[i][2]=attaque.get(i).attaque;
 		}
 		for(int i = 0 ; i<defense.size();i++) {
 			randomNum2 = ThreadLocalRandom.current().nextInt(defense.get(i).puissance[0], defense.get(i).puissance[defense.get(i).puissance.length-1]);
-			puissanceDefense[i]=randomNum2;
+			puissanceDefense[i][0]=randomNum2;
+			puissanceDefense[i][1]=i;
+			puissanceDefense[i][2]=defense.get(i).defense;
 		}
 		
 		//on les trie
@@ -323,181 +306,76 @@ public class Joueur {
 		TriParSelection(puissanceDefense);
 		
 		
-		Unite unitesMortes [][] = new Unite[2][4];
+		Unite unitesMortes [][] = new Unite[2][2];
 		//les valeurs sont comparées pour le combat
 		if(attaque.size() >= defense.size()) {
 			for(int i = 0 ; i <defense.size(); i++) {
-				System.out.println(attaque.get(i).nom + " attaque " + defense.get(i).nom + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
-				if(puissanceAttaque[i]>puissanceDefense[i]) {
-					System.out.println(defense.get(i).nom + " est mort");
-					unitesMortes[0][i] = defense.get(i);
+				System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " attaque " + defense.get(puissanceDefense[i][1]).nom + " : " + puissanceAttaque[i][0] + " vs " + puissanceDefense[i][0]);
+				if(puissanceAttaque[i][0]>puissanceDefense[i][0]) {
+					System.out.println(defense.get(puissanceDefense[i][1]).nom + " est mort");
+					unitesMortes[0][i] = defense.get(puissanceDefense[i][1]);
 				}
-				else if(puissanceDefense[i]>puissanceAttaque[i]) {
-					System.out.println(attaque.get(i).nom + " est mort");
-					unitesMortes[1][i] = attaque.get(i);
-				}
-				else if(defense.get(i).defense > attaque.get(i).attaque) {
-					System.out.println(defense.get(i).nom + " est mort");
-					unitesMortes[0][i] = defense.get(i);
-				}
-				else if(attaque.get(i).attaque > defense.get(i).defense) {
-					System.out.println(attaque.get(i).nom + " est mort");
-					unitesMortes[1][i] = attaque.get(i);
-				}
-				else {
-					randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-					if(randomNum==1) {
-						System.out.println(attaque.get(i).nom + " est mort");
-						unitesMortes[1][i] = attaque.get(i);
-					}
-					else {
-						System.out.println(defense.get(i).nom + " est mort");
-						unitesMortes[0][i] = defense.get(i);
-					}
+				else if(puissanceDefense[i][0]>puissanceAttaque[i][0]) {
+					System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(puissanceAttaque[i][1]);
 				}
 			}
 		}
 		else {
 			for(int i = 0 ; i <attaque.size(); i++) {
-				System.out.println(attaque.get(i).nom + " attaque " + defense.get(i).nom + " : " + puissanceAttaque[i] + " vs " + puissanceDefense[i]);
-				if(puissanceAttaque[i]>puissanceDefense[i]) {
-					System.out.println(defense.get(i).nom + " est mort");
-					unitesMortes[0][i] = defense.get(i);
+				System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " attaque " + defense.get(puissanceDefense[i][1]).nom + " : " + puissanceAttaque[i][0] + " vs " + puissanceDefense[i][0]);
+				if(puissanceAttaque[i][0]>puissanceDefense[i][0]) {
+					System.out.println(defense.get(puissanceDefense[i][1]).nom + " est mort");
+					unitesMortes[0][i] = defense.get(puissanceDefense[i][1]);
 				}
-				else if(puissanceDefense[i]>puissanceAttaque[i]) {
-					System.out.println(attaque.get(i).nom + " est mort");
-					unitesMortes[1][i] = attaque.get(i);
-				}
-				else if(defense.get(i).defense > attaque.get(i).attaque) {
-					System.out.println(defense.get(i).nom + " est mort");
-					unitesMortes[0][i] = defense.get(i);
-				}
-				else if(attaque.get(i).attaque > defense.get(i).defense) {
-					System.out.println(attaque.get(i).nom + " est mort");
-					unitesMortes[1][i] = attaque.get(i);
-				}
-				else {
-					randomNum = ThreadLocalRandom.current().nextInt(0, 2);
-					if(randomNum==1) {
-						System.out.println(attaque.get(i).numero + " est mort");
-						unitesMortes[1][i] = attaque.get(i);
-					}
-					else {
-						System.out.println(defense.get(i).numero + " est mort");
-						unitesMortes[0][i] = defense.get(i);
-					}
+				else if(puissanceDefense[i][0]>puissanceAttaque[i][0]) {
+					System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " est mort");
+					unitesMortes[1][i] = attaque.get(puissanceAttaque[i][1]);
 				}
 			}
 		}
 		return unitesMortes;
 	}
 	
+	protected void deplacerUnites(Territoires territoireOrigine, Territoires territoireCible, ArrayList <Unite> unitesDeplacees) {
+		if(territoireCible.proprietaire == this) {	
+		for(int i = 0 ; i<unitesDeplacees.size(); i++) {
+				unitesDeplacees.get(i).fatigue();
+				unitesDeplacees.get(i).verifDisponibilite();
+				territoireOrigine.unites.remove(unitesDeplacees.get(i));
+				territoireCible.unites.add(unitesDeplacees.get(i));
+			}
+		}
+	}	
+	
+	
+	
 	protected void reposTroupes() {
 		for(int i = 0 ; i<this.territoires.size(); i++) {
 			for(int j = 0 ; j<this.territoires.get(i).unites.size(); j++) {
-				System.out.println(this.territoires.get(i).nom);
-				System.out.println(this.territoires.get(i).unites.get(j).nom);
 				this.territoires.get(i).unites.get(j).revigoree();
 			}
 		}
 	}
-	public void action(Partie partie) {
-		boolean fin = false;
-		Territoires  territoireSelec;
-		ArrayList <Territoires> voisins = new ArrayList();
-		ArrayList <Territoires> allies = new ArrayList();
-		ArrayList <Territoires> ennemis = new ArrayList();
-		
-		while(!fin) {
-			//le joueur choisit un territoire
-			territoireSelec = this.selectionTerritoire();
-			System.out.println("Pays sélectionné :");
-			System.out.println("      " + territoireSelec.nom);
-			System.out.println("");
-			//on regarde les territoires voisins
-			voisins = territoireSelec.voisinsTerritoire(partie);
-			//on indique que le joueur ne peut pas jouer depuis ce territoire car il n'a qu'une unite
-			if(territoireSelec.unites.size()==1 && this.territoires.contains(territoireSelec)) {
-				System.out.println("Pas d'actions possibles depuis ce territoire");
-			}
-			//si ce territoire lui appartient on trie si les voisins sont allies ou ennemis
-			else if(this.territoires.contains(territoireSelec)) {
-				for(int i = 0 ; i < voisins.size(); i++) {
-					if(this.territoires.contains(voisins.get(i))) {
-						allies.add(voisins.get(i));
-					}	
-					else {
-						ennemis.add(voisins.get(i));
-					}
-				}
-				
-				System.out.println("Deplacer des unités vers :");
-				if(allies.size()!=0) {
-					for(int i = 0 ; i < allies.size() ; i++) {
-						System.out.println("      " + allies.get(i).nom);
-					}
-				}
-				else {
-					System.out.println("      Pas de frontière commune avec un pays allié.");
-				}
-				
-				System.out.println("");
-				if(ennemis.size()!=0) {
-					System.out.println("Attaquer :");
-					for(int i = 0 ; i < ennemis.size() ; i++) {
-						System.out.println("      " + ennemis.get(i).nom);
-					}
-				}
-				else {
-					System.out.println("      Pas de frontière commune avec un pays ennemi.");
-				}
-				System.out.println("---------------------------");
-				System.out.println("---------------------------");
-				
-				/*//choisir une des options puis lancer attaque ou deplacement sur territoireCible
-					//attaque :
-					//ne marche sans doute PAS
-						Territoires territoireCible = ..... ;
-						int indiceDefense = 0;
-						int indiceAttaque = 1;
-						ArrayList <Unite> attaquants = this.choixUnitesCombat(territoireSelec);
-						ArrayList <Unite> defenseurs = territoireCible.unitesDef(attaquants.size());
-						Unite resultat [][]= issueBataille(defenseurs, attaquants);
-						for(int i = 0  ; i<resultat[0].length ; i++) {
-							territoireCible.unites.remove(resultat[0][i]);
-							territoireCible.proprietaire.armees.remove(resultat[0][i]);
-						}
-						if(territoireCible.unites.size() == 0) {
-							territoireCible.proprietaire = this;
-							territoireCible.unites.addAll(attaquants);
-							for(int i = 0 ; i<resultat[1].length ; i++) {
-								territoireCible.unites.remove(resultat[1][i]);
-								territoireCible.proprietaire.armees.remove(resultat[1][i]);
-							}
-						}
-						else {
-							for(int i = 0 ; i<resultat[1].length ; i++) {
-								territoireSelec.unites.remove(resultat[1][i]);
-								this.armees.remove(resultat[1][i]);
-							}
-						}*/		
-			}
-			
-			voisins.clear();
-			allies.clear();
-			ennemis.clear();
-			fin = true;
-		}
-	}
+
 	
-	public void resultatsBataille(Unite unitesMortes [][], Territoires territoireDef, Territoires territoireAtk, ArrayList<Unite> unitesAtk) {
+	public void resultatsBataille(Unite unitesMortes [][], Territoires territoireDef, Territoires territoireAtk, ArrayList<Unite> unitesAtk, Partie partie) {
 		for(int i = 0  ; i<unitesMortes[0].length ; i++) {
 			territoireDef.unites.remove(unitesMortes[0][i]);
 			territoireDef.proprietaire.armees.remove(unitesMortes[0][i]);
 		}
 		if(territoireDef.unites.size() == 0) {
+			territoireDef.proprietaire.territoires.remove(territoireDef);
+			Regions regionTerritoireDef = territoireDef.appartenanceRegionTerritoire(partie);
+			regionTerritoireDef.appartenanceRegionJoueur(territoireDef.proprietaire);
+			if(territoireDef.proprietaire.armees.size()==0) {
+				this.joueursDetruits.add(territoireDef.proprietaire.numero);
+			}
 			territoireDef.proprietaire = this;
 			this.territoires.add(territoireDef);
+			this.territoiresConquis.add(territoireDef);
+			this.dernieresConquetes++;
+			regionTerritoireDef.appartenanceRegionJoueur(this);
 			
 			for(int i = 0 ; i<unitesAtk.size() ; i++) {
 				territoireDef.unites.add(unitesAtk.get(i));
@@ -546,7 +424,15 @@ public class Joueur {
 	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
-		frame.affichageRenfortDebutPartie(this);
+		if(partie.tour == 0) {
+			frame.affichageRenfortDebutPartie(this);
+		}
+		else if(partie.tour>1){
+			frame.affichageRenfort(this);
+		}
+		else {
+			this.setFlagFinDePhase(1);
+		}
 	}
 	
 	public void actionJoueur(Partie partie, Interface2 frame) {
@@ -579,7 +465,6 @@ public class Joueur {
 	public void boucleTourJoueur(Partie partie, Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
-		System.out.println("Les unites ont ete refresh");
 		frame.choixAttaqueDeplacement(partie, this);
 	}
 	

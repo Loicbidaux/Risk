@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.Font;
 import java.awt.geom.FlatteningPathIterator;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.Border;
@@ -38,11 +41,13 @@ public class Interface2 extends JFrame {
 	JLabel transition = new JLabel("");
 	JLabel lblCarte = new JLabel("Carte");
 	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
+	//JLabel lblEncartHautGauche = new JLabel("EncartHautGauche");
 	
 	
 	JButton btnPlay = new JButton("");
 	JButton btnFullscreen = new JButton("FullScreen");
 	JButton btnFullscreenCarte = new JButton("FullScreenCarte");
+	JButton btnFullscreenMenuParametrage = new JButton("btnFullscreenMenuParametrage");
 	JButton btnDebutDePartie = new JButton("");
 	JButton btnSkip = new JButton("Skip");
 	
@@ -52,8 +57,10 @@ public class Interface2 extends JFrame {
 	JLabel fenetreRenfort = new JLabel("");
 	JLabel fenetreChoixAction = new JLabel("");
 	JLabel fenetreAttaque = new JLabel("");
+	JLabel fenetreDeplacement = new JLabel("");
 	
 	int flagSkip =0;
+	String choixCamp ="";
 	
 	private Timer timer = null;
 	
@@ -105,16 +112,8 @@ public class Interface2 extends JFrame {
 		lblMenuParametrage.setBounds(0, 0, 1920, 1080);
  		lblMenuParametrage.setIcon(new ImageIcon("src/Images/Menu/MENU-RISK-STARWARS.png"));
 		contentPane.add(lblMenuParametrage,"2");
-		
- 		lblMenuParametrage.add(btnDebutDePartie);
- 		btnDebutDePartie.setOpaque(false);
- 		btnDebutDePartie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
- 		btnDebutDePartie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
- 		btnDebutDePartie.setFocusPainted(false); // On n'affiche pas l'effet de focus.
- 		btnDebutDePartie.setBounds(760, 960, 375, 81);
- 		btnDebutDePartie.setVisible(true);
  		
- 		lblMenuParametrage.add(btnFullscreen);
+ 		lblMenuParametrage.add(btnFullscreenMenuParametrage);
  		
 		transition.setBounds(0, 0, 1920, 1080);
  		transition.setHorizontalAlignment(JLabel.CENTER);
@@ -122,6 +121,14 @@ public class Interface2 extends JFrame {
  		transition.setBackground(Color.black);
  		transition.setIcon(new ImageIcon("src/Images/Menu/menuaction/test.gif"));
  		contentPane.add(transition,"3");
+ 		
+ 		btnFullscreenMenuParametrage.setOpaque(false);
+ 		btnFullscreenMenuParametrage.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+ 		btnFullscreenMenuParametrage.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+ 		btnFullscreenMenuParametrage.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+ 		btnFullscreenMenuParametrage.setBounds(1780, 920, 83, 81);
+ 		btnFullscreenMenuParametrage.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
+ 		btnFullscreenMenuParametrage.setVisible(true);
  		
  		transition.add(btnSkip);
  		btnSkip.setBounds(1680, 965, 200, 50);
@@ -141,6 +148,9 @@ public class Interface2 extends JFrame {
 		lblEncartBasDroite.setBounds(0, 0, 1920, 1080);
 		lblEncartBasDroite.setIcon(new ImageIcon("src/Images/Menu/menuaction/ENCART-BASDROIT-VIDE.png"));
 		lblCarte.add(lblEncartBasDroite);
+		
+		//lblEncartHautGauche.setBounds(32,23,470,230);
+		//lblCarte.add(lblEncartHautGauche);
 		
 		
 		lblCarte.add(btnFullscreenCarte);
@@ -237,19 +247,11 @@ public class Interface2 extends JFrame {
 			
 		};
 		
-		ActionListener DebutDePartie = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-			cl.show(contentPane, "3");	
-			timer.start();
-			}
-		};
-		
 		btnFullscreen.addMouseListener(fullscreen);
 		btnFullscreenCarte.addMouseListener(fullscreen);
+		btnFullscreenMenuParametrage.addMouseListener(fullscreen);
 		btnPlay.addActionListener(Jouer);
 		
-		btnDebutDePartie.addActionListener(DebutDePartie);
 		btnSkip.addMouseListener(new MouseListener() {
 		 			
 			@Override
@@ -289,15 +291,13 @@ public class Interface2 extends JFrame {
 	}
 	
 	
-	public void affichageUniteCarte(Partie partie ) {
+	public void affichageUniteCarte(Partie partie) {
 		String couleur;
 		String camp;
 		ArrayList <Unite> uniteTerritoire = new ArrayList();
 		int nbSoldatTerritoire=0 ;
 		int nbCavalierTerritoire = 0;
 		int nbCanonTerritoire = 0;
-		
-		
 		int[] coordonneesUnite ;
 		
 		for(int i = 0 ; i<partie.regions.size(); i++) {
@@ -377,7 +377,7 @@ public class Interface2 extends JFrame {
 			for(int i = 0 ; i<partie.regions.size(); i++) {
 			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
 		 	try {
-		 		Thread.sleep(500);
+		 		Thread.sleep(200);
 		 	} catch (InterruptedException e) {
 		 	// TODO Auto-generated catch block
 		 		e.printStackTrace();
@@ -428,7 +428,7 @@ public class Interface2 extends JFrame {
 			}}
 		}
 		 	
-		public void parametragePartie(Partie partie) {
+	public void parametragePartie(Partie partie) {
 				
 			JButton joueurEmpire = new JButton();
 			JButton joueurRebelle = new JButton();
@@ -436,6 +436,16 @@ public class Interface2 extends JFrame {
 			JButton iaRebelle = new JButton();
 			JButton ajouterJoueur = new JButton();
 			JButton ajouterIa = new JButton();
+			
+			JTextField fieldPseudo = new JTextField();
+
+			int nbJoueur =partie.getNbreJoueursTotal();
+			
+			lblMenuParametrage.add(fieldPseudo);
+			fieldPseudo.setText("");
+			fieldPseudo.setOpaque(false);
+			fieldPseudo.setBorder(null);
+			fieldPseudo.setBounds(585, 255, 895, 40);
 				 
 			lblMenuParametrage.add(joueurEmpire);
 			joueurEmpire.setOpaque(false);
@@ -476,7 +486,81 @@ public class Interface2 extends JFrame {
 			ajouterJoueur.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			ajouterJoueur.setBounds(490, 470, 365, 71);
 			ajouterJoueur.setVisible(true);
-				
+			
+			MouseListener ajoutJoueur = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+						
+						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), true);
+						joueur.setCamp(choixCamp);
+						if(nbJoueur ==0) {
+							joueur.setCouleur("black");
+							
+						}
+						if(nbJoueur ==1) {
+							joueur.setCouleur("red");
+						}
+						if(nbJoueur ==2) {
+							joueur.setCouleur("pink");						
+						}
+						if(nbJoueur ==3) {
+							joueur.setCouleur("green");
+						}
+						if(nbJoueur ==4) {
+							joueur.setCouleur("orange");
+						}
+						
+						if(nbJoueur ==5) {
+							joueur.setCouleur("blue");
+						}
+						
+						
+						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						listejoueur.add(joueur);
+						partie.setJoueurs(listejoueur);
+						
+						
+						
+						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
+						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
+						
+						choixCamp ="";
+						partie.flagAjouter=1;
+					}
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			};
+			
+			ajouterJoueur.addMouseListener(ajoutJoueur);
+			
+			
 			lblMenuParametrage.add(ajouterIa);
 			ajouterIa.setOpaque(false);
 			ajouterIa.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
@@ -484,7 +568,199 @@ public class Interface2 extends JFrame {
 			ajouterIa.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			ajouterIa.setBounds(1055, 470, 365, 71);
 			ajouterIa.setVisible(true);
+			
+			MouseListener ajoutIa = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+						
+						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), false);
+						joueur.setCamp(choixCamp);
+						if(nbJoueur ==0) {
+							joueur.setCouleur("black");
+							
+						}
+						if(nbJoueur ==1) {
+							joueur.setCouleur("red");
+						}
+						if(nbJoueur ==2) {
+							joueur.setCouleur("pink");
+							
+						}
+						if(nbJoueur ==3) {
+							joueur.setCouleur("green");
+						}
+						if(nbJoueur ==4) {
+							joueur.setCouleur("orange");
+						}
+						
+						if(nbJoueur ==5) {
+							joueur.setCouleur("blue");
+						}
+						
+						
+						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						listejoueur.add(joueur);
+						partie.setJoueurs(listejoueur);
+						
+						
+						
+						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
+						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
+						
+						choixCamp ="";
+						partie.flagAjouter=1;
+					}
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+			
+			ajouterIa.addMouseListener(ajoutIa);
+			
+			lblMenuParametrage.add(btnDebutDePartie);
+	 		btnDebutDePartie.setOpaque(false);
+	 		btnDebutDePartie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+	 		btnDebutDePartie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+	 		btnDebutDePartie.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+	 		btnDebutDePartie.setBounds(760, 960, 375, 81);
+	 		btnDebutDePartie.setVisible(true);
+			
+			ActionListener DebutDePartie = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(nbJoueur > 1 ) {
+						cl.show(contentPane, "3");
+						partie.flagDebutDePartie = 1;
+						timer.start();
+					}
 				
+				}
+			};
+			
+			btnDebutDePartie.addActionListener(DebutDePartie);
+			
+			if(nbJoueur!= 0) {
+				for(int i =0; i< nbJoueur; i++) {
+					String pseudo = partie.getJoueurs().get(i).Pseudo;
+					String couleur = partie.getJoueurs().get(i).Couleur;
+					String camp = partie.getJoueurs().get(i).camp;
+					
+					JLabel joueur = new JLabel(pseudo);
+					joueur.setOpaque(false);
+					joueur.setBounds(500, 700+i*50, 500, 25);
+					joueur.setVisible(true);
+					
+					JLabel iconeJoueur = new JLabel();
+					iconeJoueur.setOpaque(false);
+					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
+					iconeJoueur.setVisible(true);
+					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+					
+					
+					
+					lblMenuParametrage.add(joueur);
+					lblMenuParametrage.add(iconeJoueur);
+				}
+			}
+			
+			MouseListener choixCampEmpire = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					choixCamp="empire";
+					
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+			
+			MouseListener choixCampRebelles = new MouseListener() {
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						choixCamp="rebelles";
+					}
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					};
+				
+			joueurEmpire.addMouseListener(choixCampEmpire);
+			joueurRebelle.addMouseListener(choixCampRebelles);
+			iaEmpire.addMouseListener(choixCampEmpire);
+			iaRebelle.addMouseListener(choixCampRebelles);
+					
 			lblMenuParametrage.validate();
 			lblMenuParametrage.repaint();
 	}
@@ -499,6 +775,12 @@ public class Interface2 extends JFrame {
 		int nbCavalierTerritoire=0;
 		int nbCanonTerritoire=0;
 		
+		JLabel tourDe = new JLabel("<html><font color = 'white'><font size = 25>Tour de "+ joueur.Pseudo +" (Joueur " + joueur.numero + ")</html>");
+		lblCarte.add(tourDe);
+		tourDe.setOpaque(false);
+		tourDe.setBounds(30, 25, 112, 43);
+		
+		tourDe.setVisible(true);
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
 		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
@@ -524,6 +806,9 @@ public class Interface2 extends JFrame {
 					
 					joueur.setFlagFinDePhase(1);
 					
+					lblEncartBasDroite.removeAll();
+					lblEncartBasDroite.repaint();
+					lblEncartBasDroite.validate();
 					fenetreRenfort.removeAll();
 					fenetreRenfort.repaint();
 					fenetreRenfort.validate();
@@ -608,9 +893,6 @@ public class Interface2 extends JFrame {
 				nbSoldatMoins.setFocusPainted(false);
 				nbSoldatMoins.setVisible(true);
 				
-				
-				
-				
 				JLabel nbCavalier = new JLabel("<html><font color = 'white'><font size = '15'>"+0+"</html>");
 				nbCavalier.setHorizontalAlignment(JLabel.CENTER);
 				nbCavalier.setVerticalAlignment(JLabel.CENTER);
@@ -633,8 +915,6 @@ public class Interface2 extends JFrame {
 				nbCavalierMoins.setContentAreaFilled(false);
 				nbCavalierMoins.setFocusPainted(false);
 				nbCavalierMoins.setVisible(true);
-				
-				
 				
 				JLabel nbCanon = new JLabel("<html><font color = 'white'><font size = '15'>"+0+"</html>");
 				nbCanon.setHorizontalAlignment(JLabel.CENTER);
@@ -660,7 +940,6 @@ public class Interface2 extends JFrame {
 				nbCanonMoins.setVisible(true);
 				
 				
-				
 				JLabel nbRenfortDisponible = new JLabel("<html><font color = 'white'><font size = '15'>"+String.valueOf(joueur.getNbRenfort())+"</html>");
 				nbRenfortDisponible.setHorizontalTextPosition(JLabel.CENTER);
 				nbRenfortDisponible.setOpaque(false);
@@ -683,8 +962,7 @@ public class Interface2 extends JFrame {
 					@Override
 					public void mouseReleased(MouseEvent e) {
 						// TODO Auto-generated method stub
-						System.out.println("haha");
-						
+	
 						fenetreRenfort.add(nbSoldat);
 						nbSoldat.setVisible(true);
 						fenetreRenfort.add(nbSoldatPlus);
@@ -1194,8 +1472,7 @@ public class Interface2 extends JFrame {
 		
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
-		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
-		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/renfort.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JButton finDePhase = new JButton("");
@@ -1218,6 +1495,9 @@ public class Interface2 extends JFrame {
 					
 					joueur.setFlagFinDePhase(1);
 					
+					lblEncartBasDroite.removeAll();
+					lblEncartBasDroite.repaint();
+					lblEncartBasDroite.validate();
 					fenetreRenfort.removeAll();
 					fenetreRenfort.repaint();
 					fenetreRenfort.validate();
@@ -1329,7 +1609,6 @@ public class Interface2 extends JFrame {
 					@Override
 					public void mouseReleased(MouseEvent e) {
 						// TODO Auto-generated method stub
-						System.out.println("haha");
 						
 						fenetreRenfort.add(nbSoldat);
 						nbSoldat.setVisible(true);
@@ -1560,16 +1839,45 @@ public class Interface2 extends JFrame {
 		int nbCavalierTerritoire;
 		int nbCanonTerritoire;
 		int [] coordonneesUnite;
+		String camp = joueur.camp;
 		
 		lblEncartBasDroite.removeAll();
 		
 		fenetreChoixAction.setBounds(0,0,1920,1080);
 		fenetreChoixAction.setIcon(new ImageIcon("src/Images/Menu/menuaction/ATTAQUE-DEPLACEMENT.png"));
 		
+		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");
+		lblCarte.add(tourDePseudo);
+		tourDePseudo.setOpaque(false);
+		tourDePseudo.setBounds(60, 10, 400, 100);
+		
+		tourDePseudo.setVisible(true);
+		
+		JLabel tourDeNumero = new JLabel("<html><font color = 'white'><font size = 5>(Joueur "+ joueur.numero + ")</html>");
+		lblCarte.add(tourDeNumero);
+		tourDeNumero.setOpaque(false);
+		tourDeNumero.setBounds(60, 40, 400, 100);
+		
+		tourDeNumero.setVisible(true);
+		
+		JLabel missionJoueur = new JLabel("<html><font color = 'white'><font size = 5>Mission : "+ joueur.mission.enonce +"</html>");
+		lblCarte.add(missionJoueur);
+		missionJoueur.setOpaque(false);
+		missionJoueur.setBounds(40,80,400,100);
+		
+		missionJoueur.setVisible(true);
+		
+		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase Attaque/Deplacement</html>");
+		lblCarte.add(nomPhase);
+		nomPhase.setOpaque(false);
+		nomPhase.setBounds(40, 140, 400, 100);
+		
+		nomPhase.setVisible(true);
+		
 		JButton finDePhase = new JButton("");
 		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1560, 735, 200, 50);
+		finDePhase.setBounds(1600, 735, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
@@ -1616,7 +1924,7 @@ public class Interface2 extends JFrame {
 		});
 		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
-			final Territoires territoireAttaquant = joueur.territoires.get(i);
+			final Territoires territoireJoueur = joueur.territoires.get(i);
 			ArrayList <JButton> territoiresAllies = new ArrayList();
 			ArrayList <JButton> territoiresEnnemis = new ArrayList();
 			nbSoldatTerritoire = 0;
@@ -1642,9 +1950,9 @@ public class Interface2 extends JFrame {
 			final int nbCavalierTerritoireFinal = nbCavalierTerritoire;
 			final int nbCanonTerritoireFinal = nbCanonTerritoire;
 			
-			System.out.println(joueur.territoires.get(i).voisinsTerritoire(partie).size());
 			for(int j = 0 ; j<joueur.territoires.get(i).voisinsTerritoire(partie).size() ; j++) {
 				if(joueur.territoires.contains(joueur.territoires.get(i).voisinsTerritoire(partie).get(j))) {
+					final Territoires territoireCible = joueur.territoires.get(i).voisinsTerritoire(partie).get(j);
 					JButton territoireAllie = new JButton("");
 					territoireAllie.setOpaque(false);
 					territoireAllie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
@@ -1683,8 +1991,428 @@ public class Interface2 extends JFrame {
 						@Override
 						public void mouseClicked(MouseEvent e) {
 							// TODO Auto-generated method stub
+							lblEncartBasDroite.remove(fenetreChoixAction);
+							lblEncartBasDroite.repaint();
+							lblEncartBasDroite.validate();
+							fenetreDeplacement.setBounds(0,0,1920,1080);
+							fenetreDeplacement.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/deplacement.png"));
+							lblEncartBasDroite.add(fenetreDeplacement);
+							fenetreDeplacement.removeAll();
+							fenetreDeplacement.add(finDePhase);
 							
+							JLabel soldatDeplacement = new JLabel("<html><font color = 'white'><font size = 15>"+0+"</html>");
+							soldatDeplacement.setHorizontalAlignment(JLabel.CENTER);
+							soldatDeplacement.setVerticalAlignment(JLabel.CENTER);
+							soldatDeplacement.setOpaque(false);
+							soldatDeplacement.setBounds(1465, 933, 60, 60);
+							soldatDeplacement.setVisible(true);
+							fenetreDeplacement.add(soldatDeplacement);
+							
+							JLabel soldatDeplacementDispo = new JLabel("<html><font color = 'yellow'><font size = 5>/"+nbSoldatTerritoireFinal+"</html>");
+							soldatDeplacementDispo.setHorizontalAlignment(JLabel.CENTER);
+							soldatDeplacementDispo.setVerticalAlignment(JLabel.CENTER);
+							soldatDeplacementDispo.setOpaque(false);
+							soldatDeplacementDispo.setBounds(1465, 957, 60, 60);
+							soldatDeplacementDispo.setVisible(true);
+							fenetreDeplacement.add(soldatDeplacementDispo);
+							
+							JLabel cavalierDeplacement = new JLabel("<html><font color = 'white'><font size = 15>"+0+"</html>");
+							cavalierDeplacement.setHorizontalAlignment(JLabel.CENTER);
+							cavalierDeplacement.setVerticalAlignment(JLabel.CENTER);
+							cavalierDeplacement.setOpaque(false);
+							cavalierDeplacement.setBounds(1615, 933, 60, 60);
+							cavalierDeplacement.setVisible(true);
+							fenetreDeplacement.add(cavalierDeplacement);
+							
+							JLabel cavalierDeplacementDispo = new JLabel("<html><font color = 'yellow'><font size = 5>/"+nbCavalierTerritoireFinal+"</html>");
+							cavalierDeplacementDispo.setHorizontalAlignment(JLabel.CENTER);
+							cavalierDeplacementDispo.setVerticalAlignment(JLabel.CENTER);
+							cavalierDeplacementDispo.setOpaque(false);
+							cavalierDeplacementDispo.setBounds(1615, 957, 60, 60);
+							cavalierDeplacementDispo.setVisible(true);
+							fenetreDeplacement.add(cavalierDeplacementDispo);
+							
+							JLabel canonDeplacement = new JLabel("<html><font color = 'white'><font size = 15>"+0+"</html>");
+							canonDeplacement.setHorizontalAlignment(JLabel.CENTER);
+							canonDeplacement.setVerticalAlignment(JLabel.CENTER);
+							canonDeplacement.setOpaque(false);
+							canonDeplacement.setBounds(1770, 933, 60, 60);
+							canonDeplacement.setVisible(true);
+							fenetreDeplacement.add(canonDeplacement);
+							
+							JLabel canonDeplacementDispo = new JLabel("<html><font color = 'yellow'><font size = 5>/"+nbCanonTerritoireFinal+"</html>");
+							canonDeplacementDispo.setHorizontalAlignment(JLabel.CENTER);
+							canonDeplacementDispo.setVerticalAlignment(JLabel.CENTER);
+							canonDeplacementDispo.setOpaque(false);
+							canonDeplacementDispo.setBounds(1770, 957, 60, 60);
+							canonDeplacementDispo.setVisible(true);
+							fenetreDeplacement.add(canonDeplacementDispo);
+							
+
+							JButton deplacer = new JButton("");
+							deplacer.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+							deplacer.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+							deplacer.setFocusPainted(false);
+							deplacer.setOpaque(false);
+							deplacer.setBounds(1560, 1010, 200, 50);
+							deplacer.setVisible(false);
+							fenetreDeplacement.add(deplacer);
+							
+							deplacer.addMouseListener(new MouseListener() {
+								
+								@Override
+								public void mouseReleased(MouseEvent e) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void mousePressed(MouseEvent e) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void mouseExited(MouseEvent e) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void mouseEntered(MouseEvent e) {
+									// TODO Auto-generated method stub
+									
+								}
+								
+								@Override
+								public void mouseClicked(MouseEvent e) {
+									// TODO Auto-generated method stub
+									int j = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7));
+									int k = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7));
+									int l = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7));
+									ArrayList <Unite> unitesDeplacees = new ArrayList();
+									for(int q = 0 ; q < territoireJoueur.unites.size() ; q++) {
+										if(j!=0 && territoireJoueur.unites.get(q).cout==1) {
+											unitesDeplacees.add(territoireJoueur.unites.get(q));
+											j--;
+										}
+										if(k!=0 && territoireJoueur.unites.get(q).cout==3) {
+											unitesDeplacees.add(territoireJoueur.unites.get(q));
+											k--;
+										}
+										if(l!=0 && territoireJoueur.unites.get(q).cout==7) {
+											unitesDeplacees.add(territoireJoueur.unites.get(q));
+											l--;
+										}
+									}
+									joueur.deplacerUnites(territoireJoueur, territoireCible, unitesDeplacees);
+									joueur.setFlagValider(1);	
+								}
+							});
+							
+							if(nbSoldatTerritoireFinal>0) {
+								JButton soldatDeplacementPlus = new JButton("");
+								soldatDeplacementPlus.setOpaque(false);
+								soldatDeplacementPlus.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								soldatDeplacementPlus.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								soldatDeplacementPlus.setFocusPainted(false);
+								soldatDeplacementPlus.setBounds(1430, 960, 33, 30);
+								fenetreDeplacement.add(soldatDeplacementPlus);
+							
+								soldatDeplacementPlus.addMouseListener(new MouseListener() {
+								
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7))+1;
+										int k = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7));
+										int l = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7));
+										if (j<=nbSoldatTerritoireFinal && j+k+l != territoireJoueur.unites.size()) {
+											soldatDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if(j+k+l>0) {
+											deplacer.setVisible(true);
+										}
+									}
+								});
+							
+								JButton soldatDeplacementMoins = new JButton("");
+								soldatDeplacementMoins.setOpaque(false);
+								soldatDeplacementMoins.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								soldatDeplacementMoins.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								soldatDeplacementMoins.setFocusPainted(false);
+								soldatDeplacementMoins.setBounds(1530, 960, 25, 30);
+								fenetreDeplacement.add(soldatDeplacementMoins);
+							
+								soldatDeplacementMoins.addMouseListener(new MouseListener() {
+								
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+									
+									}
+								
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7))-1;
+									
+										if (j>=0) {
+											soldatDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if (j<=0) {
+											deplacer.setVisible(false);
+										}
+									}
+								});
+							
+							}
+							
+							if(nbCavalierTerritoireFinal>0) {
+								JButton cavalierDeplacementPlus = new JButton("");
+								cavalierDeplacementPlus.setOpaque(false);
+								cavalierDeplacementPlus.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								cavalierDeplacementPlus.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								cavalierDeplacementPlus.setFocusPainted(false);
+								cavalierDeplacementPlus.setBounds(1580, 960, 33, 30);
+								fenetreDeplacement.add(cavalierDeplacementPlus);
+								
+								cavalierDeplacementPlus.addMouseListener(new MouseListener() {
+									
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7))+1;
+										int k = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7));
+										int l = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7));
+										
+										if (j<=nbCavalierTerritoireFinal && j+k+l != territoireJoueur.unites.size()) {
+										cavalierDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if(j+k+l>0) {
+											deplacer.setVisible(true);
+										}
+									}
+								});
+								
+								JButton cavalierDeplacementMoins = new JButton("");
+								cavalierDeplacementMoins.setOpaque(false);
+								cavalierDeplacementMoins.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								cavalierDeplacementMoins.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								cavalierDeplacementMoins.setFocusPainted(false);
+								cavalierDeplacementMoins.setBounds(1680, 960, 25, 30);
+								fenetreDeplacement.add(cavalierDeplacementMoins);
+								
+								cavalierDeplacementMoins.addMouseListener(new MouseListener() {
+									
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub	
+									}
+									
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7))-1;
+										
+										if (j>=0) {
+											cavalierDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if (j<=0) {
+											deplacer.setVisible(false);
+										}
+									}
+								});
+							
+							}
+							
+							
+							if(nbCanonTerritoireFinal>0) {
+								JButton canonDeplacementPlus = new JButton("");
+								canonDeplacementPlus.setOpaque(false);
+								canonDeplacementPlus.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								canonDeplacementPlus.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								canonDeplacementPlus.setFocusPainted(false);
+								canonDeplacementPlus.setBounds(1730, 960, 33, 30);
+								fenetreDeplacement.add(canonDeplacementPlus);
+								
+								canonDeplacementPlus.addMouseListener(new MouseListener() {
+									
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7))+1;
+										int k = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7));
+										int l = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7));
+										
+										if (j<=nbCanonTerritoireFinal && j+k+l != territoireJoueur.unites.size()) {
+										canonDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if(j+k+l>0) {
+											deplacer.setVisible(true);
+										}
+									}
+								});
+								
+								JButton canonDeplacementMoins = new JButton("");
+								canonDeplacementMoins.setOpaque(false);
+								canonDeplacementMoins.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+								canonDeplacementMoins.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+								canonDeplacementMoins.setFocusPainted(false);
+								canonDeplacementMoins.setBounds(1830, 960, 25, 30);
+								fenetreDeplacement.add(canonDeplacementMoins);
+								
+								canonDeplacementMoins.addMouseListener(new MouseListener() {
+									
+									@Override
+									public void mouseReleased(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mousePressed(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseExited(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseEntered(MouseEvent e) {
+										// TODO Auto-generated method stub
+										
+									}
+									
+									@Override
+									public void mouseClicked(MouseEvent e) {
+										// TODO Auto-generated method stub
+										int j = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7))-1;
+										
+										if (j>=0) {
+										canonDeplacement.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
+										}
+										if (j<=0) {
+											deplacer.setVisible(false);
+										}
+									}
+								});
+								
+							}
 						}
+						
 					});
 				}
 				else {
@@ -1731,7 +2459,7 @@ public class Interface2 extends JFrame {
 							lblEncartBasDroite.repaint();
 							lblEncartBasDroite.validate();
 							fenetreAttaque.setBounds(0,0,1920,1080);
-							fenetreAttaque.setIcon(new ImageIcon("src/Images/Menu/menuaction/empire/attaque.png"));
+							fenetreAttaque.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/attaque.png"));
 							lblEncartBasDroite.add(fenetreAttaque);
 							fenetreAttaque.removeAll();
 							fenetreAttaque.add(finDePhase);
@@ -1827,43 +2555,67 @@ public class Interface2 extends JFrame {
 									int l = Integer.parseInt(canonAttaque.getText().substring(44,canonAttaque.getText().length()-7));
 									ArrayList <Unite> unitesDef = territoireDefense.unitesDef(j+k+l);
 									ArrayList <Unite> unitesAtk = new ArrayList();
-									for(int q = 0 ; q < territoireAttaquant.unites.size() ; q++) {
-										if(j!=0 && territoireAttaquant.unites.get(q).cout==1) {
-											unitesAtk.add(territoireAttaquant.unites.get(q));
+									for(int q = 0 ; q < territoireJoueur.unites.size() ; q++) {
+										if(j!=0 && territoireJoueur.unites.get(q).cout==1) {
+											unitesAtk.add(territoireJoueur.unites.get(q));
 											j--;
 										}
-										if(k!=0 && territoireAttaquant.unites.get(q).cout==3) {
-											unitesAtk.add(territoireAttaquant.unites.get(q));
+										if(k!=0 && territoireJoueur.unites.get(q).cout==3) {
+											unitesAtk.add(territoireJoueur.unites.get(q));
 											k--;
 										}
-										if(l!=0 && territoireAttaquant.unites.get(q).cout==7) {
-											unitesAtk.add(territoireAttaquant.unites.get(q));
+										if(l!=0 && territoireJoueur.unites.get(q).cout==7) {
+											unitesAtk.add(territoireJoueur.unites.get(q));
 											l--;
 										}
 									}
 									
 									Unite unitesMortes [][] = joueur.issueBataille(unitesDef, unitesAtk);
-									System.out.println("Nbre d'attaquants : " + unitesAtk.size());
-									System.out.println("Avant A: " + territoireAttaquant.unites.size());
-									System.out.println("Avant D: " + territoireDefense.unites.size());
-									joueur.resultatsBataille(unitesMortes, territoireDefense, territoireAttaquant, unitesAtk);
-									System.out.println("Apres A: " +territoireAttaquant.unites.size());
-									System.out.println("Apres D: " +territoireDefense.unites.size());
-									if(territoireDefense.proprietaire==territoireAttaquant.proprietaire) {
-										System.out.println("Je peux m'attaquer ?????");
+									/*int nbSoldatsMortsAttaque = 0;
+									int nbCavaliersMortsAttaque = 0;
+									int nbCanonsMortsAttaque = 0;
+									int nbSoldatsMortsDefense = 0;
+									int nbCavaliersMortsDefense = 0;
+									int nbCanonsMortsDefense = 0;
+									
+									for(int q = 0 ; q<unitesMortes[1].length-1 ; q++) {
+										if(unitesMortes[1][q].cout==1) {
+											nbSoldatsMortsAttaque++;
+										}
+										if(unitesMortes[1][q].cout==3) {
+											nbCavaliersMortsAttaque++;
+										}
+										if(unitesMortes[1][q].cout==7) {
+											nbCanonsMortsAttaque++;
+										}
 									}
-									else {
-										System.out.println("Il n'a pas cédé !");
-									}
-								
+									
+									for(int q = 0 ; q<unitesMortes[0].length-1 ; q++) {
+										if(unitesMortes[1][q].cout==1) {
+											nbSoldatsMortsDefense++;
+										}
+										if(unitesMortes[1][q].cout==3) {
+											nbCavaliersMortsDefense++;
+										}
+										if(unitesMortes[1][q].cout==7) {
+											nbCanonsMortsDefense++;
+										}
+									}*/
+									joueur.resultatsBataille(unitesMortes, territoireDefense, territoireJoueur, unitesAtk,partie);
 									joueur.setFlagValider(1);	
+									
+									/*JTextArea resultatsAttaquant = new JTextArea();
+							        resultatsAttaquant.setLineWrap(true);
+							        resultatsAttaquant.setText("The quick brown fox jumps over the lazy dog.");
+
+							        Font font = new Font("Segoe Script", Font.BOLD, 20);
+							        resultatsAttaquant.setFont(font);
+									resultatsAttaquant.setVisible(true);
+									lblEncartHautGauche.add(resultatsAttaquant);*/
 									lblEncartBasDroite.removeAll();
 									lblEncartBasDroite.repaint();
 									lblEncartBasDroite.validate();
 									
-									
-									//System.out.println("La defense a perdu " + unitesMortes[0].length + " unites ...");
-									//System.out.println("L'attaque a perdu " + unitesMortes[1].length + " unites ...");
 								}
 							});
 							
@@ -1907,9 +2659,7 @@ public class Interface2 extends JFrame {
 									int j = Integer.parseInt(soldatAttaque.getText().substring(44,soldatAttaque.getText().length()-7))+1;
 									int k = Integer.parseInt(cavalierAttaque.getText().substring(44,cavalierAttaque.getText().length()-7));
 									int l = Integer.parseInt(canonAttaque.getText().substring(44,canonAttaque.getText().length()-7));
-									System.out.println("	max : " + nbSoldatTerritoireFinal);
-									System.out.println("	j : " + j);
-									if (j<=nbSoldatTerritoireFinal && j+k+l<=3 && j+k+l != territoireAttaquant.unites.size()) {
+									if (j<=nbSoldatTerritoireFinal && j+k+l<=3 && j+k+l != territoireJoueur.unites.size()) {
 									soldatAttaque.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
 									}
 									if(j+k+l>0) {
@@ -2007,7 +2757,7 @@ public class Interface2 extends JFrame {
 									int k = Integer.parseInt(soldatAttaque.getText().substring(44,soldatAttaque.getText().length()-7));
 									int l = Integer.parseInt(canonAttaque.getText().substring(44,canonAttaque.getText().length()-7));
 									
-									if (j<=nbCavalierTerritoireFinal && j+k+l<=3 && j+k+l != territoireAttaquant.unites.size()) {
+									if (j<=nbCavalierTerritoireFinal && j+k+l<=3 && j+k+l != territoireJoueur.unites.size()) {
 									cavalierAttaque.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
 									}
 									if(j+k+l>0) {
@@ -2104,7 +2854,7 @@ public class Interface2 extends JFrame {
 									int k = Integer.parseInt(soldatAttaque.getText().substring(44,soldatAttaque.getText().length()-7));
 									int l = Integer.parseInt(cavalierAttaque.getText().substring(44,cavalierAttaque.getText().length()-7));
 									
-									if (j<=nbCanonTerritoireFinal && j+k+l<=3 && j+k+l != territoireAttaquant.unites.size()) {
+									if (j<=nbCanonTerritoireFinal && j+k+l<=3 && j+k+l != territoireJoueur.unites.size()) {
 									canonAttaque.setText("<html><font color = 'white'><font size = 15>"+String.valueOf(j)+"</html>");
 									}
 									if(j+k+l>0) {
@@ -2205,11 +2955,11 @@ public class Interface2 extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					// TODO Auto-generated method stub
 					lblEncartBasDroite.remove(fenetreAttaque);
+					lblEncartBasDroite.remove(fenetreDeplacement);
 					lblEncartBasDroite.add(fenetreChoixAction);
 					fenetreChoixAction.removeAll();
 					fenetreChoixAction.repaint();
 					fenetreChoixAction.validate();
-					System.out.println(territoiresAllies.size());
 					for(int i = 0 ; i < territoiresAllies.size() ; i++) {
 						fenetreChoixAction.add(territoiresAllies.get(i));
 						territoiresAllies.get(i).setVisible(true);
@@ -2233,6 +2983,11 @@ public class Interface2 extends JFrame {
 		lblCarte.validate();
 		lblCarte.repaint();
 	}
-
 	
+	public void refreshMenuParametrage() {
+		lblMenuParametrage.removeAll();
+		lblMenuParametrage.add(btnFullscreenMenuParametrage);
+		lblMenuParametrage.validate();
+		lblMenuParametrage.repaint();
+	}
 }

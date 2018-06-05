@@ -7,24 +7,6 @@ import java.awt.event.*;
 
 public class Jeu {
 	
-	/*public void menuPrincipal() {
-		StdDraw.setCanvasSize(1352,720);
-		StdDraw.picture(0.5,0.5,"avantMenu.png");
-		if(StdDraw.isKeyPressed(49)) {	
-			System.out.println("Ca marche");
-			StdDraw.clear();
-			StdDraw.filledRectangle(0, 0, 30, 40);
-		}
-	}*/
-	
-	private void menuOption() {
-		
-	}
-	
-	private void menuPartie() {
-		
-	}
-	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
@@ -279,19 +261,22 @@ public class Jeu {
 		Unite canonA = new Canon(3, "CanonA");
 		
 		Unite soldatD = new Soldat(4, "SoldatD");
-		Unite cavalierD = new Cavalier(5, "CavalierA" );
-		Unite canonD = new Canon(6, "CanonA");
+		Unite cavalierD = new Cavalier(5, "CavalierD" );
+		Unite canonD = new Canon(6, "CanonD");
 		
 		
-		/*ArrayList <Unite> attaquants = new ArrayList<Unite>();
+		ArrayList <Unite> attaquants = new ArrayList<Unite>();
 		attaquants.add(0,soldatA);
 		attaquants.add(1, cavalierA);
 		attaquants.add(2, canonA);
-		attaquants.add(3, soldatD);
+		
+		ArrayList <Unite> defenseurs = new ArrayList();
+		defenseurs.add(soldatD);
+		defenseurs.add(cavalierD);
 		
 		
-		Tatooine.setUnites(attaquants);
-		Wayland.setUnites(attaquants);
+		/*Tatooine.setUnites(attaquants);
+		Wayland.setUnites(defenseurs);
 		Toprawa.setUnites(attaquants);
 		Dathomir.setUnites(attaquants);
 		Yavin4.setUnites(attaquants);
@@ -368,7 +353,7 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
@@ -386,23 +371,35 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0},
 				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0}
 		};
-		Partie partie = new Partie(0,6,4, regions, adjMatrices);
+		Partie partie = new Partie(0,regions, adjMatrices);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
-		frame.parametragePartie(partie);
+		partie.parametragePartie(frame);
 		partie.miseEnPlace();
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			partie.joueurs.get(i).attributionRenfort(partie,frame);
 		}
-		
-		for(int i = 0 ; i<partie.joueurs.size(); i++) {
-			partie.joueurs.get(i).reposTroupes();
-			partie.joueurs.get(i).actionJoueur(partie, frame);
+		partie.tour++;
+		while(!termine) {
+			for(int i = 0 ; i<partie.joueurs.size(); i++) {
+				System.out.println("Le tour " + partie.tour + " est en cours !");
+				System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
+				partie.tourJoueur(partie.joueurs.get(i), frame);
+				termine=partie.joueurs.get(i).verifVictoire();
+			}
+			partie.tour++;
 		}
+		
+		//frame.choixAttaqueDeplacement(partie, partie.joueurs.get(0));
+		for(int i = 0 ; i < partie.joueurs.size(); i++) {
+			System.out.println(partie.joueurs.get(i).mission.enonce);
+		}
+
+		joueur.issueBataille(defenseurs, attaquants);
 		
 	}
 

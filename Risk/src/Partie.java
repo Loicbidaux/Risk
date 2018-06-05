@@ -5,22 +5,22 @@ import java.util.ListIterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Partie {
-	int tour;
-	int nbreJoueursTotal;
-	int nbreJoueursHumains;
-	Territoires [] noeuds;
-	int adjMatrices [][];
-	ArrayList <Joueur> joueurs = new ArrayList();
-	ArrayList <Missions> missionsDispo = new ArrayList();
-	ArrayList <Regions> regions = new ArrayList();
+	public int tour = 0;
+	public int nbreJoueursTotal;
+	public int nbreJoueursHumains;
+	public Territoires [] noeuds;
+	public int adjMatrices [][];
+	public ArrayList <Joueur> joueurs = new ArrayList();
+	public ArrayList <Missions> missionsDispo = new ArrayList();
+	public ArrayList <Regions> regions = new ArrayList();
 	
-	int flagParametrageDebut = 0;
+	public int flagParametrageDebut = 0;
+	public int flagDebutDePartie =0;
+	public int flagAjouter =0;
 	
-	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Regions> regions, int adjMatrices [][]) {
+	public Partie(int tour, ArrayList <Regions> regions, int adjMatrices [][]) {
 		super();
 		this.tour = tour;
-		this.nbreJoueursTotal = nbreJoueursTotal;
-		this.nbreJoueursHumains = nbreJoueursHumains;
 		this.regions = regions;
 		this.adjMatrices = adjMatrices;
 	}
@@ -60,46 +60,19 @@ public class Partie {
 	public void setMissionsDispo(ArrayList<Missions> missionsDispo) {
 		this.missionsDispo = missionsDispo;
 	}
-
-	//on regarde a quelle region appartient la region demandee
-	public Regions appartenanceRegionTerritoire(Territoires territoire) {
-		for(int i = 0 ; i < this.regions.size(); i++) {
-			if(this.regions.get(i).territoires.contains(territoire)) {
-				return this.regions.get(i);
-			}
-		}
-		return this.regions.get(0);
-	}
 	
+	public void setJoueurs(ArrayList<Joueur> joueurs) {
+		this.joueurs = joueurs;
+	}
+
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
 	//fonction ne se lancant qu'au debut de la partie
 	public void miseEnPlace() {
 		int randomNum;
 		int randomNum2;
-		
-		for(int i=0 ; i<nbreJoueursTotal ; i++) {
-			Joueur joueur = new Joueur(i,"gege", true);
-			joueur.setCamp("rebelles");
-			if (i==0) {
-				joueur.setCouleur("red");
-			}
-			else if(i==1) {
-				joueur.setCouleur("black");
-			}
-			else if(i==2) {
-				joueur.setCouleur("pink");
-			}
-			else if(i==3) {
-				joueur.setCouleur("orange");
-			}
-			else if(i==4) {
-				joueur.setCouleur("green");
-			}
-			else {
-				joueur.setCouleur("blue");
-			}
-			this.joueurs.add(joueur);
-			
-		}
 		
 		//tableau contenant tous les territoires
 		List <Territoires> territoires = new LinkedList();
@@ -131,6 +104,7 @@ public class Partie {
 				randomNum2 = ThreadLocalRandom.current().nextInt(0, territoires.size());
 				this.joueurs.get(i).territoires.add(territoires.get(randomNum2));
 				territoires.get(randomNum2).setProprietaire(this.joueurs.get(i));
+				territoires.get(randomNum2).ajouterSoldat();
 				territoires.remove(randomNum2);
 			}
 			
@@ -148,23 +122,35 @@ public class Partie {
 			if(!joueursChanceux.contains(this.joueurs.get(randomNum))) {
 				randomNum2 = ThreadLocalRandom.current().nextInt(0, territoires.size());
 				this.joueurs.get(randomNum).territoires.add(territoires.get(randomNum2));
+				territoires.get(randomNum2).ajouterSoldat();
 				territoires.get(randomNum2).setProprietaire(this.joueurs.get(randomNum));
 				territoires.remove(randomNum2);
 				joueursChanceux.add(this.joueurs.get(randomNum));
 			}
 		}	
+		
+		for(int i = 0 ; i < this.joueurs.size(); i++) {
+			this.joueurs.get(i).setNbRenfort(this.joueurs.get(i).nbRenfort - this.joueurs.get(i).territoires.size());
+		}
 	}
 	
 	
 	
 	//on increment le compteur du nombre de tours
-	public void tourJoueur(Joueur joueur) {
-		if(joueur.Humain) {
-			joueur.appelRenforts();
-			joueur.action(this);
+	public void tourJoueur(Joueur joueur, Interface2 frame) {
+		if(!joueur.verifDefaite()) {
+			if(joueur.Humain) {
+				joueur.appelRenforts();
+				joueur.attributionRenfort(this,frame);
+				joueur.reposTroupes();
+				joueur.actionJoueur(this, frame);
+			}
+			else {
+				//code intell. artif.
+			}
 		}
 		else {
-			//code intell. artif.
+			this.joueurs.remove(joueur);
 		}
 	}
 	
@@ -191,6 +177,33 @@ public class Partie {
 			this.missionsDispo.add(new Missions("Contrôler 18 territoires avec au moins 2 armées", 4));
 			this.missionsDispo.add(new Missions("Contrôler 21 territoires", 5));
 		}
+	}
+	
+	public void parametragePartie(Interface2 frame) {
+		while(flagDebutDePartie == 0) {
+			
+			frame.refreshMenuParametrage();
+			frame.parametragePartie(this);
+			while(flagAjouter ==0) {
+				if(flagDebutDePartie==1) {flagAjouter=1;}
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			System.out.println("let's go baby");
+			flagAjouter=0;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		flagDebutDePartie =0;
+		frame.refreshCarte();
 	}
 	
 	

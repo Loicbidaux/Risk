@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class Regions {
 	String nom;
-	//Territoires [] noeuds;
-	//int adjMatrices [][];
 	ArrayList <Territoires> territoires = new ArrayList();
 	
 	public Regions(String nom, ArrayList<Territoires> territoires) {
@@ -31,6 +29,9 @@ public class Regions {
 		boolean appartient = true;
 		for(int i = 0 ; i<this.territoires.size(); i++) {
 			if(!joueur.territoires.contains(this.territoires.get(i))) {
+				if(joueur.regions.contains(this)) {
+					joueur.regions.remove(this);
+				}
 				appartient = false;
 				break;
 			}

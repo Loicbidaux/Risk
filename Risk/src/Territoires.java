@@ -44,7 +44,7 @@ public class Territoires {
 			}
 		}
 		ArrayList <Territoires> voisins = new ArrayList();
-		Regions region = partie.appartenanceRegionTerritoire(this);
+		Regions region = this.appartenanceRegionTerritoire(partie);
 		
 		for(int i = 0 ; i < partie.adjMatrices[this.numero].length ; i++) {
 			if(partie.adjMatrices[this.numero][i] != 0) {
@@ -99,11 +99,15 @@ public class Territoires {
 		attaquants2.add(new Canon(3,"Canon"));
 		this.setUnites(attaquants2);
 	}
-	//on ajoute des unites au territoire
-	//public void ajoutUnites(ArrayList <Unite> unites) {
-		//for(int i = 0 ; i < unites.size(); i++) {
-			//this.unites.add(unites.get(i));
-			//unites.remove(i);
-		//}
-	//}
+	
+	//on regarde a quelle region appartient le territoire demande
+	public Regions appartenanceRegionTerritoire(Partie partie) {
+		for(int i = 0 ; i < partie.regions.size(); i++) {
+			if(partie.regions.get(i).territoires.contains(this)) {
+				return partie.regions.get(i);
+			}
+		}
+		return partie.regions.get(0);
+	}
+
 }
