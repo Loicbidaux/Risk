@@ -388,11 +388,11 @@ public class Jeu {
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0},
 		};
-		Partie partie = new Partie(0,6,4, regions, adjMatrices);
+		Partie partie = new Partie(0,0,4, regions, adjMatrices);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
-		frame.parametragePartie(partie);
+		partie.parametragePartie(frame);
 		partie.miseEnPlace();
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {

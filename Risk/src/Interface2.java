@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
@@ -20,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.Border;
@@ -43,6 +45,7 @@ public class Interface2 extends JFrame {
 	JButton btnPlay = new JButton("");
 	JButton btnFullscreen = new JButton("FullScreen");
 	JButton btnFullscreenCarte = new JButton("FullScreenCarte");
+	JButton btnFullscreenMenuParametrage = new JButton("btnFullscreenMenuParametrage");
 	JButton btnDebutDePartie = new JButton("");
 	JButton btnSkip = new JButton("Skip");
 	
@@ -54,6 +57,7 @@ public class Interface2 extends JFrame {
 	JLabel fenetreAttaque = new JLabel("");
 	
 	int flagSkip =0;
+	String choixCamp ="";
 	
 	private Timer timer = null;
 	
@@ -62,6 +66,8 @@ public class Interface2 extends JFrame {
 		
 		build();//On initialise notre fenêtre
 	}
+	
+	
 	
 	private void build(){
 		setTitle("Risk Ultimate Sublime Warframe"); //On donne un titre à l'application
@@ -106,15 +112,8 @@ public class Interface2 extends JFrame {
  		lblMenuParametrage.setIcon(new ImageIcon("src/Images/Menu/MENU-RISK-STARWARS.png"));
 		contentPane.add(lblMenuParametrage,"2");
 		
- 		lblMenuParametrage.add(btnDebutDePartie);
- 		btnDebutDePartie.setOpaque(false);
- 		btnDebutDePartie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
- 		btnDebutDePartie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
- 		btnDebutDePartie.setFocusPainted(false); // On n'affiche pas l'effet de focus.
- 		btnDebutDePartie.setBounds(760, 960, 375, 81);
- 		btnDebutDePartie.setVisible(true);
  		
- 		lblMenuParametrage.add(btnFullscreen);
+ 		lblMenuParametrage.add(btnFullscreenMenuParametrage);
  		
 		transition.setBounds(0, 0, 1920, 1080);
  		transition.setHorizontalAlignment(JLabel.CENTER);
@@ -122,6 +121,15 @@ public class Interface2 extends JFrame {
  		transition.setBackground(Color.black);
  		transition.setIcon(new ImageIcon("src/Images/Menu/menuaction/test.gif"));
  		contentPane.add(transition,"3");
+ 		
+ 	
+		btnFullscreenMenuParametrage.setOpaque(false);
+		btnFullscreenMenuParametrage.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		btnFullscreenMenuParametrage.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+		btnFullscreenMenuParametrage.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnFullscreenMenuParametrage.setBounds(1780, 920, 83, 81);
+		btnFullscreenMenuParametrage.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
+		btnFullscreenMenuParametrage.setVisible(true);
  		
  		transition.add(btnSkip);
  		btnSkip.setBounds(1680, 965, 200, 50);
@@ -237,19 +245,14 @@ public class Interface2 extends JFrame {
 			
 		};
 		
-		ActionListener DebutDePartie = new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-			cl.show(contentPane, "3");	
-			timer.start();
-			}
-		};
+		
 		
 		btnFullscreen.addMouseListener(fullscreen);
 		btnFullscreenCarte.addMouseListener(fullscreen);
+		btnFullscreenMenuParametrage.addMouseListener(fullscreen);
 		btnPlay.addActionListener(Jouer);
 		
-		btnDebutDePartie.addActionListener(DebutDePartie);
+		
 		btnSkip.addMouseListener(new MouseListener() {
 		 			
 			@Override
@@ -377,7 +380,7 @@ public class Interface2 extends JFrame {
 			for(int i = 0 ; i<partie.regions.size(); i++) {
 			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
 		 	try {
-		 		Thread.sleep(500);
+		 		Thread.sleep(200);
 		 	} catch (InterruptedException e) {
 		 	// TODO Auto-generated catch block
 		 		e.printStackTrace();
@@ -436,7 +439,17 @@ public class Interface2 extends JFrame {
 			JButton iaRebelle = new JButton();
 			JButton ajouterJoueur = new JButton();
 			JButton ajouterIa = new JButton();
-				 
+			
+			JTextField fieldPseudo = new JTextField();
+			
+			int nbJoueur =partie.getNbreJoueursTotal();
+			
+			lblMenuParametrage.add(fieldPseudo);
+			fieldPseudo.setText("");
+			fieldPseudo.setOpaque(false);
+			fieldPseudo.setBorder(null);
+			fieldPseudo.setBounds(585, 255, 895, 40);
+			
 			lblMenuParametrage.add(joueurEmpire);
 			joueurEmpire.setOpaque(false);
 			joueurEmpire.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
@@ -444,6 +457,8 @@ public class Interface2 extends JFrame {
 			joueurEmpire.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			joueurEmpire.setBounds(505, 320, 115, 115);
 			joueurEmpire.setVisible(true);
+			
+			
 				
 			lblMenuParametrage.add(joueurRebelle);
 			joueurRebelle.setOpaque(false);
@@ -452,7 +467,10 @@ public class Interface2 extends JFrame {
 			joueurRebelle.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			joueurRebelle.setBounds(735, 320, 115, 115);
 			joueurRebelle.setVisible(true);
+			
+
 				
+			
 			lblMenuParametrage.add(iaEmpire);
 			iaEmpire.setOpaque(false);
 			iaEmpire.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
@@ -476,6 +494,80 @@ public class Interface2 extends JFrame {
 			ajouterJoueur.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			ajouterJoueur.setBounds(490, 470, 365, 71);
 			ajouterJoueur.setVisible(true);
+			
+			MouseListener ajoutJoueur = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+						
+						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), true);
+						joueur.setCamp(choixCamp);
+						if(nbJoueur ==0) {
+							joueur.setCouleur("black");
+							
+						}
+						if(nbJoueur ==1) {
+							joueur.setCouleur("red");
+						}
+						if(nbJoueur ==2) {
+							joueur.setCouleur("pink");
+							
+						}
+						if(nbJoueur ==3) {
+							joueur.setCouleur("green");
+						}
+						if(nbJoueur ==4) {
+							joueur.setCouleur("orange");
+						}
+						
+						if(nbJoueur ==5) {
+							joueur.setCouleur("blue");
+						}
+						
+						
+						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						listejoueur.add(joueur);
+						partie.setJoueurs(listejoueur);
+						
+						
+						
+						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
+						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
+						
+						choixCamp ="";
+						partie.flagAjouter=1;
+					}
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+			
+			ajouterJoueur.addMouseListener(ajoutJoueur);
 				
 			lblMenuParametrage.add(ajouterIa);
 			ajouterIa.setOpaque(false);
@@ -484,7 +576,199 @@ public class Interface2 extends JFrame {
 			ajouterIa.setFocusPainted(false); // On n'affiche pas l'effet de focus.
 			ajouterIa.setBounds(1055, 470, 365, 71);
 			ajouterIa.setVisible(true);
+			
+			MouseListener ajoutIa = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+						
+						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), false);
+						joueur.setCamp(choixCamp);
+						if(nbJoueur ==0) {
+							joueur.setCouleur("black");
+							
+						}
+						if(nbJoueur ==1) {
+							joueur.setCouleur("red");
+						}
+						if(nbJoueur ==2) {
+							joueur.setCouleur("pink");
+							
+						}
+						if(nbJoueur ==3) {
+							joueur.setCouleur("green");
+						}
+						if(nbJoueur ==4) {
+							joueur.setCouleur("orange");
+						}
+						
+						if(nbJoueur ==5) {
+							joueur.setCouleur("blue");
+						}
+						
+						
+						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						listejoueur.add(joueur);
+						partie.setJoueurs(listejoueur);
+						
+						
+						
+						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
+						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
+						
+						choixCamp ="";
+						partie.flagAjouter=1;
+					}
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+			
+			ajouterIa.addMouseListener(ajoutIa);
+			
+			lblMenuParametrage.add(btnDebutDePartie);
+	 		btnDebutDePartie.setOpaque(false);
+	 		btnDebutDePartie.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+	 		btnDebutDePartie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
+	 		btnDebutDePartie.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+	 		btnDebutDePartie.setBounds(760, 960, 375, 81);
+	 		btnDebutDePartie.setVisible(true);
+			
+			ActionListener DebutDePartie = new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					if(nbJoueur > 1 ) {
+						cl.show(contentPane, "3");
+						partie.flagDebutDePartie = 1;
+						timer.start();
+					}
 				
+				}
+			};
+			
+			btnDebutDePartie.addActionListener(DebutDePartie);
+			
+			if(nbJoueur!= 0) {
+				for(int i =0; i< nbJoueur; i++) {
+					String pseudo = partie.getJoueurs().get(i).Pseudo;
+					String couleur = partie.getJoueurs().get(i).Couleur;
+					String camp = partie.getJoueurs().get(i).camp;
+					
+					JLabel joueur = new JLabel(pseudo);
+					joueur.setOpaque(false);
+					joueur.setBounds(500, 700+i*50, 500, 25);
+					joueur.setVisible(true);
+					
+					JLabel iconeJoueur = new JLabel();
+					iconeJoueur.setOpaque(false);
+					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
+					iconeJoueur.setVisible(true);
+					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+					
+					
+					
+					lblMenuParametrage.add(joueur);
+					lblMenuParametrage.add(iconeJoueur);
+				}
+			}
+			
+			MouseListener choixCampEmpire = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					choixCamp="empire";
+					
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+			
+			MouseListener choixCampRebelles = new MouseListener() {
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						choixCamp="rebelles";
+					}
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					};
+				
+			joueurEmpire.addMouseListener(choixCampEmpire);
+			joueurRebelle.addMouseListener(choixCampRebelles);
+			iaEmpire.addMouseListener(choixCampEmpire);
+			iaRebelle.addMouseListener(choixCampRebelles);
+					
 			lblMenuParametrage.validate();
 			lblMenuParametrage.repaint();
 	}
@@ -2232,6 +2516,13 @@ public class Interface2 extends JFrame {
 		lblCarte.add(lblEncartBasDroite);
 		lblCarte.validate();
 		lblCarte.repaint();
+	}
+	
+	public void refreshMenuParametrage() {
+		lblMenuParametrage.removeAll();
+		lblMenuParametrage.add(btnFullscreenMenuParametrage);
+		lblMenuParametrage.validate();
+		lblMenuParametrage.repaint();
 	}
 
 	

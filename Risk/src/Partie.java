@@ -15,6 +15,8 @@ public class Partie {
 	ArrayList <Regions> regions = new ArrayList();
 	
 	int flagParametrageDebut = 0;
+	int flagDebutDePartie =0 ;
+	int flagAjouter =0;
 	
 	public Partie(int tour, int nbreJoueursTotal, int nbreJoueursHumains, ArrayList <Regions> regions, int adjMatrices [][]) {
 		super();
@@ -49,6 +51,14 @@ public class Partie {
 		this.nbreJoueursHumains = nbreJoueursHumains;
 	}
 	
+	public ArrayList<Joueur> getJoueurs() {
+		return joueurs;
+	}
+
+	public void setJoueurs(ArrayList <Joueur> joueurs) {
+		this.joueurs = joueurs;
+	}
+	
 	public void setAdjMatrices(int[][] adjMatrices) {
 		this.adjMatrices = adjMatrices;
 	}
@@ -76,30 +86,6 @@ public class Partie {
 		int randomNum;
 		int randomNum2;
 		
-		for(int i=0 ; i<nbreJoueursTotal ; i++) {
-			Joueur joueur = new Joueur(i,"gege", true);
-			joueur.setCamp("rebelles");
-			if (i==0) {
-				joueur.setCouleur("red");
-			}
-			else if(i==1) {
-				joueur.setCouleur("black");
-			}
-			else if(i==2) {
-				joueur.setCouleur("pink");
-			}
-			else if(i==3) {
-				joueur.setCouleur("orange");
-			}
-			else if(i==4) {
-				joueur.setCouleur("green");
-			}
-			else {
-				joueur.setCouleur("blue");
-			}
-			this.joueurs.add(joueur);
-			
-		}
 		
 		//tableau contenant tous les territoires
 		List <Territoires> territoires = new LinkedList();
@@ -131,6 +117,7 @@ public class Partie {
 				randomNum2 = ThreadLocalRandom.current().nextInt(0, territoires.size());
 				this.joueurs.get(i).territoires.add(territoires.get(randomNum2));
 				territoires.get(randomNum2).setProprietaire(this.joueurs.get(i));
+				territoires.get(randomNum2).ajouterSoldat();
 				territoires.remove(randomNum2);
 			}
 			
@@ -191,6 +178,33 @@ public class Partie {
 			this.missionsDispo.add(new Missions("Contrôler 18 territoires avec au moins 2 armées", 4));
 			this.missionsDispo.add(new Missions("Contrôler 21 territoires", 5));
 		}
+	}
+	
+	public void parametragePartie(Interface2 frame) {
+		while(flagDebutDePartie == 0) {
+			
+			frame.refreshMenuParametrage();
+			frame.parametragePartie(this);
+			while(flagAjouter ==0) {
+				if(flagDebutDePartie==1) {flagAjouter=1;}
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			System.out.println("let's go baby");
+			flagAjouter=0;
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		flagDebutDePartie =0;
+		frame.refreshCarte();
 	}
 	
 	
