@@ -496,7 +496,7 @@ public class Interface2 extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-					if(choixCamp != "" && !fieldPseudo.getText().isEmpty()  && nbJoueur<6) {
+					if(choixCamp != "" && !fieldPseudo.getText().isEmpty() && fieldPseudo.getText().length()<9 && nbJoueur<6) {
 						
 						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), true);
 						joueur.setCamp(choixCamp);
@@ -791,58 +791,35 @@ public class Interface2 extends JFrame {
 		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/rebelles/renfort.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
-		JButton finDePhase = new JButton("");
-		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
-		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1760, 765, 92, 60);
-		finDePhase.setBorderPainted(true);
-		finDePhase.setContentAreaFilled(false);
-		finDePhase.setFocusPainted(false);
-		finDePhase.setVisible(true);
-		fenetreRenfort.add(finDePhase);
+		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");
+		lblCarte.add(tourDePseudo);
+		tourDePseudo.setOpaque(false);
+		tourDePseudo.setBounds(60, 10, 400, 100);
 		
-		finDePhase.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if(joueur.getNbRenfort() == 0) {
-					
-					joueur.setFlagFinDePhase(1);
-					
-					lblEncartBasDroite.removeAll();
-					lblEncartBasDroite.repaint();
-					lblEncartBasDroite.validate();
-					fenetreRenfort.removeAll();
-					fenetreRenfort.repaint();
-					fenetreRenfort.validate();
-				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		tourDePseudo.setVisible(true);
+		
+		JLabel tourDeNumero = new JLabel("<html><font color = 'white'><font size = 5>(Joueur "+ joueur.numero + ")</html>");
+		lblCarte.add(tourDeNumero);
+		tourDeNumero.setOpaque(false);
+		tourDeNumero.setBounds(60, 40, 400, 100);
+		
+		tourDeNumero.setVisible(true);
+		
+		JLabel missionJoueur = new JLabel("<html><font color = 'white'><font size = 5>Mission : "+ joueur.mission.enonce +"</html>");
+		lblCarte.add(missionJoueur);
+		missionJoueur.setOpaque(false);
+		missionJoueur.setBounds(40,80,400,100);
+		
+		missionJoueur.setVisible(true);
+		
+		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase atribution des renforts</html>");
+		lblCarte.add(nomPhase);
+		nomPhase.setOpaque(false);
+		nomPhase.setBounds(40, 140, 400, 100);
+		
+		nomPhase.setVisible(true);
+		
+		
 		
 		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
@@ -1474,64 +1451,39 @@ public class Interface2 extends JFrame {
 		int nbCavalierTerritoire=0;
 		int nbCanonTerritoire=0;
 		
-		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
 		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfortSoldat.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
-		JButton finDePhase = new JButton("");
-		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1760, 765, 92, 60);
-		finDePhase.setBorderPainted(true);
-		finDePhase.setContentAreaFilled(false);
-		finDePhase.setFocusPainted(false);
-		finDePhase.setVisible(true);
-		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
-		fenetreRenfort.add(finDePhase);
+		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");
+		lblCarte.add(tourDePseudo);
+		tourDePseudo.setOpaque(false);
+		tourDePseudo.setBounds(60, 10, 400, 100);
+		
+		tourDePseudo.setVisible(true);
+		
+		JLabel tourDeNumero = new JLabel("<html><font color = 'white'><font size = 5>(Joueur "+ joueur.numero + ")</html>");
+		lblCarte.add(tourDeNumero);
+		tourDeNumero.setOpaque(false);
+		tourDeNumero.setBounds(60, 40, 400, 100);
+		
+		tourDeNumero.setVisible(true);
+		
+		JLabel missionJoueur = new JLabel("<html><font color = 'white'><font size = 5>Mission : "+ joueur.mission.enonce +"</html>");
+		lblCarte.add(missionJoueur);
+		missionJoueur.setOpaque(false);
+		missionJoueur.setBounds(40,80,400,100);
+		
+		missionJoueur.setVisible(true);
+		
+		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase atribution des renforts</html>");
+		lblCarte.add(nomPhase);
+		nomPhase.setOpaque(false);
+		nomPhase.setBounds(40, 140, 400, 100);
+		
+		nomPhase.setVisible(true);
 		
 		
-		finDePhase.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				if(joueur.getNbRenfort() == 0) {
-					
-					joueur.setFlagFinDePhase(1);
-					
-					lblEncartBasDroite.removeAll();
-					lblEncartBasDroite.repaint();
-					lblEncartBasDroite.validate();
-					fenetreRenfort.removeAll();
-					fenetreRenfort.repaint();
-					fenetreRenfort.validate();
-				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
@@ -1881,7 +1833,7 @@ public class Interface2 extends JFrame {
 		JButton finDePhase = new JButton("");
 		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		finDePhase.setOpaque(false);
-		finDePhase.setBounds(1600, 735, 92, 60);
+		finDePhase.setBounds(1600, 765, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
@@ -2980,6 +2932,63 @@ public class Interface2 extends JFrame {
 	}
 	
 
+	public void affichageBtnFinDePhase(Joueur joueur) {
+		JButton finDePhase = new JButton("");
+		finDePhase.setOpaque(false);
+		finDePhase.setBounds(1760, 765, 92, 60);
+		finDePhase.setBorderPainted(true);
+		finDePhase.setContentAreaFilled(false);
+		finDePhase.setFocusPainted(false);
+		finDePhase.setVisible(true);
+		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
+		fenetreRenfort.add(finDePhase);
+		
+		
+		finDePhase.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(joueur.getNbRenfort() == 0) {
+					
+					joueur.setFlagFinDePhase(1);
+					
+					lblEncartBasDroite.removeAll();
+					lblEncartBasDroite.repaint();
+					lblEncartBasDroite.validate();
+					fenetreRenfort.removeAll();
+					fenetreRenfort.repaint();
+					fenetreRenfort.validate();
+				}
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
+	
+	
 	public void refreshCarte() {
 		lblCarte.removeAll();
 		lblCarte.add(btnFullscreenCarte);

@@ -424,11 +424,22 @@ public class Joueur {
 	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
+		
 		if(partie.tour == 0) {
 			frame.affichageRenfortDebutPartie(this);
+			if(this.nbRenfort == 0) {
+				frame.affichageBtnFinDePhase(this);
+				frame.repaint();
+				frame.validate();
+			}
 		}
 		else if(partie.tour>1){
 			frame.affichageRenfort(this);
+			if(this.nbRenfort == 0) {
+				frame.affichageBtnFinDePhase(this);
+				frame.repaint();
+				frame.validate();
+			}
 		}
 		else {
 			this.setFlagFinDePhase(1);
