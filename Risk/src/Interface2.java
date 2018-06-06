@@ -92,7 +92,7 @@ public class Interface2 extends JFrame {
 		contentPane.add(lblMenu, "1");
 		
 		lblMenu.add(btnPlay);
-		btnPlay.setBounds(823, 930, 285, 60);
+		btnPlay.setBounds(823, 945, 285, 60);
 		btnPlay.setOpaque(false);
 		btnPlay.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnPlay.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
@@ -158,7 +158,7 @@ public class Interface2 extends JFrame {
 		btnFullscreenCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnFullscreenCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
 		btnFullscreenCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
-		btnFullscreenCarte.setBounds(10, 990, 83, 81);
+		btnFullscreenCarte.setBounds(17, 280, 83, 81);
 		btnFullscreenCarte.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreenCarte.setVisible(true);
 		
@@ -680,7 +680,7 @@ public class Interface2 extends JFrame {
 					iconeJoueur.setOpaque(false);
 					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
 					iconeJoueur.setVisible(true);
-					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/logocamp.png"));
 					
 					
 					
@@ -1472,7 +1472,7 @@ public class Interface2 extends JFrame {
 		
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
-		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfortSoldat.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JButton finDePhase = new JButton("");
