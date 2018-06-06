@@ -437,7 +437,7 @@ public class Interface2 extends JFrame {
 			JButton ajouterJoueur = new JButton();
 			JButton ajouterIa = new JButton();
 			
-			JTextField fieldPseudo = new JTextField();
+			JTextField fieldPseudo = new JTextField("");
 
 			int nbJoueur =partie.getNbreJoueursTotal();
 			
@@ -445,7 +445,10 @@ public class Interface2 extends JFrame {
 			fieldPseudo.setText("");
 			fieldPseudo.setOpaque(false);
 			fieldPseudo.setBorder(null);
-			fieldPseudo.setBounds(585, 255, 895, 40);
+			fieldPseudo.setBounds(595, 253, 895, 40);
+			Font font = new Font("Arial",Font.BOLD,25);
+			fieldPseudo.setForeground(Color.WHITE);
+			fieldPseudo.setFont(font);
 				 
 			lblMenuParametrage.add(joueurEmpire);
 			joueurEmpire.setOpaque(false);
@@ -493,7 +496,7 @@ public class Interface2 extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+					if(choixCamp != "" && !fieldPseudo.getText().isEmpty()  && nbJoueur<6) {
 						
 						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), true);
 						joueur.setCamp(choixCamp);
@@ -575,7 +578,7 @@ public class Interface2 extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+					if(choixCamp != "" && !fieldPseudo.getText().isEmpty() && nbJoueur<6) {
 						
 						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), false);
 						joueur.setCamp(choixCamp);
@@ -608,7 +611,6 @@ public class Interface2 extends JFrame {
 						
 						
 						
-						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
 						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
 						
 						choixCamp ="";
@@ -673,12 +675,14 @@ public class Interface2 extends JFrame {
 					
 					JLabel joueur = new JLabel(pseudo);
 					joueur.setOpaque(false);
-					joueur.setBounds(500, 700+i*50, 500, 25);
+					joueur.setBounds(500, 700+i*40, 500, 25);
+					joueur.setForeground(Color.WHITE);
 					joueur.setVisible(true);
+					joueur.setFont(font);
 					
 					JLabel iconeJoueur = new JLabel();
 					iconeJoueur.setOpaque(false);
-					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
+					iconeJoueur.setBounds(1285, 700+i*40, 25, 25);
 					iconeJoueur.setVisible(true);
 					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/logocamp.png"));
 					
