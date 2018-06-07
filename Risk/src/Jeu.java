@@ -395,6 +395,8 @@ public class Jeu {
 			for(int i = 0 ; i<partie.joueurs.size(); i++) {
 				System.out.println("Le tour " + partie.tour + " est en cours !");
 				System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
+				System.out.println("Le joueur possede : " + partie.joueurs.get(i).territoires.size() + " territoires " );
+
 				partie.tourJoueur(partie.joueurs.get(i), frame);
 				termine=partie.joueurs.get(i).verifVictoire();
 				if(termine==true) {
@@ -405,11 +407,8 @@ public class Jeu {
 		}
 		
 		System.out.println("Victoire");
-		
-		for(int i = 0 ; i < partie.joueurs.size(); i++) {
-			System.out.println(partie.joueurs.get(i).mission.enonce);
-		}
-
+		frame.victoire();
+	
 		//joueur.issueBataille(defenseurs, attaquants);
 		
 	}

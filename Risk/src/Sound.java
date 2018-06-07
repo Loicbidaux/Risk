@@ -7,7 +7,7 @@ import java.net.URL;
 public class Sound extends Thread {
      
 	static URL u1;//l'url de ton fichier son
-    static AudioClip s1;//le son crÃ©Ã© depuis ton url
+    static AudioClip s1;//le son créé depuis ton url
     
  
     public Sound() {

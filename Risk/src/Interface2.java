@@ -1907,7 +1907,9 @@ public class Interface2 extends JFrame {
 							fenetreDeplacement.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/deplacement.png"));
 							lblEncartBasDroite.add(fenetreDeplacement);
 							fenetreDeplacement.removeAll();
-							fenetreDeplacement.add(finDePhase);
+							finDePhase.setVisible(false);
+							repaint();
+							validate();
 							
 							JLabel soldatDeplacement = new JLabel("<html><font color = 'white'><font size = 15>"+0+"</html>");
 							soldatDeplacement.setHorizontalAlignment(JLabel.CENTER);
@@ -2371,7 +2373,9 @@ public class Interface2 extends JFrame {
 							fenetreAttaque.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/attaque.png"));
 							lblEncartBasDroite.add(fenetreAttaque);
 							fenetreAttaque.removeAll();
-							fenetreAttaque.add(finDePhase);
+							finDePhase.setVisible(false);
+							repaint();
+							validate();
 							
 							JLabel soldatAttaque = new JLabel("<html><font color = 'white'><font size = 15>"+0+"</html>");
 							soldatAttaque.setHorizontalAlignment(JLabel.CENTER);
@@ -2916,4 +2920,16 @@ public class Interface2 extends JFrame {
 		lblMenuParametrage.validate();
 		lblMenuParametrage.repaint();
 	}
+	
+	public void victoire() {
+		JLabel victoire = new JLabel("");
+		victoire.setBounds(0,0,1920,1080);
+		victoire.setIcon(new ImageIcon("src/Images/Menu/menuaction/VICTOIRE.gif"));
+		victoire.setVisible(true);
+		lblCarte.add(victoire);
+		lblCarte.validate();
+		lblCarte.repaint();
+	}
+	
+	
 }

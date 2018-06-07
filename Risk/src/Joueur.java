@@ -315,7 +315,7 @@ public class Joueur {
 					System.out.println(defense.get(puissanceDefense[i][1]).nom + " est mort");
 					unitesMortes[0][i] = defense.get(puissanceDefense[i][1]);
 				}
-				else if(puissanceDefense[i][0]>puissanceAttaque[i][0]) {
+				else if(puissanceDefense[i][0]>=puissanceAttaque[i][0]) {
 					System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " est mort");
 					unitesMortes[1][i] = attaque.get(puissanceAttaque[i][1]);
 				}
