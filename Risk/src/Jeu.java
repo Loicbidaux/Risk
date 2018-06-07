@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-
+import java.applet.Applet;
 //import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.io.File;
+import java.applet.AudioClip;
+import java.net.MalformedURLException;
+import java.net.URL;
 public class Jeu {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Jeu plateau = new Jeu();
 		boolean termine = false;
@@ -376,10 +379,13 @@ public class Jeu {
 		Partie partie = new Partie(0,regions, adjMatrices);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
+		
+	    
 		partie.parametragePartie(frame);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		partie.miseEnPlace();
 		partie.joueurs.get(0).nbRenfort = partie.joueurs.get(0).nbRenfort + 27;
+		
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			if(partie.joueurs.get(i).Humain == true) {
@@ -407,7 +413,10 @@ public class Jeu {
 		}
 		
 		frame.victoire();
+		 
+			
 		
+
 	}
 
 }

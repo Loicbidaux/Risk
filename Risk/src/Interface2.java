@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 public class Interface2 extends JFrame {
 	
 	private boolean FSflag = false;
+	private boolean Sflag = false;
     private int PrevX, PrevY, PrevWidth, PrevHeight;
     JPanel contentPane = new JPanel();
 	JPanel panelMenu = new JPanel();
@@ -48,6 +49,9 @@ public class Interface2 extends JFrame {
 	JButton btnFullscreen = new JButton("FullScreen");
 	JButton btnFullscreenCarte = new JButton("FullScreenCarte");
 	JButton btnFullscreenMenuParametrage = new JButton("btnFullscreenMenuParametrage");
+	JButton btnSon = new JButton("FullScreen");
+	JButton btnSonCarte = new JButton("FullScreenCarte");
+	JButton btnSonParametrage = new JButton("btnFullscreenMenuParametrage");
 	JButton btnDebutDePartie = new JButton("");
 	JButton btnSkip = new JButton("Skip");
 	
@@ -64,13 +68,16 @@ public class Interface2 extends JFrame {
 	
 	private Timer timer = null;
 	
-	public Interface2(){
+	Sound Theme = new Sound("src/Sons/Intro.wav");
+	Sound mainTheme = new Sound("src/Sons/Music.wav");
+	
+	public Interface2() throws Exception{
 		super();
 		
 		build();//On initialise notre fenêtre
 	}
 	
-	private void build(){
+	private void build() throws Exception{
 		setTitle("Risk Ultimate Sublime Warframe"); //On donne un titre à l'application
 		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
 		setResizable(false); //On interdit la redimensionnement de la fenêtre
@@ -79,7 +86,10 @@ public class Interface2 extends JFrame {
 		setContentPane(buildContentPane());
 	}
 
-	private JPanel buildContentPane(){
+	private JPanel buildContentPane() throws Exception{
+		
+		
+		Theme.PlaySoundC();
 		//Border border = BorderFactory.createLineBorder(Color.red, 5);
 		contentPane.setLayout(cl);
 		panelMenu.add(lblMenu);
@@ -109,6 +119,15 @@ public class Interface2 extends JFrame {
 		btnFullscreen.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreen.setVisible(true);
 		
+		lblMenu.add(btnSon);
+		btnSon.setOpaque(false);
+		btnSon.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		btnSon.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+		btnSon.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnSon.setBounds(1690, 920, 83, 81);
+		btnSon.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+		btnSon.setVisible(true);
+		
 		lblMenuParametrage.setBounds(0, 0, 1920, 1080);
  		lblMenuParametrage.setIcon(new ImageIcon("src/Images/Menu/MENU-RISK-STARWARS.png"));
 		contentPane.add(lblMenuParametrage,"2");
@@ -129,6 +148,15 @@ public class Interface2 extends JFrame {
  		btnFullscreenMenuParametrage.setBounds(1780, 920, 83, 81);
  		btnFullscreenMenuParametrage.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
  		btnFullscreenMenuParametrage.setVisible(true);
+ 		
+ 		lblMenuParametrage.add(btnSonParametrage);
+ 		btnSonParametrage.setOpaque(false);
+ 		btnSonParametrage.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+ 		btnSonParametrage.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+ 		btnSonParametrage.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+ 		btnSonParametrage.setBounds(1690, 920, 83, 81);
+ 		btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+ 		btnSonParametrage.setVisible(true);
  		
  		transition.add(btnSkip);
  		btnSkip.setBounds(1680, 965, 200, 50);
@@ -162,7 +190,14 @@ public class Interface2 extends JFrame {
 		btnFullscreenCarte.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreenCarte.setVisible(true);
 		
-		
+		lblCarte.add(btnSonCarte);
+		btnSonCarte.setOpaque(false);
+		btnSonCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
+		btnSonCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
+		btnSonCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnSonCarte.setBounds(110, 280, 83, 81);
+		btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+		btnSonCarte.setVisible(true);
 		
 		
 		
@@ -230,6 +265,113 @@ public class Interface2 extends JFrame {
 			}
 			};
 			
+			MouseListener sonMenu = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					if (Sflag == false) {
+		                
+						try {
+							Theme.Stop();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		                btnSon.setIcon(new ImageIcon("src/Images/icone/son.png"));
+		                btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/son.png"));
+		                Sflag = true;
+		            } else {
+		            	try {
+							Theme.PlaySoundC();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		                btnSon.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+		                btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+		                Sflag = false;
+		            }
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				};
+				
+				MouseListener sonCarte = new MouseListener() {
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						if (Sflag == false) {
+			                
+							try {
+								mainTheme.Stop();
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+			                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/son.png"));
+			                Sflag = true;
+			            } else {
+			            	try {
+								mainTheme.PlaySoundC();
+							} catch (Exception e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+			                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+			                Sflag = false;
+			            }
+					}
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					};
+				
+			
 		timer = new Timer(29000, new ActionListener(){      // Timer 4 seconds
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "4");
@@ -250,6 +392,9 @@ public class Interface2 extends JFrame {
 		btnFullscreen.addMouseListener(fullscreen);
 		btnFullscreenCarte.addMouseListener(fullscreen);
 		btnFullscreenMenuParametrage.addMouseListener(fullscreen);
+		btnSon.addMouseListener(sonMenu);
+		btnSonParametrage.addMouseListener(sonMenu);
+		btnSonCarte.addMouseListener(sonCarte);
 		btnPlay.addActionListener(Jouer);
 		
 		btnSkip.addMouseListener(new MouseListener() {
@@ -354,17 +499,22 @@ public class Interface2 extends JFrame {
 			}}
 	}
 
-	public void affichageUniteCarteDebutPartie(Partie partie ) {
+	public void affichageUniteCarteDebutPartie(Partie partie ) throws Exception {
 		 		
-		while (flagSkip == 0) {
-		 	try {
-		 		Thread.sleep(1);
-		 	} catch (InterruptedException e) {
-		 	// TODO Auto-generated catch block
-		 		e.printStackTrace();
-		 		}
-		 	}
-		 		
+			while (flagSkip == 0) {
+			 	try {
+			 		Thread.sleep(1);
+			 	} catch (InterruptedException e) {
+			 	// TODO Auto-generated catch block
+			 		e.printStackTrace();
+			 		}
+			 	}
+			
+			if(Sflag == false) {
+			Theme.Stop();
+			mainTheme.PlaySoundC();
+			}
+			
 		 	String couleur ;
 		 	String camp ;
 		 	ArrayList <Unite> uniteTerritoire = new ArrayList();
@@ -2909,6 +3059,7 @@ public class Interface2 extends JFrame {
 	public void refreshCarte() {
 		lblCarte.removeAll();
 		lblCarte.add(btnFullscreenCarte);
+		lblCarte.add(btnSonCarte);
 		lblCarte.add(lblEncartBasDroite);
 		lblCarte.validate();
 		lblCarte.repaint();
@@ -2917,6 +3068,7 @@ public class Interface2 extends JFrame {
 	public void refreshMenuParametrage() {
 		lblMenuParametrage.removeAll();
 		lblMenuParametrage.add(btnFullscreenMenuParametrage);
+		lblMenuParametrage.add(btnSonParametrage);
 		lblMenuParametrage.validate();
 		lblMenuParametrage.repaint();
 	}
