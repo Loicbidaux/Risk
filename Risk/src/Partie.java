@@ -91,15 +91,12 @@ public class Partie {
 			//attribution des missions
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.missionsDispo.size());
 			this.joueurs.get(i).mission = new Missions(this.missionsDispo.get(randomNum).enonce, this.missionsDispo.get(randomNum).numero);
-			System.out.println("enonce avant : " +this.joueurs.get(i).mission.enonce);
 			if(this.joueurs.get(i).mission.enonce.charAt(0)== "D".charAt(0)) {
 				randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				while(randomNum == this.joueurs.get(i).numero) {
 					randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				}
-				System.out.println("random : " + randomNum);
 				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce + randomNum);
-				System.out.println("enonce apres : " +this.joueurs.get(i).mission.enonce);
 			}
 			
 			//attribution des territoires
@@ -158,6 +155,8 @@ public class Partie {
 		}
 		else {
 			this.joueurs.remove(joueur);
+			System.out.println(joueur.Pseudo + " a perdu ...");
+			
 		}
 	}
 	

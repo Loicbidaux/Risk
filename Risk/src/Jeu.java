@@ -379,7 +379,7 @@ public class Jeu {
 		partie.parametragePartie(frame);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		partie.miseEnPlace();
-		//partie.joueurs.get(0).nbRenfort = partie.joueurs.get(0).nbRenfort + 27;
+		partie.joueurs.get(0).nbRenfort = partie.joueurs.get(0).nbRenfort + 27;
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			if(partie.joueurs.get(i).Humain == true) {
@@ -395,10 +395,10 @@ public class Jeu {
 			for(int i = 0 ; i<partie.joueurs.size(); i++) {
 				System.out.println("Le tour " + partie.tour + " est en cours !");
 				System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
-				System.out.println("Le joueur possede : " + partie.joueurs.get(i).territoires.size() + " territoires " );
-
 				partie.tourJoueur(partie.joueurs.get(i), frame);
 				termine=partie.joueurs.get(i).verifVictoire();
+				System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).territoires.size() + " territoires");
+				System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).regions.size() + " regions");
 				if(termine==true) {
 					break;
 				}
@@ -406,10 +406,7 @@ public class Jeu {
 			partie.tour++;
 		}
 		
-		System.out.println("Victoire");
 		frame.victoire();
-	
-		//joueur.issueBataille(defenseurs, attaquants);
 		
 	}
 

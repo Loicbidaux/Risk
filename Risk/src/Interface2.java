@@ -1445,7 +1445,7 @@ public class Interface2 extends JFrame {
 		
 		missionJoueur.setVisible(true);
 		
-		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase atribution des renforts</html>");
+		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase attribution des renforts</html>");
 		lblCarte.add(nomPhase);
 		nomPhase.setOpaque(false);
 		nomPhase.setBounds(40, 140, 400, 100);
@@ -2930,6 +2930,4 @@ public class Interface2 extends JFrame {
 		lblCarte.validate();
 		lblCarte.repaint();
 	}
-	
-	
 }

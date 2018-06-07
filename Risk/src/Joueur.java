@@ -125,17 +125,24 @@ public class Joueur {
 				}
 			}
 			else if(mission.enonce.contains(dix_huit)) {
-				if(this.territoires.size()==18) {
+				if(this.territoires.size()>=18) {
 					CharSequence armee = "armée";
+					int decompte = 18;
 					if(mission.enonce.contains(armee)) {
+						System.out.println(this.Pseudo + " possède bien les 18 territoires ...");
 						for(int i = 0 ; i<this.territoires.size(); i++) {
-							if(this.territoires.get(i).unites.size()!=2) {
-								return false;
+							if(this.territoires.get(i).unites.size()>=2 && decompte >0) {
+								decompte--;
 							}
 						}
-						return true;
+						if(decompte==0) {
+							return true;
+						}
+						else {
+							return false;
+						}
 					}	
-					else if(this.regions.size()==3){
+					else if(this.regions.size()>=3){
 						return true;
 					}
 				}
@@ -144,7 +151,8 @@ public class Joueur {
 				}
 			}
 			else if(mission.enonce.contains(vingt_un)) {
-				if(this.territoires.size()==21) {
+				if(this.territoires.size()>=21) {
+					System.out.println(this.Pseudo + " possède bien les 21 territoires ...");
 					return true;
 				}
 				else {
@@ -152,7 +160,8 @@ public class Joueur {
 				}
 			}
 			else if(mission.enonce.contains(vingt_quatre)) {
-				if(this.territoires.size()==24) {
+				if(this.territoires.size()>=24) {
+					System.out.println(this.Pseudo + " possède bien les 24 territoires ...");
 					return true;
 				}
 				else {
@@ -160,7 +169,8 @@ public class Joueur {
 				}
 			}
 			else if(mission.enonce.contains(trente)) {
-				if(this.territoires.size()==30) {
+				if(this.territoires.size()>=30) {
+					System.out.println(this.Pseudo + " possède bien les 30 territoires ...");
 					return true;
 				}
 				else {
@@ -328,7 +338,7 @@ public class Joueur {
 					System.out.println(defense.get(puissanceDefense[i][1]).nom + " est mort");
 					unitesMortes[0][i] = defense.get(puissanceDefense[i][1]);
 				}
-				else if(puissanceDefense[i][0]>puissanceAttaque[i][0]) {
+				else if(puissanceDefense[i][0]>=puissanceAttaque[i][0]) {
 					System.out.println(attaque.get(puissanceAttaque[i][1]).nom + " est mort");
 					unitesMortes[1][i] = attaque.get(puissanceAttaque[i][1]);
 				}
