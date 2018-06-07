@@ -339,7 +339,7 @@ public class Joueur {
 	
 	protected void deplacerUnites(Territoires territoireOrigine, Territoires territoireCible, ArrayList <Unite> unitesDeplacees) {
 		if(territoireCible.proprietaire == this) {	
-		for(int i = 0 ; i<unitesDeplacees.size(); i++) {
+			for(int i = 0 ; i<unitesDeplacees.size(); i++) {
 				unitesDeplacees.get(i).fatigue();
 				unitesDeplacees.get(i).verifDisponibilite();
 				territoireOrigine.unites.remove(unitesDeplacees.get(i));
@@ -417,14 +417,13 @@ public class Joueur {
 				e.printStackTrace();
 			}
 		}
-		flagFinDePhase =0;
+		this.setFlagFinDePhase(0);
 		frame.refreshCarte();
 	}
 	
 	public void boucleAttributionRenfort(Partie partie ,Interface2 frame) {
 		frame.refreshCarte();
 		frame.affichageUniteCarte(partie);
-		
 		if(partie.tour == 0) {
 			frame.affichageRenfortDebutPartie(this);
 			if(this.nbRenfort == 0) {
@@ -442,7 +441,7 @@ public class Joueur {
 			}
 		}
 		else {
-			this.setFlagFinDePhase(1);
+			this.setFlagFinDePhase(1); //garder un oeil là dessus
 		}
 	}
 	
@@ -479,4 +478,114 @@ public class Joueur {
 		frame.choixAttaqueDeplacement(partie, this);
 	}
 	
+	public void renfortIA(Partie partie) {
+		Regions regionVisee;
+		int [] tableau = {0,0,0,0,0,0};
+		for(int j = 0 ; j < partie.regions.size(); j++) {
+			for(int i = 0 ; i < this.territoires.size(); i++) {
+				if(partie.regions.get(j).territoires.contains(this.territoires.get(i))) {
+					tableau[j]++;
+				}
+			}
+		}
+		int max=0;
+		int indiceMax = 0;
+		for(int i = 0 ; i < tableau.length ; i++) {
+			if(tableau[i]>max) {
+				max = tableau[i];
+				indiceMax = i;
+			}
+		}
+		
+		
+		
+		regionVisee = partie.regions.get(indiceMax);
+		int nbRenfortRestant = this.nbRenfort;
+		int nbVoisinsEnnemis;
+		
+		while(nbRenfortRestant != 0) {
+			for(int i = 0 ; i < regionVisee.territoires.size() ; i++) {
+				nbVoisinsEnnemis = 0;
+				for(int j = 0 ; j < regionVisee.territoires.get(i).voisinsTerritoire(partie).size(); j++) {
+					if(!this.territoires.contains(regionVisee.territoires.get(i).voisinsTerritoire(partie).get(j))) {
+						nbVoisinsEnnemis ++;
+					}
+				}
+				if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
+					System.out.println(partie.regions.get(indiceMax).territoires.get(i).nom + " possède "+ nbVoisinsEnnemis + " voisins ennemis");
+					if(nbRenfortRestant>0 && nbVoisinsEnnemis != 0){
+						this.ajouterSoldat();
+						partie.regions.get(indiceMax).territoires.get(i).ajouterSoldat();
+						nbRenfortRestant --;
+						System.out.println("Une unite est attribuée à : " + partie.regions.get(indiceMax).territoires.get(i).nom);
+					}
+				}
+			}
+		}
+	}
+	
+	public void deplacementIA(Partie partie) {
+		ArrayList <Unite> unitesDeplacees = new ArrayList();
+		int [] tableauNbVoisinsEnnemis = new int[this.territoires.size()];
+		boolean deplacementsPossibles = true;
+		
+		for(int i = 0 ; i< this.territoires.size(); i++) {
+			for(int j = 0 ; j < this.territoires.get(i).voisinsTerritoire(partie).size(); j++) {
+				if(!this.territoires.contains(this.territoires.get(i).voisinsTerritoire(partie).get(j))) {
+					 tableauNbVoisinsEnnemis[i]++;
+				}
+			}
+		}
+		
+		while(deplacementsPossibles) {
+			Territoires territoireCible = new Territoires(42);
+			Territoires territoireOrigine = new Territoires(42);
+			for(int i = 0 ; i < tableauNbVoisinsEnnemis.length ; i++) {
+				if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible.numero == 42) {
+					territoireOrigine = this.territoires.get(i);
+					System.out.println("If 1");
+				}
+				else if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible.numero != 42 && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireCible)) {
+					territoireOrigine = this.territoires.get(i);
+					System.out.println("If 2");
+				}
+				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine.numero != 42 && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireOrigine) ) {
+					territoireCible = this.territoires.get(i);
+					System.out.println("If 3");
+				}
+				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine.numero == 42) {
+					territoireCible = this.territoires.get(i);
+					System.out.println("If 4");
+				}
+				if(territoireCible.numero != 42 && territoireOrigine.numero != 42) {
+					System.out.println("If 5");
+					break;
+				}
+			}
+			
+			if(territoireCible.numero != 42 && territoireOrigine.numero != 42) {
+				for(int i = 0 ; i < territoireOrigine.unites.size(); i++) {
+					if(territoireOrigine.unites.get(i).disponibilite!=0) {
+						unitesDeplacees.add(territoireOrigine.unites.get(i));
+					}
+				}
+				
+				System.out.println("Taille origine avant : " + territoireOrigine.unites.size());
+				System.out.println("Taille cible avant : " + territoireCible.unites.size());
+				
+				this.deplacerUnites(territoireOrigine, territoireCible, unitesDeplacees);
+				
+				System.out.println("Taille origine après : " + territoireOrigine.unites.size());
+				System.out.println("Taille cible après : " + territoireCible.unites.size());
+				
+				unitesDeplacees.clear();
+				territoireOrigine = null;
+				territoireCible = null;
+			}
+			else {
+				System.out.println("Pas de deplacement utile");
+				deplacementsPossibles = false;
+			}
+		}
+	}
 }

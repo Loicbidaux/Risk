@@ -338,7 +338,7 @@ public class Jeu {
 				{0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //dantooine
 				{0,0,0,0,1,1,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //ord mantell
 				{0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0}, //mon calamari
-				{0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0}, //kashyyk
+				{0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //kashyyk
 				{0,0,0,0,0,0,1,0,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //kessel
 				{0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //da soochr v
 				{0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -369,19 +369,26 @@ public class Jeu {
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1},
 				{0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1,1,0,1},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,0},
-				{0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0},
+				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,1,0},
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0}
 		};
 		Partie partie = new Partie(0,regions, adjMatrices);
-		partie.ajouterMissions(partie.nbreJoueursTotal);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
 		partie.parametragePartie(frame);
+		partie.ajouterMissions(partie.nbreJoueursTotal);
 		partie.miseEnPlace();
+		//partie.joueurs.get(0).nbRenfort = partie.joueurs.get(0).nbRenfort + 27;
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
-			partie.joueurs.get(i).attributionRenfort(partie,frame);
+			if(partie.joueurs.get(i).Humain == true) {
+				partie.joueurs.get(i).attributionRenfort(partie,frame);
+			}
+			else {
+				partie.joueurs.get(i).renfortIA(partie);
+				frame.affichageUniteCarte(partie);
+			}
 		}
 		partie.tour++;
 		while(!termine) {
@@ -390,16 +397,20 @@ public class Jeu {
 				System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
 				partie.tourJoueur(partie.joueurs.get(i), frame);
 				termine=partie.joueurs.get(i).verifVictoire();
+				if(termine==true) {
+					break;
+				}
 			}
 			partie.tour++;
 		}
 		
-		//frame.choixAttaqueDeplacement(partie, partie.joueurs.get(0));
+		System.out.println("Victoire");
+		
 		for(int i = 0 ; i < partie.joueurs.size(); i++) {
 			System.out.println(partie.joueurs.get(i).mission.enonce);
 		}
 
-		joueur.issueBataille(defenseurs, attaquants);
+		//joueur.issueBataille(defenseurs, attaquants);
 		
 	}
 

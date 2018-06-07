@@ -15,6 +15,12 @@ public class Territoires {
 		this.nom = nom;
 		this.coordonneesUnite = coordonneesUnite;
 	}
+	
+	public Territoires(int numero) {
+		super();
+		this.numero = numero;
+	}
+	
 	public String getNom() {
 		return nom;
 	}

@@ -85,18 +85,21 @@ public class Partie {
 		//calcul du nombre de territoires dus aux joueurs
 		int nbreTerritoires = territoires.size();
 		int territoiresParJoueur = Math.round(nbreTerritoires/this.nbreJoueursTotal);
-
+		
 		for(int i = 0 ; i<this.nbreJoueursTotal ; i++) {
 			
 			//attribution des missions
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.missionsDispo.size());
-			this.joueurs.get(i).mission = this.missionsDispo.get(randomNum);
+			this.joueurs.get(i).mission = new Missions(this.missionsDispo.get(randomNum).enonce, this.missionsDispo.get(randomNum).numero);
+			System.out.println("enonce avant : " +this.joueurs.get(i).mission.enonce);
 			if(this.joueurs.get(i).mission.enonce.charAt(0)== "D".charAt(0)) {
 				randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				while(randomNum == this.joueurs.get(i).numero) {
 					randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				}
-				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce+randomNum);
+				System.out.println("random : " + randomNum);
+				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce + randomNum);
+				System.out.println("enonce apres : " +this.joueurs.get(i).mission.enonce);
 			}
 			
 			//attribution des territoires
@@ -146,7 +149,11 @@ public class Partie {
 				joueur.actionJoueur(this, frame);
 			}
 			else {
-				//code intell. artif.
+				System.out.println("IA");
+				joueur.appelRenforts();
+				joueur.renfortIA(this);
+				frame.affichageRenfort(joueur);
+				joueur.deplacementIA(this);
 			}
 		}
 		else {
@@ -193,7 +200,6 @@ public class Partie {
 					e.printStackTrace();
 				}
 			}
-			System.out.println("let's go baby");
 			flagAjouter=0;
 			try {
 				Thread.sleep(1);

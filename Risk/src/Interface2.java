@@ -92,7 +92,7 @@ public class Interface2 extends JFrame {
 		contentPane.add(lblMenu, "1");
 		
 		lblMenu.add(btnPlay);
-		btnPlay.setBounds(823, 945, 285, 60);
+		btnPlay.setBounds(823, 930, 285, 60);
 		btnPlay.setOpaque(false);
 		btnPlay.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnPlay.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
@@ -158,7 +158,7 @@ public class Interface2 extends JFrame {
 		btnFullscreenCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnFullscreenCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
 		btnFullscreenCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
-		btnFullscreenCarte.setBounds(17, 280, 83, 81);
+		btnFullscreenCarte.setBounds(10, 990, 83, 81);
 		btnFullscreenCarte.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreenCarte.setVisible(true);
 		
@@ -437,7 +437,7 @@ public class Interface2 extends JFrame {
 			JButton ajouterJoueur = new JButton();
 			JButton ajouterIa = new JButton();
 			
-			JTextField fieldPseudo = new JTextField("");
+			JTextField fieldPseudo = new JTextField();
 
 			int nbJoueur =partie.getNbreJoueursTotal();
 			
@@ -445,10 +445,7 @@ public class Interface2 extends JFrame {
 			fieldPseudo.setText("");
 			fieldPseudo.setOpaque(false);
 			fieldPseudo.setBorder(null);
-			fieldPseudo.setBounds(595, 253, 895, 40);
-			Font font = new Font("Arial",Font.BOLD,25);
-			fieldPseudo.setForeground(Color.WHITE);
-			fieldPseudo.setFont(font);
+			fieldPseudo.setBounds(585, 255, 895, 40);
 				 
 			lblMenuParametrage.add(joueurEmpire);
 			joueurEmpire.setOpaque(false);
@@ -578,7 +575,7 @@ public class Interface2 extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-					if(choixCamp != "" && !fieldPseudo.getText().isEmpty() && nbJoueur<6) {
+					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
 						
 						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), false);
 						joueur.setCamp(choixCamp);
@@ -611,6 +608,7 @@ public class Interface2 extends JFrame {
 						
 						
 						
+						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
 						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
 						
 						choixCamp ="";
@@ -675,16 +673,14 @@ public class Interface2 extends JFrame {
 					
 					JLabel joueur = new JLabel(pseudo);
 					joueur.setOpaque(false);
-					joueur.setBounds(500, 700+i*40, 500, 25);
-					joueur.setForeground(Color.WHITE);
+					joueur.setBounds(500, 700+i*50, 500, 25);
 					joueur.setVisible(true);
-					joueur.setFont(font);
 					
 					JLabel iconeJoueur = new JLabel();
 					iconeJoueur.setOpaque(false);
-					iconeJoueur.setBounds(1285, 700+i*40, 25, 25);
+					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
 					iconeJoueur.setVisible(true);
-					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/logocamp.png"));
+					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
 					
 					
 					
@@ -774,21 +770,9 @@ public class Interface2 extends JFrame {
 		
 		int[] coordonneesUnite ;
 		String camp = joueur.camp;
-		String couleur = joueur.Couleur;
-		int nbSoldatTerritoire=0;
-		int nbCavalierTerritoire=0;
-		int nbCanonTerritoire=0;
-		
-		JLabel tourDe = new JLabel("<html><font color = 'white'><font size = 25>Tour de "+ joueur.Pseudo +" (Joueur " + joueur.numero + ")</html>");
-		lblCarte.add(tourDe);
-		tourDe.setOpaque(false);
-		tourDe.setBounds(30, 25, 112, 43);
-		
-		tourDe.setVisible(true);
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
-		//fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
-		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/rebelles/renfort.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");
@@ -812,7 +796,7 @@ public class Interface2 extends JFrame {
 		
 		missionJoueur.setVisible(true);
 		
-		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase atribution des renforts</html>");
+		JLabel nomPhase = new JLabel("<html><font color = 'yellow'><font size = 10>Phase attribution des renforts</html>");
 		lblCarte.add(nomPhase);
 		nomPhase.setOpaque(false);
 		nomPhase.setBounds(40, 140, 400, 100);
@@ -823,22 +807,8 @@ public class Interface2 extends JFrame {
 		
 		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
-				nbSoldatTerritoire = 0;
-				nbCavalierTerritoire = 0;
-				nbCanonTerritoire = 0;
-				coordonneesUnite = joueur.territoires.get(i).coordonneesUnite;
 				
-				for(int k = 0; k<joueur.territoires.get(i).unites.size(); k++) {
-					if(joueur.territoires.get(i).unites.get(k).cout == 1) {
-						nbSoldatTerritoire++;
-					}
-					else if(joueur.territoires.get(i).unites.get(k).cout == 3) {
-						nbCavalierTerritoire ++;
-					}
-					else {
-						nbCanonTerritoire ++;
-					}
-				}
+				coordonneesUnite = joueur.territoires.get(i).coordonneesUnite;
 
 				JButton btnUnite = new JButton("");
 				
@@ -1446,13 +1416,9 @@ public class Interface2 extends JFrame {
 		
 		int[] coordonneesUnite ;
 		String camp = joueur.camp;
-		String couleur = joueur.Couleur;
-		int nbSoldatTerritoire=0;
-		int nbCavalierTerritoire=0;
-		int nbCanonTerritoire=0;
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
-		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfortSoldat.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");
@@ -1485,24 +1451,8 @@ public class Interface2 extends JFrame {
 		
 		
 		
-		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
-				nbSoldatTerritoire = 0;
-				nbCavalierTerritoire = 0;
-				nbCanonTerritoire = 0;
 				coordonneesUnite = joueur.territoires.get(i).coordonneesUnite;
-				
-				for(int k = 0; k<joueur.territoires.get(i).unites.size(); k++) {
-					if(joueur.territoires.get(i).unites.get(k).cout == 1) {
-						nbSoldatTerritoire++;
-					}
-					else if(joueur.territoires.get(i).unites.get(k).cout == 3) {
-						nbCavalierTerritoire ++;
-					}
-					else {
-						nbCanonTerritoire ++;
-					}
-				}
 
 				JButton btnUnite = new JButton("");
 				
@@ -2527,47 +2477,9 @@ public class Interface2 extends JFrame {
 									}
 									
 									Unite unitesMortes [][] = joueur.issueBataille(unitesDef, unitesAtk);
-									/*int nbSoldatsMortsAttaque = 0;
-									int nbCavaliersMortsAttaque = 0;
-									int nbCanonsMortsAttaque = 0;
-									int nbSoldatsMortsDefense = 0;
-									int nbCavaliersMortsDefense = 0;
-									int nbCanonsMortsDefense = 0;
-									
-									for(int q = 0 ; q<unitesMortes[1].length-1 ; q++) {
-										if(unitesMortes[1][q].cout==1) {
-											nbSoldatsMortsAttaque++;
-										}
-										if(unitesMortes[1][q].cout==3) {
-											nbCavaliersMortsAttaque++;
-										}
-										if(unitesMortes[1][q].cout==7) {
-											nbCanonsMortsAttaque++;
-										}
-									}
-									
-									for(int q = 0 ; q<unitesMortes[0].length-1 ; q++) {
-										if(unitesMortes[1][q].cout==1) {
-											nbSoldatsMortsDefense++;
-										}
-										if(unitesMortes[1][q].cout==3) {
-											nbCavaliersMortsDefense++;
-										}
-										if(unitesMortes[1][q].cout==7) {
-											nbCanonsMortsDefense++;
-										}
-									}*/
 									joueur.resultatsBataille(unitesMortes, territoireDefense, territoireJoueur, unitesAtk,partie);
 									joueur.setFlagValider(1);	
 									
-									/*JTextArea resultatsAttaquant = new JTextArea();
-							        resultatsAttaquant.setLineWrap(true);
-							        resultatsAttaquant.setText("The quick brown fox jumps over the lazy dog.");
-
-							        Font font = new Font("Segoe Script", Font.BOLD, 20);
-							        resultatsAttaquant.setFont(font);
-									resultatsAttaquant.setVisible(true);
-									lblEncartHautGauche.add(resultatsAttaquant);*/
 									lblEncartBasDroite.removeAll();
 									lblEncartBasDroite.repaint();
 									lblEncartBasDroite.validate();
@@ -2931,7 +2843,6 @@ public class Interface2 extends JFrame {
 		
 	}
 	
-
 	public void affichageBtnFinDePhase(Joueur joueur) {
 		JButton finDePhase = new JButton("");
 		finDePhase.setOpaque(false);
@@ -2945,12 +2856,12 @@ public class Interface2 extends JFrame {
 		
 		
 		finDePhase.addMouseListener(new MouseListener() {
-			
+		
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(joueur.getNbRenfort() == 0) {
-					
+						
 					joueur.setFlagFinDePhase(1);
 					
 					lblEncartBasDroite.removeAll();
@@ -2977,7 +2888,7 @@ public class Interface2 extends JFrame {
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+					
 			}
 			
 			@Override
@@ -2987,8 +2898,7 @@ public class Interface2 extends JFrame {
 			}
 		});
 	}
-	
-	
+
 	public void refreshCarte() {
 		lblCarte.removeAll();
 		lblCarte.add(btnFullscreenCarte);
