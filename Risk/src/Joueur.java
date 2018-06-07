@@ -538,32 +538,33 @@ public class Joueur {
 		}
 		
 		while(deplacementsPossibles) {
-			Territoires territoireCible = new Territoires(42);
-			Territoires territoireOrigine = new Territoires(42);
+			Territoires territoireCible = null;
+			Territoires territoireOrigine = null;
 			for(int i = 0 ; i < tableauNbVoisinsEnnemis.length ; i++) {
-				if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible.numero == 42) {
-					territoireOrigine = this.territoires.get(i);
+				if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible == null) {
+					territoireOrigine = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
 					System.out.println("If 1");
 				}
-				else if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible.numero != 42 && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireCible)) {
-					territoireOrigine = this.territoires.get(i);
+				else if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible != null && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireCible)) {
+					territoireOrigine = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
 					System.out.println("If 2");
 				}
-				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine.numero != 42 && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireOrigine) ) {
-					territoireCible = this.territoires.get(i);
+				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine != null && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireOrigine) ) {
+					territoireCible = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
 					System.out.println("If 3");
 				}
-				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine.numero == 42) {
-					territoireCible = this.territoires.get(i);
+				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine == null) {
+					territoireCible = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
+					System.out.println(territoireCible.nom);
 					System.out.println("If 4");
 				}
-				if(territoireCible.numero != 42 && territoireOrigine.numero != 42) {
+				if(territoireCible != null && territoireOrigine != null) {
 					System.out.println("If 5");
 					break;
 				}
 			}
 			
-			if(territoireCible.numero != 42 && territoireOrigine.numero != 42) {
+			if(territoireCible != null && territoireOrigine != null) {
 				for(int i = 0 ; i < territoireOrigine.unites.size(); i++) {
 					if(territoireOrigine.unites.get(i).disponibilite!=0) {
 						unitesDeplacees.add(territoireOrigine.unites.get(i));
@@ -579,8 +580,6 @@ public class Joueur {
 				System.out.println("Taille cible après : " + territoireCible.unites.size());
 				
 				unitesDeplacees.clear();
-				territoireOrigine = null;
-				territoireCible = null;
 			}
 			else {
 				System.out.println("Pas de deplacement utile");

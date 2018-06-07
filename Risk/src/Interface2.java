@@ -92,7 +92,7 @@ public class Interface2 extends JFrame {
 		contentPane.add(lblMenu, "1");
 		
 		lblMenu.add(btnPlay);
-		btnPlay.setBounds(823, 930, 285, 60);
+		btnPlay.setBounds(823, 945, 285, 60);
 		btnPlay.setOpaque(false);
 		btnPlay.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnPlay.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
@@ -158,7 +158,7 @@ public class Interface2 extends JFrame {
 		btnFullscreenCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
 		btnFullscreenCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
 		btnFullscreenCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
-		btnFullscreenCarte.setBounds(10, 990, 83, 81);
+		btnFullscreenCarte.setBounds(17, 280, 83, 81);
 		btnFullscreenCarte.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreenCarte.setVisible(true);
 		
@@ -437,7 +437,7 @@ public class Interface2 extends JFrame {
 			JButton ajouterJoueur = new JButton();
 			JButton ajouterIa = new JButton();
 			
-			JTextField fieldPseudo = new JTextField();
+			JTextField fieldPseudo = new JTextField("");
 
 			int nbJoueur =partie.getNbreJoueursTotal();
 			
@@ -445,7 +445,10 @@ public class Interface2 extends JFrame {
 			fieldPseudo.setText("");
 			fieldPseudo.setOpaque(false);
 			fieldPseudo.setBorder(null);
-			fieldPseudo.setBounds(585, 255, 895, 40);
+			fieldPseudo.setBounds(595, 253, 895, 40);
+			Font font = new Font("Arial",Font.BOLD,25);
+			fieldPseudo.setForeground(Color.WHITE);
+			fieldPseudo.setFont(font);
 				 
 			lblMenuParametrage.add(joueurEmpire);
 			joueurEmpire.setOpaque(false);
@@ -575,7 +578,7 @@ public class Interface2 extends JFrame {
 				public void mouseReleased(MouseEvent e) {
 					// TODO Auto-generated method stub
 					
-					if(choixCamp != "" && fieldPseudo.getText()!= "" && nbJoueur<6) {
+					if(choixCamp != "" && !fieldPseudo.getText().isEmpty() && fieldPseudo.getText().length()<9 && nbJoueur<6) {
 						
 						Joueur joueur = new Joueur(nbJoueur,fieldPseudo.getText(), false);
 						joueur.setCamp(choixCamp);
@@ -606,9 +609,6 @@ public class Interface2 extends JFrame {
 						listejoueur.add(joueur);
 						partie.setJoueurs(listejoueur);
 						
-						
-						
-						partie.setNbreJoueursHumains(partie.getNbreJoueursHumains()+1);
 						partie.setNbreJoueursTotal(partie.getNbreJoueursTotal()+1);
 						
 						choixCamp ="";
@@ -673,14 +673,17 @@ public class Interface2 extends JFrame {
 					
 					JLabel joueur = new JLabel(pseudo);
 					joueur.setOpaque(false);
-					joueur.setBounds(500, 700+i*50, 500, 25);
+					joueur.setBounds(500, 700+i*40, 500, 25);
+					joueur.setBounds(500, 700+i*40, 500, 25);
+					joueur.setForeground(Color.WHITE);
 					joueur.setVisible(true);
+					joueur.setFont(font);
 					
 					JLabel iconeJoueur = new JLabel();
 					iconeJoueur.setOpaque(false);
-					iconeJoueur.setBounds(1265, 700+i*50, 25, 25);
+					iconeJoueur.setBounds(1285, 700+i*40, 25, 25);
 					iconeJoueur.setVisible(true);
-					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/cercleunite.png"));
+					iconeJoueur.setIcon(new ImageIcon("src/Images/icone/"+camp+"/"+couleur+"/logocamp.png"));
 					
 					
 					
@@ -1418,7 +1421,7 @@ public class Interface2 extends JFrame {
 		String camp = joueur.camp;
 		
 		fenetreRenfort.setBounds(0,0, 1920, 1080);
-		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfort.png"));
+		fenetreRenfort.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/renfortSoldat.png"));
 		lblEncartBasDroite.add(fenetreRenfort);
 		
 		JLabel tourDePseudo = new JLabel("<html><font color = 'white'><font size = 10>Tour de "+ joueur.Pseudo + "</html>");

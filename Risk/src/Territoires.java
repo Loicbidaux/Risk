@@ -16,9 +16,12 @@ public class Territoires {
 		this.coordonneesUnite = coordonneesUnite;
 	}
 	
-	public Territoires(int numero) {
+	public Territoires(String nom, int numero, ArrayList <Unite> unites, Joueur proprietaire) {
 		super();
 		this.numero = numero;
+		this.nom = nom;
+		this.unites = unites;
+		this.proprietaire = proprietaire;
 	}
 	
 	public String getNom() {
