@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Regions {
 	String nom;
-	ArrayList <Territoires> territoires = new ArrayList();
+	ArrayList <Territoires> territoires = new ArrayList<Territoires>();
 	
 	public Regions(String nom, ArrayList<Territoires> territoires) {
 		super();

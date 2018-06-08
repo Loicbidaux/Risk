@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Partie {
@@ -10,9 +9,9 @@ public class Partie {
 	public int nbreJoueursHumains;
 	public Territoires [] noeuds;
 	public int adjMatrices [][];
-	public ArrayList <Joueur> joueurs = new ArrayList();
-	public ArrayList <Missions> missionsDispo = new ArrayList();
-	public ArrayList <Regions> regions = new ArrayList();
+	public ArrayList <Joueur> joueurs = new ArrayList<Joueur>();
+	public ArrayList <Missions> missionsDispo = new ArrayList<Missions>();
+	public ArrayList <Regions> regions = new ArrayList<Regions>();
 	
 	public int flagParametrageDebut = 0;
 	public int flagDebutDePartie =0;
@@ -75,7 +74,7 @@ public class Partie {
 		int randomNum2;
 		
 		//tableau contenant tous les territoires
-		List <Territoires> territoires = new LinkedList();
+		List <Territoires> territoires = new LinkedList<Territoires>();
 		for(int i = 0 ; i<this.regions.size(); i++) {
 			for(int j = 0; j<this.regions.get(i).territoires.size() ; j++) {
 				territoires.add(this.regions.get(i).territoires.get(j));
@@ -119,7 +118,7 @@ public class Partie {
 			}
 		}
 		
-		ArrayList <Joueur> joueursChanceux = new ArrayList();
+		ArrayList <Joueur> joueursChanceux = new ArrayList<Joueur>();
 		
 		//les territoires non distribues sont donnes aleatoirement a des joueurs differents
 		while(!territoires.isEmpty()) {

@@ -1,19 +1,9 @@
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-import java.applet.Applet;
-import java.awt.*;
-import java.awt.event.*;
-
-import java.io.File;
-import java.applet.AudioClip;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class Jeu {
 	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		Jeu plateau = new Jeu();
 		boolean termine = false;
 		Joueur joueur = new Joueur(1,"gege", true);
 		joueur.setCamp("rebelles");
@@ -37,7 +27,7 @@ public class Jeu {
 		int coordonneesUniteMoncalamari [] = {1520,300};
 		Territoires Moncalamari = new Territoires("Mon Calamari",7,coordonneesUniteMoncalamari);
 		
-		ArrayList <Territoires> BordureExterieureListe = new ArrayList();
+		ArrayList <Territoires> BordureExterieureListe = new ArrayList<Territoires>();
 		BordureExterieureListe.add(Tatooine);
 		BordureExterieureListe.add(Wayland);
 		BordureExterieureListe.add(Toprawa);
@@ -85,7 +75,7 @@ public class Jeu {
 		Territoires Falleen = new Territoires("Falleen",18,coordonneesUniteFalleen);
 		
 		
-		ArrayList <Territoires> BordureMedianeListe = new ArrayList();
+		ArrayList <Territoires> BordureMedianeListe = new ArrayList<Territoires>();
 		BordureMedianeListe.add(Kashyyyk);
 		BordureMedianeListe.add(Kessel);
 		BordureMedianeListe.add(DasoochrV);
@@ -126,7 +116,7 @@ public class Jeu {
 				Territoires Elom = new Territoires("Elom",22,coordonneesUniteElom);
 				
 				
-				ArrayList <Territoires> EspaceSauvageListe = new ArrayList();
+				ArrayList <Territoires> EspaceSauvageListe = new ArrayList<Territoires>();
 				EspaceSauvageListe.add(Omwat);
 				EspaceSauvageListe.add(Arbra);
 				EspaceSauvageListe.add(Excarga);
@@ -153,7 +143,7 @@ public class Jeu {
 				Territoires Bakura = new Territoires("Bakura",26,coordonneesUniteBakura);
 				
 				
-				ArrayList <Territoires> CorridorDisonListe = new ArrayList();
+				ArrayList <Territoires> CorridorDisonListe = new ArrayList<Territoires>();
 				CorridorDisonListe.add(Endor);
 				CorridorDisonListe.add(Bespin);
 				CorridorDisonListe.add(Hoth);
@@ -184,7 +174,7 @@ public class Jeu {
 				Territoires Dagobah = new Territoires("Dagobah",32,coordonneesUniteDagobah);
 				
 				
-				ArrayList <Territoires> SecteurElroodListe = new ArrayList();
+				ArrayList <Territoires> SecteurElroodListe = new ArrayList<Territoires>();
 				SecteurElroodListe.add(Sullust);
 				SecteurElroodListe.add(Eriadu);
 				SecteurElroodListe.add(Sluisvan);
@@ -225,7 +215,7 @@ public class Jeu {
 				int coordonneesUniteDuro [] = {690,280};
 				Territoires Duro = new Territoires("Duro", 41, coordonneesUniteDuro);
 				
-				ArrayList <Territoires> noyauGalactiqueListe = new ArrayList();
+				ArrayList <Territoires> noyauGalactiqueListe = new ArrayList<Territoires>();
 				noyauGalactiqueListe.add(Coruscant);
 				noyauGalactiqueListe.add(Correlia);
 				noyauGalactiqueListe.add(Byss);
@@ -252,31 +242,13 @@ public class Jeu {
 		
 		
 		
-		ArrayList <Regions> regions  = new ArrayList();
+		ArrayList <Regions> regions  = new ArrayList<Regions>();
 		regions.add(BordureExterieure);
 		regions.add(BordureMediane);
 		regions.add(EspaceSauvage);
 		regions.add(CorridorDison);
 		regions.add(SecteurElrood);
 		regions.add(NoyauGalactique);
-		
-		Unite soldatA = new Soldat(1,"soldatA");
-		Unite cavalierA = new Cavalier(2, "CavalierA" );
-		Unite canonA = new Canon(3, "CanonA");
-		
-		Unite soldatD = new Soldat(4, "SoldatD");
-		Unite cavalierD = new Cavalier(5, "CavalierD" );
-		Unite canonD = new Canon(6, "CanonD");
-		
-		
-		ArrayList <Unite> attaquants = new ArrayList<Unite>();
-		attaquants.add(0,soldatA);
-		attaquants.add(1, cavalierA);
-		attaquants.add(2, canonA);
-		
-		ArrayList <Unite> defenseurs = new ArrayList();
-		defenseurs.add(soldatD);
-		defenseurs.add(cavalierD);
 		
 		//matrice pour connaître le positionnement des territoires les uns par rapport aux autres
 		int [][] adjMatrices = {

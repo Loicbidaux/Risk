@@ -1,4 +1,3 @@
-import java.lang.*;
 
 public class Missions {
 	String enonce;

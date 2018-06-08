@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -6,15 +5,15 @@ public class Joueur {
 	int numero;
 	String Pseudo;
 	Missions mission;
-	ArrayList <Unite> armees = new ArrayList();
-	ArrayList <Territoires> territoires = new ArrayList();
-	ArrayList <Regions> regions = new ArrayList();
+	ArrayList <Unite> armees = new ArrayList<Unite>();
+	ArrayList <Territoires> territoires = new ArrayList<Territoires>();
+	ArrayList <Regions> regions = new ArrayList<Regions>();
 	boolean Humain;
 	int dernieresConquetes;
 	String Couleur;
 	String camp;
-	ArrayList joueursDetruits = new ArrayList();
-	ArrayList <Territoires> territoiresConquis = new ArrayList();
+	ArrayList <Integer>joueursDetruits = new ArrayList<Integer>();
+	ArrayList <Territoires> territoiresConquis = new ArrayList<Territoires>();
 	int nbRenfort = 0;
 	int flagFinDePhase =0 ;
 	int flagValider =0 ;
@@ -216,21 +215,21 @@ public class Joueur {
 	
 	//ajoute un soldat au joueur
 	public void ajouterSoldat() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getArmees());
 		attaquants2.add(new Soldat(1,"Soldat"));
 		this.setArmees(attaquants2);
 	}
 	
 	//ajoute un cavalier au joueur
 	public void ajouterCavalier() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getArmees());
 		attaquants2.add(new Cavalier(2,"Cavalier"));
 		this.setArmees(attaquants2);
 	}
 	
 	//ajoute un canon au joueur
 	public void ajouterCanon() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getArmees());
 		attaquants2.add(new Canon(3,"Canon"));
 		this.setArmees(attaquants2);
 	}
@@ -513,7 +512,7 @@ public class Joueur {
 	//renforts attribués par l'ia
 	public void renfortIA(Partie partie) {
 		Regions regionVisee = null;
-		ArrayList <Integer> territoiresParRegion = new ArrayList();
+		ArrayList <Integer> territoiresParRegion = new ArrayList<Integer>();
 		//on stocke le nombre de territoires alliés par region dans l'arraylist
 		for(int j = 0 ; j < partie.regions.size(); j++) {
 			territoiresParRegion.add(0);
@@ -581,7 +580,7 @@ public class Joueur {
 	
 	//fonction de deplacement d'unites par l'ia   NE FONCTIONNE PAS
 	public void deplacementIA(Partie partie) {
-		ArrayList <Unite> unitesDeplacees = new ArrayList();
+		ArrayList <Unite> unitesDeplacees = new ArrayList<Unite>();
 		int [] tableauNbVoisinsEnnemis = new int[this.territoires.size()];
 		boolean deplacementsPossibles = true;
 		
@@ -641,9 +640,8 @@ public class Joueur {
 	
 	//fonction d'attaque par l'ia
 	public void attaqueIA(Partie partie) {
-		ArrayList <Unite> unitesAttaque = new ArrayList();
-		ArrayList <Unite> unitesDefense = new ArrayList();
-		ArrayList <Territoires> ennemisVoisins = new ArrayList();
+		ArrayList <Unite> unitesAttaque = new ArrayList<Unite>();
+		ArrayList <Unite> unitesDefense = new ArrayList<Unite>();
 		boolean attaqueEffectuee = false;
 		boolean attaquesPossibles = true;
 		

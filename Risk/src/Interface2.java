@@ -433,7 +433,7 @@ public class Interface2 extends JFrame {
 	public void affichageUniteCarte(Partie partie) {
 		String couleur;
 		String camp;
-		ArrayList <Unite> uniteTerritoire = new ArrayList();
+		ArrayList <Unite> uniteTerritoire = new ArrayList<Unite>();
 		int nbSoldatTerritoire=0 ;
 		int nbCavalierTerritoire = 0;
 		int nbCanonTerritoire = 0;
@@ -511,7 +511,7 @@ public class Interface2 extends JFrame {
 		 		
 		 	String couleur ;
 		 	String camp ;
-		 	ArrayList <Unite> uniteTerritoire = new ArrayList();
+		 	ArrayList <Unite> uniteTerritoire = new ArrayList<Unite>();
 		 	int nbSoldatTerritoire=0 ;
 		 	int nbCavalierTerritoire = 0;
 		 	int nbCanonTerritoire = 0;
@@ -666,7 +666,7 @@ public class Interface2 extends JFrame {
 						}
 						
 						
-						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						ArrayList <Joueur> listejoueur = new ArrayList<Joueur>(partie.getJoueurs());
 						listejoueur.add(joueur);
 						partie.setJoueurs(listejoueur);
 						
@@ -749,7 +749,7 @@ public class Interface2 extends JFrame {
 						}
 						
 						
-						ArrayList <Joueur> listejoueur = new ArrayList(partie.getJoueurs());
+						ArrayList <Joueur> listejoueur = new ArrayList<Joueur>(partie.getJoueurs());
 						listejoueur.add(joueur);
 						partie.setJoueurs(listejoueur);
 						
@@ -1978,8 +1978,8 @@ public class Interface2 extends JFrame {
 		
 		for(int i = 0 ; i<joueur.territoires.size(); i++) {
 			final Territoires territoireJoueur = joueur.territoires.get(i);
-			ArrayList <JButton> territoiresAllies = new ArrayList();
-			ArrayList <JButton> territoiresEnnemis = new ArrayList();
+			ArrayList <JButton> territoiresAllies = new ArrayList<JButton>();
+			ArrayList <JButton> territoiresEnnemis = new ArrayList<JButton>();
 			nbSoldatTerritoire = 0;
 			nbCavalierTerritoire = 0;
 			nbCanonTerritoire = 0;
@@ -2146,7 +2146,7 @@ public class Interface2 extends JFrame {
 									int j = Integer.parseInt(soldatDeplacement.getText().substring(44,soldatDeplacement.getText().length()-7));
 									int k = Integer.parseInt(cavalierDeplacement.getText().substring(44,cavalierDeplacement.getText().length()-7));
 									int l = Integer.parseInt(canonDeplacement.getText().substring(44,canonDeplacement.getText().length()-7));
-									ArrayList <Unite> unitesDeplacees = new ArrayList();
+									ArrayList <Unite> unitesDeplacees = new ArrayList<Unite>();
 									for(int q = 0 ; q < territoireJoueur.unites.size() ; q++) {
 										if(j!=0 && territoireJoueur.unites.get(q).cout==1) {
 											unitesDeplacees.add(territoireJoueur.unites.get(q));
@@ -2612,7 +2612,7 @@ public class Interface2 extends JFrame {
 									int k = Integer.parseInt(cavalierAttaque.getText().substring(44,cavalierAttaque.getText().length()-7));
 									int l = Integer.parseInt(canonAttaque.getText().substring(44,canonAttaque.getText().length()-7));
 									ArrayList <Unite> unitesDef = territoireDefense.unitesDef(j+k+l);
-									ArrayList <Unite> unitesAtk = new ArrayList();
+									ArrayList <Unite> unitesAtk = new ArrayList<Unite>();
 									for(int q = 0 ; q < territoireJoueur.unites.size() ; q++) {
 										if(j!=0 && territoireJoueur.unites.get(q).cout==1) {
 											unitesAtk.add(territoireJoueur.unites.get(q));

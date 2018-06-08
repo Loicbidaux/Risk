@@ -5,7 +5,7 @@ import java.util.List;
 public class Territoires {
 	String nom;
 	int numero;
-	ArrayList <Unite> unites = new ArrayList();
+	ArrayList <Unite> unites = new ArrayList<Unite>();
 	Joueur proprietaire;
 	int [] coordonneesUnite;
 	
@@ -43,16 +43,16 @@ public class Territoires {
 	public ArrayList<Unite> getUnites() {
 		return unites;
 	}
+	
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
 	public ArrayList <Territoires> voisinsTerritoire(Partie partie) {
-		List <Territoires> territoiresTotal = new LinkedList();
+		List <Territoires> territoiresTotal = new LinkedList<Territoires>();
 		for(int i = 0 ; i<partie.regions.size(); i++) {
 			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
 				territoiresTotal.add(partie.regions.get(i).territoires.get(j));
 			}
 		}
-		ArrayList <Territoires> voisins = new ArrayList();
-		Regions region = this.appartenanceRegionTerritoire(partie);
+		ArrayList <Territoires> voisins = new ArrayList<Territoires>();
 		
 		for(int i = 0 ; i < partie.adjMatrices[this.numero].length ; i++) {
 			if(partie.adjMatrices[this.numero][i] != 0) {
@@ -64,7 +64,7 @@ public class Territoires {
 	
 	//on determine les unites qui vont defendre un territoire contre une attaque
 	public ArrayList <Unite> unitesDef(int nbreAttaquants) {
-		ArrayList <Unite> defenseurs = new ArrayList();
+		ArrayList <Unite> defenseurs = new ArrayList<Unite>();
 		
 		//s'il n'y a qu'une unite sur le territoire, elle est la seule a defendre
 		if(this.unites.size()==1) {
@@ -92,7 +92,7 @@ public class Territoires {
 	
 	//on determine les meilleurs unites pour attaquer (IA)
 	public ArrayList <Unite> unitesAtkIA() {
-		ArrayList <Unite> attaquants = new ArrayList();
+		ArrayList <Unite> attaquants = new ArrayList<Unite>();
 		
 		if(this.unites.size()==2) {
 			attaquants.add(this.unites.get(0));
@@ -128,7 +128,7 @@ public class Territoires {
 	
 	//ajoute un soldat au territoire
 	public void ajouterSoldat() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getUnites());
 		attaquants2.add(new Soldat(1,"Soldat"));
 		this.setUnites(attaquants2);
 	}
@@ -136,7 +136,7 @@ public class Territoires {
 	
 	//ajoute un cavalier au territoire
 	public void ajouterCavalier() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getUnites());
 		attaquants2.add(new Cavalier(2,"Cavalier"));
 		this.setUnites(attaquants2);
 	}
@@ -144,7 +144,7 @@ public class Territoires {
 	
 	//ajoute un canon au territoire
 	public void ajouterCanon() {
-		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
+		ArrayList <Unite> attaquants2 = new ArrayList<Unite>(this.getUnites());
 		attaquants2.add(new Canon(3,"Canon"));
 		this.setUnites(attaquants2);
 	}
