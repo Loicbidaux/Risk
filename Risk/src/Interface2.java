@@ -47,6 +47,8 @@ public class Interface2 extends JFrame {
 	JLabel lblCarte = new JLabel("Carte");
 	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
 	
+	JButton finDePhase;
+	
 	
 	
 	JButton btnPlay = new JButton("");
@@ -1945,6 +1947,7 @@ public class Interface2 extends JFrame {
 		nomPhase.setVisible(true);
 		
 		JButton finDePhase = new JButton("");
+		lblEncartBasDroite.add(finDePhase);
 		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
 		finDePhase.setOpaque(false);
 		finDePhase.setBounds(1600, 765, 92, 60);
@@ -1952,7 +1955,8 @@ public class Interface2 extends JFrame {
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
 		finDePhase.setVisible(true);
-		lblEncartBasDroite.add(finDePhase);
+		lblEncartBasDroite.validate();
+		lblEncartBasDroite.repaint();
 		
 		finDePhase.addMouseListener(new MouseListener() {
 			
@@ -2069,7 +2073,7 @@ public class Interface2 extends JFrame {
 							fenetreDeplacement.setIcon(new ImageIcon("src/Images/Menu/menuaction/"+camp+"/deplacement.png"));
 							lblEncartBasDroite.add(fenetreDeplacement);
 							fenetreDeplacement.removeAll();
-							finDePhase.setVisible(false);
+							finDePhase.setVisible(true);
 							repaint();
 							validate();
 							
@@ -3016,15 +3020,18 @@ public class Interface2 extends JFrame {
 	}
 	
 	public void affichageBtnFinDePhase(Joueur joueur) {
-		JButton finDePhase = new JButton("");
+		 finDePhase = new JButton("");
+		fenetreRenfort.add(finDePhase);
 		finDePhase.setOpaque(false);
 		finDePhase.setBounds(1760, 765, 92, 60);
 		finDePhase.setBorderPainted(true);
 		finDePhase.setContentAreaFilled(false);
 		finDePhase.setFocusPainted(false);
-		finDePhase.setVisible(true);
 		finDePhase.setIcon(new ImageIcon("src/Images/Menu/menuaction/FIN.png"));
-		fenetreRenfort.add(finDePhase);
+		finDePhase.setVisible(true);
+		fenetreRenfort.validate();
+		fenetreRenfort.repaint();
+		
 		
 		
 		finDePhase.addMouseListener(new MouseListener() {
