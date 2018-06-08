@@ -88,10 +88,6 @@ public class Partie {
 		for(int i = 0 ; i<this.nbreJoueursTotal ; i++) {
 			
 			//attribution des missions
-			if(i == 0) {
-				this.joueurs.get(i).mission = new Missions("Détruire le joueur 1", 3);
-			}
-			else {
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.missionsDispo.size());
 			this.joueurs.get(i).mission = new Missions(this.missionsDispo.get(randomNum).enonce, this.missionsDispo.get(randomNum).numero);
 			//si la mission est une mission "detruire un joueur", on lui donne un joueur à détruire
@@ -101,7 +97,7 @@ public class Partie {
 					randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				}
 				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce + randomNum);
-			}}
+			}
 			
 			//attribution des territoires
 			for(int j=0 ; j<territoiresParJoueur ; j++) {

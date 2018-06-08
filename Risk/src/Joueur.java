@@ -556,7 +556,7 @@ public class Joueur {
 		int nbRenfortRestant = this.nbRenfort;
 		int nbVoisinsEnnemis;
 		
-		//on atttribue les renforts aux territoires de la region selectionnee qui ont une frontiere avec un ennemi
+		//on attribue les renforts aux territoires de la region selectionnee qui ont une frontiere avec un ennemi
 		while(nbRenfortRestant != 0) {
 			for(int i = 0 ; i < regionVisee.territoires.size() ; i++) {
 				nbVoisinsEnnemis = 0;
@@ -565,11 +565,36 @@ public class Joueur {
 						nbVoisinsEnnemis ++;
 					}
 				}
-				if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
-					if(nbRenfortRestant>0 && nbVoisinsEnnemis != 0){
-						this.ajouterSoldat();
-						partie.regions.get(indiceMax).territoires.get(i).ajouterSoldat();
-						nbRenfortRestant --;
+				if(partie.tour<2) {
+					if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
+						if(nbRenfortRestant>0 && nbVoisinsEnnemis != 0){
+							this.ajouterSoldat();
+							partie.regions.get(indiceMax).territoires.get(i).ajouterSoldat();
+							nbRenfortRestant --;
+						}
+					}
+				}
+				else {
+					if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
+						if(nbRenfortRestant>6 && nbVoisinsEnnemis != 0){
+							this.ajouterCanon();
+							partie.regions.get(indiceMax).territoires.get(i).ajouterCanon();
+							nbRenfortRestant = nbRenfortRestant - 7;
+						}
+					}
+					if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
+						if(nbRenfortRestant>3 && nbVoisinsEnnemis != 0){
+							this.ajouterCavalier();
+							partie.regions.get(indiceMax).territoires.get(i).ajouterCavalier();
+							nbRenfortRestant = nbRenfortRestant - 3;
+						}
+					}
+					if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
+						if(nbRenfortRestant>0 && nbVoisinsEnnemis != 0){
+							this.ajouterSoldat();
+							partie.regions.get(indiceMax).territoires.get(i).ajouterSoldat();
+							nbRenfortRestant --;
+						}
 					}
 				}
 			}		

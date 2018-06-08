@@ -50,7 +50,7 @@ public class Jeu {
 		
 		
 		
-		//Ensemble des térritoires de la région 2
+		//Ensemble des territoires de la région 2
 		int coordonneesUniteKashyyyk [] = {1270,430};
 		Territoires Kashyyyk = new Territoires("Kashyyyk",8,coordonneesUniteKashyyyk);
 		int coordonneesUniteKessel [] = {1540,450};
