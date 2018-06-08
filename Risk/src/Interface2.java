@@ -29,6 +29,10 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 public class Interface2 extends JFrame {
+
+	
+	//On instancie les jlabel, jpanel et jbutton fixe
+	//On instancie les flags
 	
 	private boolean FSflag = false;
 	private boolean Sflag = false;
@@ -42,7 +46,7 @@ public class Interface2 extends JFrame {
 	JLabel transition = new JLabel("");
 	JLabel lblCarte = new JLabel("Carte");
 	JLabel lblEncartBasDroite = new JLabel("EncartBasDroite");
-	//JLabel lblEncartHautGauche = new JLabel("EncartHautGauche");
+	
 	
 	
 	JButton btnPlay = new JButton("");
@@ -73,22 +77,25 @@ public class Interface2 extends JFrame {
 	public Interface2() throws Exception{
 		super();
 		
-		build();//On initialise notre fenêtre
+		build();
+		//On initialise notre fenêtre et on la rempli avec les premiers labels
+		//On utilise un card layout pour switch entre l'accueil, le menu, la transition et la carte
 	}
 	
 	private void build() throws Exception{
-		setTitle("Risk Ultimate Sublime Warframe"); //On donne un titre à l'application
-		setLocationRelativeTo(null); //On centre la fenêtre sur l'écran
-		setResizable(false); //On interdit la redimensionnement de la fenêtre
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //On dit à l'application de se fermer lors du clic sur la croix
+		setTitle("Risk Ultimate Sublime Warframe"); 
+		setLocationRelativeTo(null); 
+		setResizable(false); 
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		setBounds(0, 0, 1920, 1080);
 		setContentPane(buildContentPane());
 	}
 
 	private JPanel buildContentPane() throws Exception{
 		
+		 
+		
 		Theme.PlaySoundC();
-		//Border border = BorderFactory.createLineBorder(Color.red, 5);
 		contentPane.setLayout(cl);
 		panelMenu.add(lblMenu);
 		panelCarte.add(lblCarte);
@@ -102,26 +109,26 @@ public class Interface2 extends JFrame {
 		lblMenu.add(btnPlay);
 		btnPlay.setBounds(823, 945, 285, 60);
 		btnPlay.setOpaque(false);
-		btnPlay.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-		btnPlay.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
-		btnPlay.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnPlay.setContentAreaFilled(false); 
+		btnPlay.setBorderPainted(true); 
+		btnPlay.setFocusPainted(false); 
 		btnPlay.setVisible(true);
 		
 		
 		lblMenu.add(btnFullscreen);
 		btnFullscreen.setOpaque(false);
-		btnFullscreen.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-		btnFullscreen.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
-		btnFullscreen.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnFullscreen.setContentAreaFilled(false); 
+		btnFullscreen.setBorderPainted(false); 
+		btnFullscreen.setFocusPainted(false); 
 		btnFullscreen.setBounds(1780, 920, 83, 81);
 		btnFullscreen.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreen.setVisible(true);
 		
 		lblMenu.add(btnSon);
 		btnSon.setOpaque(false);
-		btnSon.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-		btnSon.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
-		btnSon.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnSon.setContentAreaFilled(false); 
+		btnSon.setBorderPainted(false); 
+		btnSon.setFocusPainted(false); 
 		btnSon.setBounds(1690, 920, 83, 81);
 		btnSon.setIcon(new ImageIcon("src/Images/icone/mute.png"));
 		btnSon.setVisible(true);
@@ -140,18 +147,18 @@ public class Interface2 extends JFrame {
  		contentPane.add(transition,"3");
  		
  		btnFullscreenMenuParametrage.setOpaque(false);
- 		btnFullscreenMenuParametrage.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
- 		btnFullscreenMenuParametrage.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
- 		btnFullscreenMenuParametrage.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+ 		btnFullscreenMenuParametrage.setContentAreaFilled(false); 
+ 		btnFullscreenMenuParametrage.setBorderPainted(false); 
+ 		btnFullscreenMenuParametrage.setFocusPainted(false); 
  		btnFullscreenMenuParametrage.setBounds(1780, 920, 83, 81);
  		btnFullscreenMenuParametrage.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
  		btnFullscreenMenuParametrage.setVisible(true);
  		
  		lblMenuParametrage.add(btnSonParametrage);
  		btnSonParametrage.setOpaque(false);
- 		btnSonParametrage.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
- 		btnSonParametrage.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
- 		btnSonParametrage.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+ 		btnSonParametrage.setContentAreaFilled(false); 
+ 		btnSonParametrage.setBorderPainted(false); 
+ 		btnSonParametrage.setFocusPainted(false); 
  		btnSonParametrage.setBounds(1690, 920, 83, 81);
  		btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/mute.png"));
  		btnSonParametrage.setVisible(true);
@@ -159,9 +166,9 @@ public class Interface2 extends JFrame {
  		transition.add(btnSkip);
  		btnSkip.setBounds(1680, 965, 200, 50);
  		btnSkip.setOpaque(false);
- 		btnSkip.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
- 		btnSkip.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
- 		btnSkip.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+ 		btnSkip.setContentAreaFilled(false); 
+ 		btnSkip.setBorderPainted(false); 
+ 		btnSkip.setFocusPainted(false); 
  		btnSkip.setVisible(true);
  		btnSkip.setIcon(new ImageIcon("src/Images/Menu/menuaction/btnSkip.png"));
 		
@@ -175,27 +182,29 @@ public class Interface2 extends JFrame {
 		lblEncartBasDroite.setIcon(new ImageIcon("src/Images/Menu/menuaction/ENCART-BASDROIT-VIDE.png"));
 		lblCarte.add(lblEncartBasDroite);
 		
-		//lblEncartHautGauche.setBounds(32,23,470,230);
-		//lblCarte.add(lblEncartHautGauche);
+		
 		
 		
 		lblCarte.add(btnFullscreenCarte);
 		btnFullscreenCarte.setOpaque(false);
-		btnFullscreenCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-		btnFullscreenCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
-		btnFullscreenCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnFullscreenCarte.setContentAreaFilled(false); 
+		btnFullscreenCarte.setBorderPainted(false); 
+		btnFullscreenCarte.setFocusPainted(false); 
 		btnFullscreenCarte.setBounds(17, 280, 83, 81);
 		btnFullscreenCarte.setIcon(new ImageIcon("src/Images/icone/fullscreen.png"));
 		btnFullscreenCarte.setVisible(true);
 		
 		lblCarte.add(btnSonCarte);
 		btnSonCarte.setOpaque(false);
-		btnSonCarte.setContentAreaFilled(false); // On met à false pour empêcher le composant de peindre l'intérieur du JButton.
-		btnSonCarte.setBorderPainted(false); // De même, on ne veut pas afficher les bordures.
-		btnSonCarte.setFocusPainted(false); // On n'affiche pas l'effet de focus.
+		btnSonCarte.setContentAreaFilled(false); 
+		btnSonCarte.setBorderPainted(false); 
+		btnSonCarte.setFocusPainted(false); 
 		btnSonCarte.setBounds(110, 280, 83, 81);
 		btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
 		btnSonCarte.setVisible(true);
+		
+		//On crée un mouselistener particulier pour les boutons fulscreen et d'autres pour les bouton son
+		//on utilise un flag pour connaitre la postion du bouton 
 		
 		MouseListener fullscreen = new MouseListener() {
 
@@ -208,9 +217,7 @@ public class Interface2 extends JFrame {
 	                PrevWidth = getWidth();
 	                PrevHeight = getHeight();
 
-	                // Destroys the whole JFrame but keeps organized every Component
-	                // Needed if you want to use Undecorated JFrame dispose() is the
-	                // reason that this trick doesn't work with videos.
+	                
 	                dispose();
 	                setUndecorated(true);
 
@@ -365,11 +372,11 @@ public class Interface2 extends JFrame {
 			};
 								
 							
-			
+		// on crée un timer si le joueur laisse la vidéo en entiere
 		timer = new Timer(29000, new ActionListener(){      // Timer 4 seconds
 			public void actionPerformed(ActionEvent e) {
 				cl.show(contentPane, "4");
-				flagSkip = 1;
+				flagSkip = 1;//on passe notre flag du début de partie
 			}
 		});					
 		
@@ -429,7 +436,7 @@ public class Interface2 extends JFrame {
 		return contentPane;
 	}
 	
-	
+	//Cette fonction permet d'afficher les unitées sur la cartes avec les nombres de soldats cavaliers et canon
 	public void affichageUniteCarte(Partie partie) {
 		String couleur;
 		String camp;
@@ -439,13 +446,16 @@ public class Interface2 extends JFrame {
 		int nbCanonTerritoire = 0;
 		int[] coordonneesUnite ;
 		
+		
+		
 		for(int i = 0 ; i<partie.regions.size(); i++) {
 			for(int j = 0; j<partie.regions.get(i).territoires.size() ; j++) {
-				couleur = partie.regions.get(i).territoires.get(j).proprietaire.Couleur;
-				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;
-				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;
-				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;
+				couleur = partie.regions.get(i).territoires.get(j).proprietaire.Couleur;//on recupere la couleur du joueur
+				camp = partie.regions.get(i).territoires.get(j).proprietaire.camp;//son camp
+				uniteTerritoire = partie.regions.get(i).territoires.get(j).unites;//la liste des unitées
+				coordonneesUnite = partie.regions.get(i).territoires.get(j).coordonneesUnite;//les coordonées de l'unité 
 				
+				//On boucle sur les nitées pour récupérer le nombre de chaque unitées
 				for(int k = 0; k<partie.regions.get(i).territoires.get(j).unites.size(); k++) {
 					if(partie.regions.get(i).territoires.get(j).unites.get(k).cout == 1) {
 						nbSoldatTerritoire++;
@@ -493,6 +503,8 @@ public class Interface2 extends JFrame {
 			}}
 	}
 
+	//même fonction que affichageUniteCarte mais on ajoute un délai entre chaque appartition pour créer du suspens
+	//on démarre également la deuxieme partie du son
 	public void affichageUniteCarteDebutPartie(Partie partie ) throws Exception {
 	 		
 			while (flagSkip == 0) {
@@ -571,7 +583,8 @@ public class Interface2 extends JFrame {
 						
 			}}
 		}
-		 	
+	
+	//Cette fonction correspond a l'écran avant la partie pour ajouter des joueurs 
 	public void parametragePartie(Partie partie) {
 				
 			JButton joueurEmpire = new JButton();
@@ -912,6 +925,8 @@ public class Interface2 extends JFrame {
 			lblMenuParametrage.repaint();
 	}
 	
+	
+	//Cette fonction gere l'ajout de renfort par le joueur
 	public void affichageRenfort (Joueur joueur) {
 	
 		
@@ -1129,6 +1144,7 @@ public class Interface2 extends JFrame {
 						
 						if (j>=0) {
 						int i = Integer.parseInt(nbSoldat.getText().substring(46,nbSoldat.getText().length()-7))+1;
+						// i est le nb de soldat il est recuperer en soustrayant l'html du text du label et en le vertissant en int
 						nbSoldat.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
 						
 						nbRenfortDisponible.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(j)+"</html>");
@@ -1190,6 +1206,7 @@ public class Interface2 extends JFrame {
 						
 						if (j>=0) {
 						int i = Integer.parseInt(nbCavalier.getText().substring(46,nbCavalier.getText().length()-7))+1;
+						// i est le nb de nbCavalier il est recuperer en soustrayant l'html du text du label et en le vertissant en int
 						nbCavalier.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
 						
 						nbRenfortDisponible.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(j)+"</html>");
@@ -1248,7 +1265,7 @@ public class Interface2 extends JFrame {
 					@Override
 					public void mouseReleased(MouseEvent e) {
 						int j = Integer.parseInt(nbRenfortDisponible.getText().substring(46,nbRenfortDisponible.getText().length()-7))-7;
-						
+						// i est le nb de nbRenfortDisponible il est recuperer en soustrayant l'html du text du label et en le vertissant en int
 						if (j>=0) {
 						int i = Integer.parseInt(nbCanon.getText().substring(46,nbCanon.getText().length()-7))+1;
 						nbCanon.setText("<html><font color = 'white'><font size = '15'>"+String.valueOf(i)+"</html>");
@@ -2162,7 +2179,10 @@ public class Interface2 extends JFrame {
 										}
 									}
 									joueur.deplacerUnites(territoireJoueur, territoireCible, unitesDeplacees);
-									joueur.setFlagValider(1);	
+									joueur.setFlagValider(1);
+									lblEncartBasDroite.removeAll();
+									lblEncartBasDroite.repaint();
+									lblEncartBasDroite.validate();
 								}
 							});
 							
