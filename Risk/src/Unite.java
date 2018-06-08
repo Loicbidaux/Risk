@@ -63,10 +63,12 @@ public abstract class Unite {
 		this.mouvement--;
 	}
 	
+	//on regarde si l'unite peut encore agir
 	public void verifDisponibilite() {
 		if(this.mouvement == 0) {
 			this.disponibilite =0;
 		}
 	}
+	
 	abstract void revigoree();
 }

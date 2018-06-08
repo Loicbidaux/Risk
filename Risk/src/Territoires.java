@@ -44,7 +44,6 @@ public class Territoires {
 		return unites;
 	}
 	//on cherche les territoires voisins à celui demandé en parcourant un graphe
-	//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!COMPLETER POUR INTERCONTINENTAL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public ArrayList <Territoires> voisinsTerritoire(Partie partie) {
 		List <Territoires> territoiresTotal = new LinkedList();
 		for(int i = 0 ; i<partie.regions.size(); i++) {
@@ -91,25 +90,66 @@ public class Territoires {
 		}
 	}
 	
+	//on determine les meilleurs unites pour attaquer (IA)
+	public ArrayList <Unite> unitesAtkIA() {
+		ArrayList <Unite> attaquants = new ArrayList();
+		
+		if(this.unites.size()==2) {
+			attaquants.add(this.unites.get(0));
+			return attaquants;
+		}
+		
+		else {
+			for(int i = 0 ; i< this.unites.size()-1 ; i++) {
+				if(i<=2) {
+					attaquants.add(this.unites.get(i));
+				}
+				else {
+					for(int j = 0 ; j<3 ; j++) {
+						if(attaquants.get(j).cout>this.unites.get(i).cout) {
+							attaquants.set(j, this.unites.get(i));
+						}
+					}
+				}
+			}
+			return attaquants;
+		}
+	}
+	
+	
+	//calcul le cout total des unites sur le territoire
+	public int coutTotal() {
+		int total = 0;
+		for(int i = 0 ; i < this.unites.size(); i++) {
+			total += this.unites.get(i).cout;
+		}
+		return total;
+	}
+	
+	//ajoute un soldat au territoire
 	public void ajouterSoldat() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
 		attaquants2.add(new Soldat(1,"Soldat"));
 		this.setUnites(attaquants2);
 	}
 	
+	
+	//ajoute un cavalier au territoire
 	public void ajouterCavalier() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
 		attaquants2.add(new Cavalier(2,"Cavalier"));
 		this.setUnites(attaquants2);
 	}
 	
+	
+	//ajoute un canon au territoire
 	public void ajouterCanon() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getUnites());
 		attaquants2.add(new Canon(3,"Canon"));
 		this.setUnites(attaquants2);
 	}
 	
-	//on regarde a quelle region appartient le territoire demande
+	//on regarde a quelle region appartient le territoire demandé
 	public Regions appartenanceRegionTerritoire(Partie partie) {
 		for(int i = 0 ; i < partie.regions.size(); i++) {
 			if(partie.regions.get(i).territoires.contains(this)) {

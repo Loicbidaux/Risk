@@ -1,13 +1,14 @@
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.applet.Applet;
-//import edu.princeton.cs.introcs.StdDraw;
 import java.awt.*;
 import java.awt.event.*;
+
 import java.io.File;
 import java.applet.AudioClip;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 public class Jeu {
 	
 	public static void main(String[] args) throws Exception {
@@ -18,7 +19,7 @@ public class Jeu {
 		joueur.setCamp("rebelles");
 		
 		
-		//Ensemble des térritoires de la région 1
+		//Ensemble des territoires de la région 1
 		int coordonneesUniteTatooine [] = {1050,80};
 		Territoires Tatooine = new Territoires("Tatooine",0,coordonneesUniteTatooine);
 		int coordonneesUniteWayland [] = {955,165};
@@ -114,7 +115,7 @@ public class Jeu {
 		
 
 		
-		//Ensemble des térritoires de la région 3
+		//Ensemble des territoires de la région 3
 				int coordonneesUniteOmwat [] = {790,745};
 				Territoires Omwat = new Territoires("Omwat",19,coordonneesUniteOmwat);
 				int coordonneesUniteArbra [] = {960,820};
@@ -167,7 +168,7 @@ public class Jeu {
 				Bakura.setProprietaire(joueur);
 				
 				
-				//Ensemble des térritoires de la région 5
+				//Ensemble des territoires de la région 5
 				
 				int coordonneesUniteSullust [] = {545,670};
 				Territoires Sullust = new Territoires("Sullust",27,coordonneesUniteSullust);
@@ -277,64 +278,10 @@ public class Jeu {
 		defenseurs.add(soldatD);
 		defenseurs.add(cavalierD);
 		
-		
-		/*Tatooine.setUnites(attaquants);
-		Wayland.setUnites(defenseurs);
-		Toprawa.setUnites(attaquants);
-		Dathomir.setUnites(attaquants);
-		Yavin4.setUnites(attaquants);
-		Dantooine.setUnites(attaquants);
-		Ordmantell.setUnites(attaquants);
-		Moncalamari.setUnites(attaquants);
-		
-		Kashyyyk.setUnites(attaquants);
-		Kessel.setUnites(attaquants);
-		DasoochrV.setUnites(attaquants);
-		Ylesia.setUnites(attaquants);
-		Toydaria.setUnites(attaquants);
-		Narshadda.setUnites(attaquants);
-		Bothawui.setUnites(attaquants);
-		Gamorr.setUnites(attaquants);
-		Kothlis.setUnites(attaquants);
-		Rodia.setUnites(attaquants);
-		Falleen.setUnites(attaquants);
-		
-		Omwat.setUnites(attaquants);
-		Arbra.setUnites(attaquants);
-		Excarga.setUnites(attaquants);
-		Elom.setUnites(attaquants);
-		
-		Endor.setUnites(attaquants);
-		Bespin.setUnites(attaquants);
-		Hoth.setUnites(attaquants);
-		Bakura.setUnites(attaquants);
-		
-		Sullust.setUnites(attaquants);
-		Eriadu.setUnites(attaquants);
-		Sluisvan.setUnites(attaquants);
-		Derilyn.setUnites(attaquants);
-		Bpfassh.setUnites(attaquants);
-		Dagobah.setUnites(attaquants);
-		//attaquants.add(canonA);
-		
-		Coruscant.setUnites(attaquants);
-		Correlia.setUnites(attaquants);
-		Byss.setUnites(attaquants);
-		Mimban.setUnites(attaquants);
-		Alderaan.setUnites(attaquants);
-		Hapes.setUnites(attaquants);
-		Kurt.setUnites(attaquants);
-		Balmorra.setUnites(attaquants);
-		Duro.setUnites(attaquants);
-		
-		ArrayList <Unite> defenseurs = new ArrayList();
-		//defenseurs.add(soldatD);
-		defenseurs.add(cavalierD);
-		defenseurs.add(canonD);*/
-		
+		//matrice pour connaître le positionnement des territoires les uns par rapport aux autres
 		int [][] adjMatrices = {
 				{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //tatooine
-				{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0}, //wayland
+				{1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0}, //wayland
 				{1,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //toprawa
 				{1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //dathomir
 				{0,0,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0}, //yavin4
@@ -376,16 +323,14 @@ public class Jeu {
 				{0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0},
 				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0}
 		};
+		
+		//La partie commence
 		Partie partie = new Partie(0,regions, adjMatrices);
 		Interface2 frame = new Interface2();
 		frame.setVisible(true);
-		
-	    
 		partie.parametragePartie(frame);
 		partie.ajouterMissions(partie.nbreJoueursTotal);
 		partie.miseEnPlace();
-		partie.joueurs.get(0).nbRenfort = partie.joueurs.get(0).nbRenfort + 27;
-		
 		frame.affichageUniteCarteDebutPartie(partie);
 		for(int i=0 ; i<partie.joueurs.size() ; i++) {
 			if(partie.joueurs.get(i).Humain == true) {
@@ -399,24 +344,28 @@ public class Jeu {
 		partie.tour++;
 		while(!termine) {
 			for(int i = 0 ; i<partie.joueurs.size(); i++) {
-				System.out.println("Le tour " + partie.tour + " est en cours !");
-				System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
-				partie.tourJoueur(partie.joueurs.get(i), frame);
-				termine=partie.joueurs.get(i).verifVictoire();
-				System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).territoires.size() + " territoires");
-				System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).regions.size() + " regions");
-				if(termine==true) {
-					break;
+				//System.out.println("Le tour " + partie.tour + " est en cours !");
+				//System.out.println("La mission du joueur " + partie.joueurs.get(i).numero + " est " + partie.joueurs.get(i).mission.enonce);
+				//System.out.println("Le joueur possède "+partie.joueurs.get(1).armees.size()+ "unites");
+				boolean issueTour = partie.tourJoueur(partie.joueurs.get(i), frame);
+				if(issueTour==true) {
+					//System.out.println("Le joueur possède "+partie.joueurs.get(1).armees.size()+ "unites");
+					termine=partie.joueurs.get(i).verifVictoire();
+					//System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).territoires.size() + " territoires");
+					//System.out.println("Le joueur " + partie.joueurs.get(i).Pseudo + " possède " + partie.joueurs.get(i).regions.size() + " regions");
+					if(termine==true) {
+						System.out.println(partie.joueurs.get(i).numero);
+						System.out.println(partie.joueurs.get(i).mission.enonce);
+						break;
+					}
 				}
 			}
 			partie.tour++;
 		}
 		
+		System.out.println("Vicitoire");
 		frame.victoire();
-		 
-			
 		
-
 	}
 
 }

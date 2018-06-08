@@ -12,6 +12,7 @@ public class Cavalier extends Unite {
 	static final int mouvement = 3;
 	static final int disponibilite = 1;
 	
+	//redonne toutes ses capacités à l'unité
 	protected void revigoree() {
 		this.setMouvement(3);
 		this.setDisponibilite(1);

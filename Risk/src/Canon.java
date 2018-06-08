@@ -12,6 +12,7 @@ public class Canon extends Unite {
 	static final int mouvement = 1;
 	static final int disponibilite = 1;
 	
+	//redonne toutes ses capacités à l'unité
 	protected void revigoree() {
 		this.setMouvement(1);
 		this.setDisponibilite(1);

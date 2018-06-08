@@ -89,15 +89,20 @@ public class Partie {
 		for(int i = 0 ; i<this.nbreJoueursTotal ; i++) {
 			
 			//attribution des missions
+			if(i == 0) {
+				this.joueurs.get(i).mission = new Missions("Détruire le joueur 1", 3);
+			}
+			else {
 			randomNum = ThreadLocalRandom.current().nextInt(0, this.missionsDispo.size());
 			this.joueurs.get(i).mission = new Missions(this.missionsDispo.get(randomNum).enonce, this.missionsDispo.get(randomNum).numero);
+			//si la mission est une mission "detruire un joueur", on lui donne un joueur à détruire
 			if(this.joueurs.get(i).mission.enonce.charAt(0)== "D".charAt(0)) {
 				randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				while(randomNum == this.joueurs.get(i).numero) {
 					randomNum = ThreadLocalRandom.current().nextInt(0, this.nbreJoueursTotal);
 				}
 				this.joueurs.get(i).mission.setEnonce(this.joueurs.get(i).mission.enonce + randomNum);
-			}
+			}}
 			
 			//attribution des territoires
 			for(int j=0 ; j<territoiresParJoueur ; j++) {
@@ -129,37 +134,66 @@ public class Partie {
 			}
 		}	
 		
+		//on ajoute au joueur les unites qui sont attribuées d'office aux territoires en début de partie et on les enleve au nombre de renforts à distribuer
 		for(int i = 0 ; i < this.joueurs.size(); i++) {
+			for(int j = 0 ; j < this.joueurs.get(i).territoires.size() ; j++) {
+				this.joueurs.get(i).ajouterSoldat();
+			}
 			this.joueurs.get(i).setNbRenfort(this.joueurs.get(i).nbRenfort - this.joueurs.get(i).territoires.size());
 		}
 	}
 	
 	
 	
-	//on increment le compteur du nombre de tours
-	public void tourJoueur(Joueur joueur, Interface2 frame) {
+	//deroulement du tour des joueurs
+	public boolean tourJoueur(Joueur joueur, Interface2 frame) {
+		//on verifie que le joueur n'a pas perdu
 		if(!joueur.verifDefaite()) {
+			//deroulement si le joueur est humain
 			if(joueur.Humain) {
-				joueur.appelRenforts();
+				if(this.tour > 1) {
+					joueur.appelRenforts();
+				}
 				joueur.attributionRenfort(this,frame);
 				joueur.reposTroupes();
 				joueur.actionJoueur(this, frame);
+				return true;
 			}
+			//deroulement si le joueur est une ia
 			else {
 				System.out.println("IA");
-				joueur.appelRenforts();
+				if(this.tour > 1) {
+					joueur.appelRenforts();
+					System.out.println("Renforts calculés");
+				}
 				joueur.renfortIA(this);
-				frame.affichageRenfort(joueur);
+				System.out.println("Renforts attribués");
+				frame.refreshCarte();
+				frame.affichageUniteCarte(this);
 				joueur.deplacementIA(this);
+				joueur.attaqueIA(this);
+				frame.refreshCarte();
+				frame.affichageUniteCarte(this);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;
 			}
 		}
+		//s'il a perdu, on le retire de la liste des joueurs
 		else {
+			System.out.println("Le joueur perdant possédait "+ joueur.territoires.size() + " territoires");
 			this.joueurs.remove(joueur);
 			System.out.println(joueur.Pseudo + " a perdu ...");
+			return false;
 			
 		}
 	}
 	
+	//ajoute les missions potentielles en fonction du nombre de joueurs
 	public void ajouterMissions(int nbreJoueurs) {
 		this.missionsDispo.add(new Missions("Contrôler 3 régions et au moins 18 territoires", 1));
 		this.missionsDispo.add(new Missions("Contrôler la plus grosse région + 1 autre région", 2));
@@ -185,6 +219,8 @@ public class Partie {
 		}
 	}
 	
+	
+	//fonction pour le menu d'ajout de joueurs
 	public void parametragePartie(Interface2 frame) {
 		while(flagDebutDePartie == 0) {
 			

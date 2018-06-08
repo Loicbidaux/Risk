@@ -67,7 +67,6 @@ public class Interface2 extends JFrame {
 	String choixCamp ="";
 	
 	private Timer timer = null;
-	
 	Sound Theme = new Sound("src/Sons/Intro.wav");
 	Sound mainTheme = new Sound("src/Sons/Music.wav");
 	
@@ -87,7 +86,6 @@ public class Interface2 extends JFrame {
 	}
 
 	private JPanel buildContentPane() throws Exception{
-		
 		
 		Theme.PlaySoundC();
 		//Border border = BorderFactory.createLineBorder(Color.red, 5);
@@ -199,12 +197,6 @@ public class Interface2 extends JFrame {
 		btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
 		btnSonCarte.setVisible(true);
 		
-		
-		
-		
-		
-		
-		
 		MouseListener fullscreen = new MouseListener() {
 
 			@Override
@@ -265,7 +257,62 @@ public class Interface2 extends JFrame {
 			}
 			};
 			
+			
 			MouseListener sonMenu = new MouseListener() {
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					if (Sflag == false) {
+				         
+						try {
+							Theme.Stop();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+							}
+				        btnSon.setIcon(new ImageIcon("src/Images/icone/son.png"));
+				        btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/son.png"));
+				        Sflag = true;
+				        } else {
+				       	try {
+				  		Theme.PlaySoundC();
+						} catch (Exception e1) {
+						// TODO Auto-generated catch block
+					e1.printStackTrace();
+					}
+				    btnSon.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+	                btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+	                Sflag = false;
+	            }
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			};
+			
+			MouseListener sonCarte = new MouseListener() {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
@@ -273,23 +320,21 @@ public class Interface2 extends JFrame {
 					if (Sflag == false) {
 		                
 						try {
-							Theme.Stop();
+							mainTheme.Stop();
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-		                btnSon.setIcon(new ImageIcon("src/Images/icone/son.png"));
-		                btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/son.png"));
+		                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/son.png"));
 		                Sflag = true;
 		            } else {
 		            	try {
-							Theme.PlaySoundC();
+							mainTheme.PlaySoundC();
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-		                btnSon.setIcon(new ImageIcon("src/Images/icone/mute.png"));
-		                btnSonParametrage.setIcon(new ImageIcon("src/Images/icone/mute.png"));
+		                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
 		                Sflag = false;
 		            }
 				}
@@ -317,60 +362,9 @@ public class Interface2 extends JFrame {
 					// TODO Auto-generated method stub
 					
 				}
-				};
-				
-				MouseListener sonCarte = new MouseListener() {
-
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						// TODO Auto-generated method stub
-						if (Sflag == false) {
-			                
-							try {
-								mainTheme.Stop();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-			                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/son.png"));
-			                Sflag = true;
-			            } else {
-			            	try {
-								mainTheme.PlaySoundC();
-							} catch (Exception e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-			                btnSonCarte.setIcon(new ImageIcon("src/Images/icone/mute.png"));
-			                Sflag = false;
-			            }
-					}
-
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void mouseExited(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-
-					@Override
-					public void mousePressed(MouseEvent e) {
-						// TODO Auto-generated method stub
-						
-					}
-					};
-				
+			};
+								
+							
 			
 		timer = new Timer(29000, new ActionListener(){      // Timer 4 seconds
 			public void actionPerformed(ActionEvent e) {
@@ -500,7 +494,7 @@ public class Interface2 extends JFrame {
 	}
 
 	public void affichageUniteCarteDebutPartie(Partie partie ) throws Exception {
-		 		
+	 		
 			while (flagSkip == 0) {
 			 	try {
 			 		Thread.sleep(1);
@@ -511,10 +505,10 @@ public class Interface2 extends JFrame {
 			 	}
 			
 			if(Sflag == false) {
-			Theme.Stop();
-			mainTheme.PlaySoundC();
+				Theme.Stop();
+				mainTheme.PlaySoundC();
 			}
-			
+		 		
 		 	String couleur ;
 		 	String camp ;
 		 	ArrayList <Unite> uniteTerritoire = new ArrayList();
@@ -2018,6 +2012,7 @@ public class Interface2 extends JFrame {
 					territoireAllie.setBorderPainted(true); // De même, on ne veut pas afficher les bordures.
 					territoireAllie.setFocusPainted(false);
 					territoireAllie.setText(joueur.territoires.get(i).voisinsTerritoire(partie).get(j).nom);
+					territoireAllie.setFont(new Font("Arial", Font.BOLD ,  12));
 					territoiresAllies.add(territoireAllie);
 					territoireAllie.setBounds(1700, 850 + territoiresAllies.indexOf(territoireAllie)*30, 112, 20);
 					

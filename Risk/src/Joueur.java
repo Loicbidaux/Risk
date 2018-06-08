@@ -189,6 +189,7 @@ public class Joueur {
 		return false;
 	}
 	
+	//on verifie si le joueur a gagne (= a tous les territoires ou mission remplie)
 	public boolean verifVictoire() {
 		if(this.territoires.size() == 42) {
 			return true;
@@ -201,6 +202,8 @@ public class Joueur {
 		}
 	}
 	
+	
+	//on verifie si le joueur a perdu (= n'a plus de territoires
 	public boolean verifDefaite() {
 		if(this.territoires.size() == 0) {
 			return true;
@@ -210,24 +213,29 @@ public class Joueur {
 		}
 	}
 
+	
+	//ajoute un soldat au joueur
 	public void ajouterSoldat() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
 		attaquants2.add(new Soldat(1,"Soldat"));
 		this.setArmees(attaquants2);
 	}
 	
+	//ajoute un cavalier au joueur
 	public void ajouterCavalier() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
 		attaquants2.add(new Cavalier(2,"Cavalier"));
 		this.setArmees(attaquants2);
 	}
 	
+	//ajoute un canon au joueur
 	public void ajouterCanon() {
 		ArrayList <Unite> attaquants2 = new ArrayList(this.getArmees());
 		attaquants2.add(new Canon(3,"Canon"));
 		this.setArmees(attaquants2);
 	}
 	
+	//calcul le nombre de renforts obtenus par les joueurs au debut de chaque tour
 	public void appelRenforts() {
 		int armeesRegion = 0;
 		int territoiresRegion;
@@ -250,14 +258,8 @@ public class Joueur {
 			totalRenfort += ThreadLocalRandom.current().nextInt(0, 2);
 		}
 		
-		/*//on lui ajoute ces soldats
-		for(int i = 0 ; i < totalRenfort ; i++) {
-			this.ajouterSoldat();
-		}*/
-		
 		//si il a recu moins de 2 soldats, on lui en donne jusqu'a ce qu'il en ait eu 2
 		while(totalRenfort <2) {
-			//this.ajouterSoldat();
 			totalRenfort++;
 		}
 		
@@ -267,7 +269,7 @@ public class Joueur {
 		this.setNbRenfort(totalRenfort);
 	}
 
-	
+	//permute 2 elements d'un tableau
 	public static int [][] permute(int [][] tab, int a, int b) {
 		int [] var;
 		var=tab[a];
@@ -276,6 +278,7 @@ public class Joueur {
 		return tab;
 	}
 	
+	//tri les elements d'un tableau dimension 2 en fonction de la première colonne, puis en fonction de la deuxieme
 	public static void TriParSelection(int [][] tab) {
 		for (int j=0 ; j<tab.length; j++)	{
 			for (int i=j ; i<tab.length; i++)	{
@@ -291,6 +294,8 @@ public class Joueur {
 		}
 	}
 	
+	
+	//donne en sortie un tableau contenant les unites mortes pendant la bataille
 	public Unite [][] issueBataille(ArrayList <Unite> defense, ArrayList <Unite> attaque) {
 		int puissanceDefense [][] = new int[defense.size()][3];
 		int puissanceAttaque [][] = new int[attaque.size()][3];
@@ -347,6 +352,7 @@ public class Joueur {
 		return unitesMortes;
 	}
 	
+	//on deplace les unites d'un territoire à l'autre, et on les fatigue
 	protected void deplacerUnites(Territoires territoireOrigine, Territoires territoireCible, ArrayList <Unite> unitesDeplacees) {
 		if(territoireCible.proprietaire == this) {	
 			for(int i = 0 ; i<unitesDeplacees.size(); i++) {
@@ -359,7 +365,7 @@ public class Joueur {
 	}	
 	
 	
-	
+	//toutes les unites du joueur recuperent leurs forces
 	protected void reposTroupes() {
 		for(int i = 0 ; i<this.territoires.size(); i++) {
 			for(int j = 0 ; j<this.territoires.get(i).unites.size(); j++) {
@@ -368,36 +374,47 @@ public class Joueur {
 		}
 	}
 
-	
+	//en fonction de "issueBataille" enleve les unites mortes aux joueurs et aux territoires, change les proprietaires de territoire ...
 	public void resultatsBataille(Unite unitesMortes [][], Territoires territoireDef, Territoires territoireAtk, ArrayList<Unite> unitesAtk, Partie partie) {
+		//on enleve les unites de defense mortes de leur territoire
 		for(int i = 0  ; i<unitesMortes[0].length ; i++) {
 			territoireDef.unites.remove(unitesMortes[0][i]);
 			territoireDef.proprietaire.armees.remove(unitesMortes[0][i]);
 		}
+		//si la population du territoire attaquee est reduite à 0
 		if(territoireDef.unites.size() == 0) {
+			//on enleve ce territoire de la liste des territoires du joueur defenseur
 			territoireDef.proprietaire.territoires.remove(territoireDef);
 			Regions regionTerritoireDef = territoireDef.appartenanceRegionTerritoire(partie);
 			regionTerritoireDef.appartenanceRegionJoueur(territoireDef.proprietaire);
-			if(territoireDef.proprietaire.armees.size()==0) {
+			
+			//on verifie si le joueur defenseur a completement perdu. Si oui on l'ajoute aux joueurs detruits par l'attaquant
+			if(territoireDef.proprietaire.territoires.size()==0) {
 				this.joueursDetruits.add(territoireDef.proprietaire.numero);
 			}
+			//on change le proprietaire, on deplace les attaquants dans le nouveau territoire et on regarde si le nouveau proprietaire possede la region entiere
 			territoireDef.proprietaire = this;
 			this.territoires.add(territoireDef);
 			this.territoiresConquis.add(territoireDef);
 			this.dernieresConquetes++;
 			regionTerritoireDef.appartenanceRegionJoueur(this);
 			
+			//on fait les echanges d'unite entre les territoires
 			for(int i = 0 ; i<unitesAtk.size() ; i++) {
 				territoireDef.unites.add(unitesAtk.get(i));
 				territoireAtk.unites.remove(unitesAtk.get(i));
 				unitesAtk.get(i).fatigue();
 				unitesAtk.get(i).verifDisponibilite();
 			}
+			//on enleve les unites attaquantes mortes
 			for(int i = 0 ; i<unitesMortes[1].length ; i++) {
 				territoireDef.unites.remove(unitesMortes[1][i]);
 				this.armees.remove(unitesMortes[1][i]);
 			}
 		}
+		
+		
+		// on enleve les unites attaquantes mortes
 		else {
 			for(int i = 0 ; i<unitesMortes[1].length ; i++) {
 				territoireAtk.unites.remove(unitesMortes[1][i]);
@@ -406,6 +423,8 @@ public class Joueur {
 		}
 	}
 	
+	
+	//boucle pour l'attribution des unites
 	public void attributionRenfort(Partie partie,Interface2 frame) {
 		while(flagFinDePhase == 0) {
 			this.boucleAttributionRenfort(partie,frame);
@@ -455,6 +474,8 @@ public class Joueur {
 		}
 	}
 	
+	
+	//boucle pour les actions du joueur (hors renfort)
 	public void actionJoueur(Partie partie, Interface2 frame) {
 		while(flagFinDePhase == 0) {
 			this.boucleTourJoueur(partie, frame);
@@ -488,31 +509,55 @@ public class Joueur {
 		frame.choixAttaqueDeplacement(partie, this);
 	}
 	
+	
+	//renforts attribués par l'ia
 	public void renfortIA(Partie partie) {
-		Regions regionVisee;
-		int [] tableau = {0,0,0,0,0,0};
+		Regions regionVisee = null;
+		ArrayList <Integer> territoiresParRegion = new ArrayList();
+		//on stocke le nombre de territoires alliés par region dans l'arraylist
 		for(int j = 0 ; j < partie.regions.size(); j++) {
+			territoiresParRegion.add(0);
 			for(int i = 0 ; i < this.territoires.size(); i++) {
 				if(partie.regions.get(j).territoires.contains(this.territoires.get(i))) {
-					tableau[j]++;
+					territoiresParRegion.set(j, territoiresParRegion.get(j)+1);
 				}
 			}
 		}
-		int max=0;
-		int indiceMax = 0;
-		for(int i = 0 ; i < tableau.length ; i++) {
-			if(tableau[i]>max) {
-				max = tableau[i];
-				indiceMax = i;
+		
+		
+		
+		int max;
+		int indiceMax;
+		boolean flagRegionsPossedees = false;
+		
+		//on recupere l'indice de la region qui est le plus occupée par le joueur, ou la deuxieme si la premiere est totalement occupee, etc
+		while(regionVisee == null || this.regions.contains(regionVisee)) {
+			max=0;
+			indiceMax = 0;
+			for(int i = 0 ; i < territoiresParRegion.size() ; i++) {
+				if(territoiresParRegion.get(i)>max) {
+					max = territoiresParRegion.get(i);
+					indiceMax = i;
+				}
 			}
+			if(territoiresParRegion.get(indiceMax)==0) {
+				System.out.println("J'ai tous les territoires");
+				flagRegionsPossedees = true;
+				break;
+			}
+			territoiresParRegion.set(indiceMax, 0);
+			regionVisee = partie.regions.get(indiceMax);
 		}
 		
+		if(flagRegionsPossedees == true) {
+			regionVisee = this.regions.get(0);
+		}
 		
-		
-		regionVisee = partie.regions.get(indiceMax);
+		indiceMax = partie.regions.indexOf(regionVisee);		
 		int nbRenfortRestant = this.nbRenfort;
 		int nbVoisinsEnnemis;
 		
+		//on atttribue les renforts aux territoires de la region selectionnee qui ont une frontiere avec un ennemi
 		while(nbRenfortRestant != 0) {
 			for(int i = 0 ; i < regionVisee.territoires.size() ; i++) {
 				nbVoisinsEnnemis = 0;
@@ -522,18 +567,19 @@ public class Joueur {
 					}
 				}
 				if(partie.regions.get(indiceMax).territoires.get(i).proprietaire == this && nbVoisinsEnnemis !=0) {
-					System.out.println(partie.regions.get(indiceMax).territoires.get(i).nom + " possède "+ nbVoisinsEnnemis + " voisins ennemis");
 					if(nbRenfortRestant>0 && nbVoisinsEnnemis != 0){
 						this.ajouterSoldat();
 						partie.regions.get(indiceMax).territoires.get(i).ajouterSoldat();
 						nbRenfortRestant --;
-						System.out.println("Une unite est attribuée à : " + partie.regions.get(indiceMax).territoires.get(i).nom);
 					}
 				}
-			}
-		}
+			}		
+		}			
+		this.setNbRenfort(0);
 	}
 	
+	
+	//fonction de deplacement d'unites par l'ia   NE FONCTIONNE PAS
 	public void deplacementIA(Partie partie) {
 		ArrayList <Unite> unitesDeplacees = new ArrayList();
 		int [] tableauNbVoisinsEnnemis = new int[this.territoires.size()];
@@ -541,7 +587,7 @@ public class Joueur {
 		
 		for(int i = 0 ; i< this.territoires.size(); i++) {
 			for(int j = 0 ; j < this.territoires.get(i).voisinsTerritoire(partie).size(); j++) {
-				if(!this.territoires.contains(this.territoires.get(i).voisinsTerritoire(partie).get(j))) {
+				if(!this.territoires.contains(this.territoires.get(i).voisinsTerritoire(partie).get(j)) && this.territoires.get(i).unites.size()>1) {
 					 tableauNbVoisinsEnnemis[i]++;
 				}
 			}
@@ -553,29 +599,23 @@ public class Joueur {
 			for(int i = 0 ; i < tableauNbVoisinsEnnemis.length ; i++) {
 				if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible == null) {
 					territoireOrigine = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
-					System.out.println("If 1");
 				}
 				else if(tableauNbVoisinsEnnemis[i] == 0 && this.territoires.get(i).unites.size()>1 && territoireCible != null && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireCible)) {
 					territoireOrigine = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
-					System.out.println("If 2");
 				}
 				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine != null && this.territoires.get(i).voisinsTerritoire(partie).contains(territoireOrigine) ) {
 					territoireCible = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
-					System.out.println("If 3");
 				}
 				else if(tableauNbVoisinsEnnemis[i] != 0 && territoireOrigine == null) {
 					territoireCible = new Territoires(this.territoires.get(i).nom, this.territoires.get(i).numero, this.territoires.get(i).unites, this.territoires.get(i).proprietaire);
-					System.out.println(territoireCible.nom);
-					System.out.println("If 4");
 				}
-				if(territoireCible != null && territoireOrigine != null) {
-					System.out.println("If 5");
+				if(territoireCible != null && territoireOrigine != null) {;
 					break;
 				}
 			}
 			
 			if(territoireCible != null && territoireOrigine != null) {
-				for(int i = 0 ; i < territoireOrigine.unites.size(); i++) {
+				for(int i = 0 ; i < territoireOrigine.unites.size()-1; i++) {
 					if(territoireOrigine.unites.get(i).disponibilite!=0) {
 						unitesDeplacees.add(territoireOrigine.unites.get(i));
 					}
@@ -592,8 +632,37 @@ public class Joueur {
 				unitesDeplacees.clear();
 			}
 			else {
-				System.out.println("Pas de deplacement utile");
+				//System.out.println("Pas de deplacement utile");
 				deplacementsPossibles = false;
+			}
+		}
+	}
+	
+	
+	//fonction d'attaque par l'ia
+	public void attaqueIA(Partie partie) {
+		ArrayList <Unite> unitesAttaque = new ArrayList();
+		ArrayList <Unite> unitesDefense = new ArrayList();
+		ArrayList <Territoires> ennemisVoisins = new ArrayList();
+		boolean attaqueEffectuee = false;
+		boolean attaquesPossibles = true;
+		
+		//les territoires alliés qui sont voisins avec un ennemi attaquent leur voisin s'il a un cout total superieur ou égal
+		while(attaquesPossibles) {
+			attaqueEffectuee = false;
+			for(int i = 0 ; i< this.territoires.size(); i++) {
+				for(int j = 0 ; j < this.territoires.get(i).voisinsTerritoire(partie).size(); j++) {
+					if(!this.territoires.contains(this.territoires.get(i).voisinsTerritoire(partie).get(j)) && this.territoires.get(i).coutTotal() >= this.territoires.get(i).voisinsTerritoire(partie).get(j).coutTotal()+1 && this.territoires.get(i).unites.size()>2) {
+						 unitesAttaque = this.territoires.get(i).unitesAtkIA();
+						 unitesDefense = this.territoires.get(i).voisinsTerritoire(partie).get(j).unitesDef(unitesAttaque.size());
+						 Unite [][] unitesMortes = this.issueBataille(unitesDefense, unitesAttaque);
+						 this.resultatsBataille(unitesMortes, this.territoires.get(i).voisinsTerritoire(partie).get(j), this.territoires.get(i), unitesAttaque,partie);
+						 attaqueEffectuee = true;
+					}
+				}
+			}
+			if(!attaqueEffectuee) {
+				attaquesPossibles=false;
 			}
 		}
 	}

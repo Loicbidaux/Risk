@@ -22,9 +22,7 @@ public class Regions {
 		this.territoires = territoires;
 	}
 	
-	//public void setAdjMatrices(int[][] adjMatrices) {
-		//this.adjMatrices = adjMatrices;
-	//}
+	//verifie si la region appartient au joueur
 	public void appartenanceRegionJoueur(Joueur joueur) {
 		boolean appartient = true;
 		for(int i = 0 ; i<this.territoires.size(); i++) {
